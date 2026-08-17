@@ -1,0 +1,584 @@
+/* ==========================================================================
+   Sections — פריסות ייחודיות לכל אזור בדף
+   ========================================================================== */
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  padding-block: calc(var(--nav-h) + clamp(56px, 9vw, 110px)) clamp(56px, 8vw, 104px);
+  overflow: hidden;
+  text-align: center;
+  /* גרדיאנט אדום בהיר — הפינה הצבועה בימין־עליון, מתבהר ללבן לכיוון שמאל־מטה */
+  background: linear-gradient(
+    to bottom left,
+    var(--c-hero-tint)   0%,
+    var(--c-hero-tint-2) 38%,
+    var(--c-bg)          70%
+  );
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--c-line), transparent);
+}
+
+.hero__inner { position: relative; z-index: 1; max-width: 880px; margin-inline: auto; }
+
+.hero__brand {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: var(--sp-5);
+  padding: 8px 18px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-sm);
+}
+.hero__brand-text { font-size: var(--fs-xs); font-weight: 500; color: var(--c-ink-2); }
+.hero__brand-text b { font-weight: 700; color: var(--c-ink); }
+
+.hero h1 { margin-bottom: var(--sp-5); }
+
+.hero__sub {
+  max-width: 620px;
+  margin-inline: auto;
+  font-size: var(--fs-lead);
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--c-ink-2);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-7);
+}
+
+.hero__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-7);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--c-line-soft);
+}
+
+@media (max-width: 520px) {
+  .hero__actions .btn { width: 100%; }
+}
+
+/* ==========================================================================
+   לפני / אחרי — סקשן כהה
+   מובייל: כל זוג ככרטיס אחד (שאלה מעל תשובה).
+   דסקטופ: שתי עמודות עם כותרות.
+   ========================================================================== */
+
+.contrast {
+  display: grid;
+  gap: 10px;
+  margin-block: var(--sp-6) var(--sp-7);
+}
+
+.contrast__head { display: none; }
+
+.contrast__row {
+  display: grid;
+  gap: 7px;
+  padding: 15px 18px;
+  background: var(--c-bg-dark-2);
+  border: 1px solid var(--c-line-dark);
+  border-radius: var(--r-md);
+}
+
+.contrast__before {
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--c-ink-inv-2);
+}
+
+.contrast__after {
+  position: relative;
+  padding-inline-start: 24px;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--c-ink-inv);
+}
+.contrast__after::before {
+  content: "←";
+  position: absolute;
+  inset-inline-start: 0;
+  color: #FF6B70;
+  font-weight: 400;
+}
+
+@media (min-width: 760px) {
+  .contrast {
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--sp-4);
+    row-gap: 0;
+  }
+
+  .contrast__head {
+    display: block;
+    padding-bottom: var(--sp-3);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: var(--ls-wide);
+    color: var(--c-ink-3);
+  }
+  .contrast__head--after { padding-inline-start: 24px; color: #FF6B70; }
+
+  /* השורה נפרשת על שתי העמודות ומתחלקת פנימית באותו יחס — כך העמודות מיושרות לכותרות */
+  .contrast__row {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--sp-4);
+    align-items: baseline;
+    padding: 15px 0;
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--c-line-dark);
+    border-radius: 0;
+  }
+  .contrast__row:last-child { border-bottom: 1px solid var(--c-line-dark); }
+}
+
+.pain__close {
+  max-width: 46ch;
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: var(--c-ink-inv);
+}
+
+/* ==========================================================================
+   איך אני יכולה לעזור — כרטיסי שירות
+   ========================================================================== */
+
+.services {
+  display: grid;
+  gap: var(--sp-4);
+  margin-top: var(--sp-7);
+}
+/* 4 כרטיסים קומפקטיים — שורה אחת בדסקטופ, כדי לא להאריך את הדף */
+@media (min-width: 620px)  { .services { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1040px) { .services { grid-template-columns: repeat(4, 1fr); gap: var(--sp-3); } }
+
+.services .card { padding: var(--sp-5); }
+
+.service__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: var(--sp-4);
+  background: var(--c-accent-soft);
+  border: 1px solid var(--c-accent-line);
+  border-radius: var(--r-md);
+  color: var(--c-accent);
+}
+.service__icon svg { width: 20px; height: 20px; }
+
+/* ==========================================================================
+   שלושת המסלולים
+   ========================================================================== */
+
+.tracks {
+  display: grid;
+  gap: var(--sp-4);
+  margin-top: var(--sp-7);
+}
+@media (min-width: 900px) { .tracks { grid-template-columns: repeat(3, 1fr); } }
+
+.track {
+  display: flex;
+  flex-direction: column;
+  padding-top: calc(var(--sp-6) + 4px);
+  overflow: hidden;
+}
+.track::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 4px;
+  background: var(--c-accent);
+  transform: scaleX(0);
+  transform-origin: right; /* RTL — הקו נפתח מצד ימין */
+  transition: transform var(--dur-slow) var(--ease);
+}
+.track:hover::before { transform: scaleX(1); }
+
+/* המסלול המרכזי — מודגש */
+.track--featured {
+  border-color: var(--c-ink);
+  box-shadow: var(--shadow-lg);
+}
+.track--featured::before { transform: scaleX(1); }
+
+.track__badge {
+  position: absolute;
+  inset-block-start: var(--sp-5);
+  inset-inline-end: var(--sp-5);
+  padding: 4px 11px;
+  background: var(--c-ink);
+  color: #fff;
+  border-radius: var(--r-pill);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.track__for {
+  margin-top: 6px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--c-accent);
+}
+
+.track__quote {
+  margin-top: var(--sp-4);
+  padding-inline-start: var(--sp-4);
+  border-inline-start: 2px solid var(--c-line);
+  font-size: var(--fs-sm);
+  font-style: italic;
+  color: var(--c-ink-2);
+  line-height: 1.65;
+}
+
+.track__cta { margin-top: auto; padding-top: var(--sp-6); }
+
+/* ==========================================================================
+   למה לא פשוט לבנות לבד
+   ========================================================================== */
+
+.diy__body { display: grid; gap: var(--sp-7); }
+@media (min-width: 900px) { .diy__body { grid-template-columns: 1fr 1fr; gap: var(--sp-8); align-items: start; } }
+
+.diy__panel {
+  padding: var(--sp-6);
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+}
+.diy__panel-title {
+  margin-bottom: var(--sp-4);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--c-ink-3);
+}
+.diy__items { display: grid; gap: 10px; }
+@media (min-width: 520px) { .diy__items { grid-template-columns: repeat(2, 1fr); } }
+
+.diy__item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 14px;
+  background: var(--c-bg-soft);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-sm);
+  color: var(--c-ink);
+}
+.diy__item svg { width: 15px; height: 15px; color: var(--c-accent); flex: none; }
+
+.diy__close {
+  margin-top: var(--sp-6);
+  padding: var(--sp-5) var(--sp-6);
+  background: var(--c-accent-soft);
+  border-inline-start: 3px solid var(--c-accent);
+  border-radius: var(--r-md);
+}
+.diy__close p + p { margin-top: var(--sp-3); }
+
+/* ==========================================================================
+   איך עובדים יחד
+   ========================================================================== */
+
+.process { position: relative; margin-top: var(--sp-7); display: grid; gap: var(--sp-5); }
+@media (min-width: 900px) { .process { grid-template-columns: repeat(5, 1fr); gap: var(--sp-4); } }
+
+.step { position: relative; padding-top: var(--sp-5); }
+.step::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 2px;
+  background: var(--c-line);
+}
+.step::after {
+  content: "";
+  position: absolute;
+  inset-block-start: -4px;
+  inset-inline-start: 0;
+  width: 10px;
+  height: 10px;
+  background: var(--c-accent);
+  border-radius: 50%;
+}
+.step__num {
+  display: block;
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--c-accent);
+  letter-spacing: var(--ls-wide);
+}
+.step__title { margin-bottom: var(--sp-2); font-size: var(--fs-h4); }
+.step__text { font-size: var(--fs-sm); color: var(--c-ink-2); line-height: 1.65; }
+
+/* במובייל המספר והכותרת באותה שורה — חוסך שורה לכל שלב */
+@media (max-width: 899px) {
+  .step { padding-top: var(--sp-4); }
+  .step__num   { display: inline; margin-inline-end: 8px; }
+  .step__title { display: inline; font-size: var(--fs-body); }
+  .step__text  { margin-top: 4px; }
+}
+
+.process__note {
+  margin-top: var(--sp-7);
+  padding: var(--sp-5) var(--sp-6);
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  text-align: center;
+}
+
+/* ==========================================================================
+   עקרונות עבודה — שלוש שורות בתוך אזור "עליי" (§15)
+   ========================================================================== */
+
+.creed {
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--c-line);
+  display: grid;
+  gap: 10px;
+}
+.creed li {
+  position: relative;
+  padding-inline-start: 20px;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--c-ink-2);
+}
+.creed li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.6em;
+  width: 7px;
+  height: 7px;
+  background: var(--c-accent);
+  border-radius: 50%;
+}
+.creed b { color: var(--c-ink); font-weight: 700; }
+
+/* ==========================================================================
+   פרויקטים
+   ========================================================================== */
+
+.projects { display: grid; gap: var(--sp-5); margin-top: var(--sp-7); }
+@media (min-width: 860px) { .projects { grid-template-columns: repeat(2, 1fr); } }
+
+.project { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+
+.project__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--c-bg-soft);
+  border-bottom: 1px solid var(--c-line);
+  overflow: hidden;
+}
+.project__media img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+
+/* מצב placeholder — עד שיתקבלו צילומי מסך */
+.project__placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  padding: var(--sp-5);
+  text-align: center;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 10px, rgba(212, 33, 39, .035) 10px 20px),
+    var(--c-bg-soft);
+  color: var(--c-ink-3);
+  font-size: var(--fs-xs);
+}
+.project__placeholder svg { width: 26px; height: 26px; color: var(--c-ink-3); }
+.project__placeholder code {
+  padding: 3px 8px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  border-radius: 5px;
+  font-size: 0.75rem;
+  direction: ltr;
+}
+
+.project__body { padding: var(--sp-5); flex: 1; }
+.project__type {
+  display: inline-block;
+  margin-bottom: var(--sp-3);
+  padding: 4px 11px;
+  background: var(--c-accent-soft);
+  border: 1px solid var(--c-accent-line);
+  border-radius: var(--r-pill);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--c-accent);
+}
+.project__rows { margin-top: var(--sp-4); display: grid; gap: var(--sp-3); }
+/* תווית וטקסט באותה שורה — חוסך 3 שורות לכל כרטיס פרויקט */
+.project__rows > div { font-size: var(--fs-sm); line-height: 1.6; }
+.project__row-label {
+  display: inline;
+  margin-inline-end: 6px;
+  font-weight: 700;
+  color: var(--c-ink);
+}
+.project__row-text { display: inline; color: var(--c-ink-2); }
+
+.projects__note {
+  margin-top: var(--sp-6);
+  font-size: var(--fs-xs);
+  color: var(--c-ink-3);
+  text-align: center;
+}
+
+/* ==========================================================================
+   המלצה
+   ========================================================================== */
+
+.testimonial {
+  max-width: 760px;
+  margin-inline: auto;
+  padding: clamp(28px, 5vw, 56px);
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-xl);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+.testimonial__quote-mark {
+  display: block;
+  margin-inline: auto;
+  margin-bottom: var(--sp-4);
+  width: 34px;
+  color: var(--c-accent);
+  opacity: .35;
+}
+.testimonial__text {
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--c-ink);
+}
+.testimonial__author {
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--c-line);
+  font-size: var(--fs-sm);
+  color: var(--c-ink-2);
+}
+.testimonial__author b { display: block; color: var(--c-ink); }
+
+.placeholder-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--sp-5);
+  padding: 5px 12px;
+  background: #FFF8E6;
+  border: 1px solid #F0DFAE;
+  border-radius: var(--r-pill);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #8A6A12;
+}
+
+/* ==========================================================================
+   עליי
+   ========================================================================== */
+
+.about { display: grid; gap: var(--sp-6); align-items: center; }
+@media (min-width: 880px) {
+  .about { grid-template-columns: 340px 1fr; gap: var(--sp-8); }
+  .about__portrait { aspect-ratio: 4 / 5; }
+}
+
+.about__portrait {
+  position: relative;
+  /* במובייל יחס נמוך יותר — 4/5 גזל ~440px גובה על מסך צר */
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--c-bg-soft);
+  border: 1px solid var(--c-line);
+}
+.about__portrait img { width: 100%; height: 100%; object-fit: cover; }
+.about__portrait .project__placeholder { background: var(--c-bg-soft); }
+
+.about__text p + p { margin-top: var(--sp-4); }
+.about__text p { color: var(--c-ink-2); line-height: 1.8; }
+.about__signature {
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--c-line);
+  font-size: var(--fs-sm);
+}
+.about__signature b { display: block; font-size: var(--fs-h4); color: var(--c-ink); }
+.about__signature span { color: var(--c-ink-3); }
+
+/* ==========================================================================
+   טופס — פריסה
+   ========================================================================== */
+
+.contact { display: grid; gap: var(--sp-7); align-items: start; }
+@media (min-width: 960px) { .contact { grid-template-columns: 1fr 1.25fr; gap: var(--sp-8); } }
+
+.contact__aside { position: sticky; top: calc(var(--nav-h) + 32px); }
+@media (max-width: 959px) { .contact__aside { position: static; } }
+
+.contact__direct { margin-top: var(--sp-6); display: grid; gap: var(--sp-3); }
+/* טלפון ומייל זה לצד זה במקום זה מתחת לזה — חוסך גובה במובייל */
+@media (min-width: 480px) and (max-width: 959px) {
+  .contact__direct { grid-template-columns: repeat(2, 1fr); }
+}
+.contact__link {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 14px 18px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+  transition: border-color var(--dur) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.contact__link:hover { border-color: var(--c-ink); transform: translateX(-2px); }
+.contact__link svg { width: 18px; height: 18px; color: var(--c-accent); flex: none; }
+.contact__link b { display: block; font-weight: 600; }
+.contact__link span { direction: ltr; display: block; font-size: var(--fs-xs); color: var(--c-ink-3); text-align: start; }
+
+.form-row { display: grid; gap: var(--sp-4); }
+@media (min-width: 560px) { .form-row { grid-template-columns: repeat(2, 1fr); } }
+.form-row .field { margin-bottom: 0; }
+.form-row { margin-bottom: var(--sp-5); }

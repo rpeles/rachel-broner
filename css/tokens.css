@@ -1,0 +1,94 @@
+/* ==========================================================================
+   Design System — רחל ברונר | בניית מערכות ניהול לעסקים
+   פלטת הצבעים נגזרת ישירות מהלוגו: אדום · שחור · לבן
+   כל שינוי עיצובי גלובלי מתבצע כאן בלבד.
+   ========================================================================== */
+
+:root {
+  /* ---------- צבעים ---------- */
+  --c-bg:          #FFFFFF;   /* רקע ראשי */
+  --c-bg-soft:     #F6F6F7;   /* רקע סקשן משני */
+  --c-bg-dark:     #111111;   /* סקשן כהה */
+  --c-bg-dark-2:   #1B1B1C;   /* כרטיס בתוך סקשן כהה */
+
+  --c-ink:         #0D0D0D;   /* טקסט ראשי */
+  --c-ink-2:       #55565A;   /* טקסט משני */
+  --c-ink-3:       #8A8B90;   /* טקסט שלישוני / labels */
+  --c-ink-inv:     #FFFFFF;   /* טקסט על רקע כהה */
+  --c-ink-inv-2:   #A8A9AD;   /* טקסט משני על רקע כהה */
+
+  --c-accent:      #D42127;   /* האדום מהלוגו */
+  --c-accent-dark: #A5171C;   /* hover */
+  --c-accent-soft: #FDF2F2;   /* רקע רך לאקסנט */
+  --c-accent-line: #F3D3D4;   /* גבול רך לאקסנט */
+
+  --c-line:        #E7E7E9;   /* קווי הפרדה */
+  --c-line-soft:   #F1F1F2;
+  --c-line-dark:   #2C2C2E;   /* קו הפרדה על רקע כהה */
+
+  /* ---------- רקע ה-Hero: גרדיאנט אדום בהיר ---------- */
+  --c-hero-tint:   #EDC3C6;   /* הפינה הצבועה (ימין־עליון) */
+  --c-hero-tint-2: #F9E6E7;   /* מעבר אמצעי */
+
+  --c-focus:       #D42127;
+
+  /* ---------- טיפוגרפיה ---------- */
+  --font-sans: "Heebo", "Assistant", -apple-system, "Segoe UI", Arial, sans-serif;
+
+  --fs-display: clamp(2.1rem, 1.35rem + 3.4vw, 4rem);      /* H1 */
+  --fs-h2:      clamp(1.65rem, 1.2rem + 2vw, 2.6rem);
+  --fs-h3:      clamp(1.15rem, 1rem + 0.6vw, 1.4rem);
+  --fs-h4:      clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  --fs-lead:    clamp(1.05rem, 0.98rem + 0.45vw, 1.3rem);
+  --fs-body:    clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --fs-sm:      0.9375rem;
+  --fs-xs:      0.8125rem;
+
+  --lh-tight:   1.18;
+  --lh-snug:    1.35;
+  --lh-normal:  1.75;
+
+  --ls-tight:   -0.02em;
+  --ls-wide:    0.12em;
+
+  /* ---------- מרווחים ---------- */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  24px;
+  --sp-6:  32px;
+  --sp-7:  48px;
+  --sp-8:  64px;
+  --sp-9:  96px;
+
+  --section-y: clamp(44px, 5.5vw, 92px);
+  --container: 1120px;
+  --gutter: clamp(20px, 5vw, 40px);
+
+  /* ---------- צורה ---------- */
+  --r-sm:   8px;
+  --r-md:   12px;
+  --r-lg:   18px;
+  --r-xl:   24px;
+  --r-pill: 999px;
+  --r-btn:  11px;   /* כפתורים — מלבן מעוגל, לא גלולה */
+
+  --shadow-sm: 0 1px 2px rgba(13, 13, 13, .04);
+  --shadow-md: 0 4px 16px rgba(13, 13, 13, .06);
+  --shadow-lg: 0 18px 48px rgba(13, 13, 13, .10);
+  --shadow-btn:       0 2px 6px rgba(165, 23, 28, .28), 0 8px 20px rgba(165, 23, 28, .18);
+  --shadow-btn-hover: 0 3px 8px rgba(165, 23, 28, .34), 0 12px 26px rgba(165, 23, 28, .22);
+
+  /* ---------- תנועה ---------- */
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --dur-fast: .18s;
+  --dur:      .28s;
+  --dur-slow: .6s;
+
+  --nav-h: 72px;
+}
+
+@media (max-width: 720px) {
+  :root { --nav-h: 62px; }
+}
