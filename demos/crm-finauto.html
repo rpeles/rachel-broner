@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת CRM - פיננסים ואוטומציות</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --primary: #1e293b;
+            --accent: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 250px;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 1rem;
+        }
+
+        aside .logo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: #60a5fa;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        aside nav ul {
+            list-style: none;
+        }
+
+        aside nav li {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #cbd5e1;
+        }
+
+        aside nav li.active, aside nav li:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* Dashboard Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .card-title {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+
+        /* Automation Feed */
+        .feed-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="logo">⚡ FinAuto CRM</div>
+        <nav>
+            <ul>
+                <li class="active">דשבורד ראשי</li>
+                <li>לקוחות ותיקיות</li>
+                <li>משימות וגבייה</li>
+                <li>ספירת שעות</li>
+                <li>הגדרות מערכת</li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+        <header>
+            <div>
+                <h1>ניהול לקוחות ואוטומציות</h1>
+                <p style="color: var(--text-muted);">שלום עובד, הנה סקירת המערכת להיום</p>
+            </div>
+            <button class="btn-primary" onclick="alert('נשלח טופס קליטה חדש ללקוח בוואטסאפ!')">+ שליחת טופס קליטה ללקוח</button>
+        </header>
+
+        <div class="stats-grid">
+            <div class="card">
+                <div class="card-title">לקוחות פעילים</div>
+                <div class="card-value">128</div>
+            </div>
+            <div class="card">
+                <div class="card-title">טפסים שנחתמו היום</div>
+                <div class="card-value" style="color: var(--success);">12</div>
+            </div>
+            <div class="card">
+                <div class="card-title">תזכורות גבייה שנשלחו</div>
+                <div class="card-value" style="color: var(--accent);">5</div>
+            </div>
+            <div class="card">
+                <div class="card-title">ממתינים לייפוי כוח</div>
+                <div class="card-value" style="color: var(--warning);">3</div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <h3>לקוחות מקולטים לאחרונה</h3>
+                <br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>שם הלקוח</th>
+                            <th>ת.ז / ח.פ</th>
+                            <th>סטטוס CRM</th>
+                            <th>תיקיית Drive</th>
+                            <th>ייפוי כוח</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ישראל ישראלי</td>
+                            <td>012345678</td>
+                            <td><span class="badge badge-success">לקוח קבוע (#102)</span></td>
+                            <td>קיימת (סונכרן)</td>
+                            <td><button style="cursor:pointer;" onclick="alert('ייפוי כוח נשלח ל-Filfaster')">שלח ב-Filfaster</button></td>
+                        </tr>
+                        <tr>
+                            <td>אברהם כהן</td>
+                            <td>987654321</td>
+                            <td><span class="badge badge-warning">בהמתנה למילוי</span></td>
+                            <td>נוצרה תיקייה</td>
+                            <td>ממתין לחתימה</td>
+                        </tr>
+                        <tr>
+                            <td>דני לוי</td>
+                            <td>055443322</td>
+                            <td><span class="badge badge-success">לקוח קבוע (#103)</span></td>
+                            <td>קיימת (סונכרן)</td>
+                            <td>נחתם ותוייק</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>לוג אוטומציות בלייב</h3>
+                <br>
+                <div class="feed-item">
+                    <div class="dot"></div>
+                    <div>נוצרה תיקיית Drive: ישראל ישראלי_012345678</div>
+                </div>
+                <div class="feed-item">
+                    <div class="dot" style="background: var(--success);"></div>
+                    <div>נשלח מייל אישור: טופס הסכמה נחתם</div>
+                </div>
+                <div class="feed-item">
+                    <div class="dot" style="background: var(--warning);"></div>
+                    <div>נשלחה תזכורת תשלום אוטומטית ללקוח #102</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

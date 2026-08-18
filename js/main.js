@@ -150,17 +150,27 @@
   /* ======================================================================
      Lightbox — הגדלת צילומי מסך של פרויקטים
      ====================================================================== */
-  var lightbox    = $('#lightbox');
-  var lightboxImg = $('#lightboxImg');
-  var lightboxCap = $('#lightboxCaption');
-  var lightboxX   = $('#lightboxClose');
-  var lastFocused = null;
+  var lightbox      = $('#lightbox');
+  var lightboxImg   = $('#lightboxImg');
+  var lightboxFrame = $('#lightboxFrame');
+  var lightboxCap   = $('#lightboxCaption');
+  var lightboxX     = $('#lightboxClose');
+  var lastFocused   = null;
 
   function openLightbox(trigger) {
     if (!lightbox) return;
     lastFocused = trigger;
-    lightboxImg.src = trigger.getAttribute('data-zoom');
-    lightboxImg.alt = trigger.querySelector('img') ? trigger.querySelector('img').alt : '';
+
+    var demo = trigger.getAttribute('data-demo');
+    if (demo) {
+      lightbox.setAttribute('data-kind', 'demo');
+      lightboxFrame.src = demo;
+    } else {
+      lightbox.setAttribute('data-kind', 'image');
+      lightboxImg.src = trigger.getAttribute('data-zoom');
+      lightboxImg.alt = trigger.querySelector('img') ? trigger.querySelector('img').alt : '';
+    }
+
     lightboxCap.textContent = trigger.getAttribute('data-caption') || '';
     lightbox.classList.add('is-open');
     document.body.classList.add('is-locked');
@@ -178,13 +188,17 @@
     lightbox.classList.remove('is-open');
     document.body.classList.remove('is-locked');
     if (lastFocused && lastFocused.focus) lastFocused.focus();
-    // משחררים את התמונה רק אחרי אנימציית היציאה
+    // משחררים את המדיה רק אחרי אנימציית היציאה.
+    // איפוס ה-iframe חשוב במיוחד — אחרת הדמו ממשיך לרוץ ברקע.
     setTimeout(function () {
-      if (!lightbox.classList.contains('is-open')) lightboxImg.src = '';
+      if (lightbox.classList.contains('is-open')) return;
+      lightboxImg.src = '';
+      lightboxFrame.src = '';
+      lightbox.removeAttribute('data-kind');
     }, 300);
   }
 
-  $$('[data-zoom]').forEach(function (btn) {
+  $$('[data-zoom], [data-demo]').forEach(function (btn) {
     btn.addEventListener('click', function () { openLightbox(btn); });
   });
 

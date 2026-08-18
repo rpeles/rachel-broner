@@ -323,32 +323,37 @@
         </div>
       </article>
 
-      <!-- ===== פרויקט 2 ===== -->
+      <!-- ===== פרויקט 2 — CRM ואוטומציות (דמו חי, נפתח ב-iframe) ===== -->
       <article class="card project reveal" data-delay="1">
-        <div class="project__media">
-          <div class="project__placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>
+        <button class="project__media" type="button"
+                data-demo="demos/crm-finauto.html"
+                data-caption="מערכת CRM ואוטומציות למשרד פיננסי — דמו אינטראקטיבי, נתונים לדוגמה"
+                aria-label="פתיחת דמו אינטראקטיבי של מערכת ה-CRM והאוטומציות">
+          <img src="assets/projects/project-2.png"
+               alt="דשבורד מערכת ה-CRM: לקוחות פעילים, טפסים שנחתמו, תזכורות גבייה ולוג אוטומציות"
+               loading="lazy" width="1400" height="700">
+          <span class="project__zoom-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m9 18 6-6-6-6"/><circle cx="12" cy="12" r="10"/>
             </svg>
-            <span>מקום לצילום מסך</span>
-            <code>assets/projects/project-2.png</code>
-          </div>
-        </div>
+            לדמו חי
+          </span>
+        </button>
         <div class="project__body">
-          <span class="project__type">[סוג המערכת]</span>
-          <h3 class="card__title">[שם הפרויקט]</h3>
+          <span class="project__type">CRM ואוטומציות</span>
+          <h3 class="card__title">קליטת לקוח בלחיצה אחת</h3>
           <div class="project__rows">
             <div>
               <p class="project__row-label">האתגר</p>
-              <p class="project__row-text">[מה היה מסורבל או מבולגן לפני.]</p>
+              <p class="project__row-text">כל לקוח חדש במשרד דרש את אותה שרשרת ידנית: טופס קליטה, פתיחת תיקייה, הקמה ב-CRM, שליחת ייפוי כוח, מעקב חתימה ואז מעקב גבייה.</p>
             </div>
             <div>
               <p class="project__row-label">הפתרון</p>
-              <p class="project__row-text">[מה נבנה, חובר או שופר.]</p>
+              <p class="project__row-text">מערכת שמחברת בין הטופס, ה-CRM, Google Drive ושירות החתימה — וסופרת גם שעות עבודה.</p>
             </div>
             <div>
               <p class="project__row-label">התוצאה</p>
-              <p class="project__row-text">[מה הפך להיות פשוט יותר.]</p>
+              <p class="project__row-text">שולחים טופס — והשאר קורה לבד. התיקייה נפתחת, ייפוי הכוח יוצא לחתימה ותזכורות הגבייה נשלחות בלי שאף אחד יזכור.</p>
             </div>
           </div>
         </div>
@@ -564,6 +569,9 @@
     </svg>
   </button>
   <img class="lightbox__img" id="lightboxImg" src="" alt="">
+  <!-- דמו אינטראקטיבי. sandbox בלי allow-same-origin — הדמו מקבל מקור נפרד ומבודד מהאתר. -->
+  <iframe class="lightbox__frame" id="lightboxFrame" src="" title="דמו אינטראקטיבי"
+          sandbox="allow-scripts allow-modals" loading="lazy"></iframe>
   <p class="lightbox__caption" id="lightboxCaption"></p>
 </div>
 
