@@ -68,11 +68,10 @@
     </a>
 
     <nav class="nav__links" aria-label="ניווט ראשי">
-      <a class="nav__link" href="#help">איך אני יכולה לעזור</a>
-      <a class="nav__link" href="#tracks">המסלולים</a>
-      <a class="nav__link" href="#process">איך עובדים</a>
+      <a class="nav__link" href="#top">בית</a>
+      <a class="nav__link" href="#about">קצת עלי</a>
+      <a class="nav__link" href="#solutions">פתרונות</a>
       <a class="nav__link" href="#work">פרויקטים</a>
-      <a class="nav__link" href="#about">עליי</a>
       <a class="nav__link" href="#contact">צור קשר</a>
     </nav>
 
@@ -89,11 +88,10 @@
 <!-- תפריט מובייל -->
 <div class="mobile-menu" id="mobileMenu">
   <nav aria-label="ניווט מובייל">
-    <a class="mobile-menu__link" href="#help">איך אני יכולה לעזור</a>
-    <a class="mobile-menu__link" href="#tracks">המסלולים</a>
-    <a class="mobile-menu__link" href="#process">איך עובדים</a>
+    <a class="mobile-menu__link" href="#top">בית</a>
+    <a class="mobile-menu__link" href="#about">קצת עלי</a>
+    <a class="mobile-menu__link" href="#solutions">פתרונות</a>
     <a class="mobile-menu__link" href="#work">פרויקטים</a>
-    <a class="mobile-menu__link" href="#about">עליי</a>
     <a class="mobile-menu__link" href="#contact">צור קשר</a>
   </nav>
   <a class="btn btn--primary btn--lg btn--block" href="#contact">בואו נעשה סדר</a>
@@ -102,25 +100,37 @@
 <main id="main">
 
 <!-- ==========================================================================
-     Hero (§8)
+     בית — Hero
+     הסלוגן ירד בינתיים (הלקוחה מחפשת משפט חדש). השם הוא הכותרת.
      ========================================================================== -->
 <section class="hero" id="top">
   <div class="container hero__inner">
 
-    <div class="hero__brand reveal">
-      <span class="hero__brand-text"><b>רחל ברונר</b> — בניית מערכות ניהול לעסקים</span>
-    </div>
-
-    <h1 class="reveal" data-delay="1">אני עושה סדר בעסק,<br>כדי לעשות סדר בראש.</h1>
-
-    <p class="hero__sub reveal" data-delay="2">
-      מערכות, דאטה ואוטומציה שנבנים נכון מבפנים — כדי שהמידע יהיה מסודר,
-      התהליכים יעבדו, ואתה לא תצטרך להחזיק את כל העסק בראש.
+    <p class="hero__status reveal">
+      <span class="hero__status-dot" aria-hidden="true"></span>
+      זמינה לפרויקטים חדשים
     </p>
 
+    <h1 class="reveal" data-delay="1">רחל ברונר</h1>
+
+    <p class="hero__role reveal" data-delay="1">בניית מערכות, דאטה ואוטומציות לעסקים</p>
+
+    <div class="hero__sub reveal" data-delay="2">
+      <p>יש שני דברים שאני באמת נהנית מהם: <strong>טכנולוגיה ואנשים</strong>.</p>
+      <p>
+        אני אוהבת ללמוד טכנולוגיות חדשות, למצוא פתרונות יצירתיים, לתכנת, לעבוד עם דאטה
+        ובעיקר — לקחת משהו מבולגן ולהפוך אותו למערכת שעובדת.
+        ומצד שני, אני אוהבת לעזור לעסקים לעבוד חכם, מסודר ויעיל יותר.
+      </p>
+      <p>
+        מהחיבור הזה נולד העסק שלי —
+        <strong>בניית מערכות, דאטה ואוטומציות שמותאמות באמת לעסק.</strong>
+      </p>
+    </div>
+
     <div class="hero__actions reveal" data-delay="3">
-      <a class="btn btn--primary btn--lg" href="#contact">בואו נעשה סדר בעסק</a>
-      <a class="btn btn--ghost btn--lg" href="#help">בואו נדבר</a>
+      <a class="btn btn--primary btn--lg" href="#contact">בואו נדבר</a>
+      <a class="btn btn--ghost btn--lg" href="#work">לפרויקטים</a>
     </div>
 
     <ul class="hero__chips reveal" data-delay="4">
@@ -134,159 +144,91 @@
 </section>
 
 <!-- ==========================================================================
-     לפני / אחרי  (§9 + §13 — הכאב והתועלות, ממוזגים)
+     קצת עלי
      ========================================================================== -->
-<section class="section section--dark" id="pain">
+<section class="section" id="about">
   <div class="container">
+    <div class="about">
 
-    <div class="section-head reveal">
-      <span class="eyebrow">לפני / אחרי</span>
-      <h2>כשהעסק מסודר, הראש מתפנה.</h2>
-      <p class="lead">
-        מידע במקום אחד, תהליכים ברורים ומערכות שעובדות בשבילך —
-        כדי שתוכל לנהל את העסק, ולא להיות עסוק בלנהל את הבלגן.
-      </p>
-    </div>
-
-    <div class="contrast">
-      <p class="contrast__head contrast__head--before">היום</p>
-      <p class="contrast__head contrast__head--after">אחרי שעשינו סדר</p>
-
-      <div class="contrast__row reveal">
-        <p class="contrast__before">איפה הנתונים האלה?</p>
-        <p class="contrast__after">מוצאים מידע מהר — הדאטה בנוי מסודר ונגיש.</p>
+      <div class="about__portrait reveal">
+        <!-- החליפו ב:
+             <img src="assets/rachel.jpg" alt="רחל ברונר" loading="lazy" width="760" height="950"> -->
+        <div class="project__placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="8.5" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/>
+          </svg>
+          <span>מקום לתמונת פורטרט</span>
+          <code>assets/rachel.jpg</code>
+        </div>
       </div>
 
-      <div class="contrast__row reveal">
-        <p class="contrast__before">מה הסטטוס של התהליך?</p>
-        <p class="contrast__after">יודעים מה קורה — תמונת מצב אחת, בלי לחפש.</p>
+      <div class="about__text reveal" data-delay="1">
+        <span class="eyebrow">קצת עלי</span>
+        <h2>אז מי אני?</h2>
+        <hr class="rule">
+        <div style="margin-top:var(--sp-6)">
+          <p>
+            אני מפתחת Full Stack עם מעל 5 שנות ניסיון, עם התמחות בדאטה ובבניית מערכות
+            מקצה לקצה.
+          </p>
+          <p>
+            מהאפיון והתכנון, דרך פיתוח המערכת והבדיקות ועד להטמעה — אני מלווה את התהליך
+            כולו, כדי שבסוף תהיה לך מערכת שבאמת עובדת בשבילך.
+          </p>
+          <p>
+            הדבר שהכי חשוב לי הוא שלא תצטרך להתאים את עצמך למערכת.
+            <strong>המערכת צריכה להתאים אליך.</strong>
+            לצרכים שלך, לאופן שבו העסק שלך עובד ולמה שבאמת יעזור לך להתנהל טוב יותר.
+          </p>
+          <p>
+            כי אני מאמינה שמערכת טובה היא לא רק עניין של טכנולוגיה.
+            היא יכולה לעשות את החיים של בעל העסק פשוטים, מסודרים ורגועים יותר —
+            פחות עומס, פחות טעויות, פחות דברים שצריך להחזיק בראש,
+            ויותר זמן לדברים שבאמת חשובים.
+          </p>
+        </div>
+        <p class="about__signature">
+          <b>רחל ברונר</b>
+          <span>מומחית דאטה ומערכות לעסקים</span>
+        </p>
       </div>
-
-      <div class="contrast__row reveal">
-        <p class="contrast__before">למה אני עדיין עושה את זה ידנית?</p>
-        <p class="contrast__after">פחות רודפים — מה שחוזר על עצמו קורה מעצמו.</p>
-      </div>
-
-      <div class="contrast__row reveal">
-        <p class="contrast__before">צריך לזכור הכול.</p>
-        <p class="contrast__after">הכול במערכת, לא בראש.</p>
-      </div>
-    </div>
-
-    <p class="pain__close reveal">
-      וכשהתשתית בנויה נכון — העסק יכול גם לגדול,
-      <span class="text-accent">בלי שכל הגדלה תהפוך לעוד בלגן.</span>
-    </p>
-
-  </div>
-</section>
-
-<!-- ==========================================================================
-     הפתרון + השירותים (§10, §5)
-     ========================================================================== -->
-<section class="section" id="help">
-  <div class="container">
-
-    <div class="section-head reveal">
-      <span class="eyebrow">איך אני יכולה לעזור</span>
-      <h2>העסק שלך צריך מערכת שעובדת בשבילך.</h2>
-      <p class="lead">
-        אני ממפה את העסק, מבינה את התהליכים והדאטה, ובונה את מה שמתאים באמת —
-        לפעמים מערכת חדשה, לפעמים שיפור של קיימת, ולפעמים אוטומציה פשוטה שחוסכת שעות.
-      </p>
-      <hr class="rule">
-      <p class="statement" style="margin-top:var(--sp-5)">
-        המטרה תמיד זהה: לעשות סדר, לפשט את העבודה ו<span class="text-accent">להחזיר לך שליטה</span>.
-      </p>
-    </div>
-
-    <div class="services">
-
-      <article class="card card--hover reveal">
-        <span class="service__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
-            <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
-          </svg>
-        </span>
-        <h3 class="card__title">מערכות</h3>
-        <p class="card__text">
-          CRM מותאם אישית, ניהול לקוחות ותהליכים, גבייה ומערכות פנימיות —
-          בנויות סביב האופן שבו העסק שלך באמת עובד.
-        </p>
-      </article>
-
-      <article class="card card--hover reveal" data-delay="1">
-        <span class="service__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <ellipse cx="12" cy="5" rx="8" ry="3"/>
-            <path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/>
-            <path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/>
-          </svg>
-        </span>
-        <h3 class="card__title">דאטה</h3>
-        <p class="card__text">
-          תכנון בסיסי נתונים, סדר בדאטה קיים וסנכרון בין מערכות —
-          כדי שהמידע יהיה נגיש בדיוק כשצריך אותו.
-        </p>
-      </article>
-
-      <article class="card card--hover reveal" data-delay="2">
-        <span class="service__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/>
-          </svg>
-        </span>
-        <h3 class="card__title">אוטומציה ואינטגרציות</h3>
-        <p class="card__text">
-          חיבור בין מערכות קיימות, Webhooks ו-APIs, וצמצום העבודה הידנית
-          שחוזרת על עצמה שוב ושוב.
-        </p>
-      </article>
-
-      <article class="card card--hover reveal" data-delay="3">
-        <span class="service__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 21h18"/>
-            <rect x="5" y="11" width="3.5" height="7" rx="1"/>
-            <rect x="10.25" y="6" width="3.5" height="12" rx="1"/>
-            <rect x="15.5" y="14" width="3.5" height="4" rx="1"/>
-          </svg>
-        </span>
-        <h3 class="card__title">BI ודשבורדים</h3>
-        <p class="card__text">
-          תמונת מצב עסקית אחת עם המדדים והדוחות שחשובים לך —
-          במקום לחפש מספרים בעשר מערכות.
-        </p>
-      </article>
 
     </div>
   </div>
 </section>
 
 <!-- ==========================================================================
-     שלושת המסלולים (§11)
+     פתרונות — שלוש דרכים לעבוד יחד
      ========================================================================== -->
-<section class="section section--soft" id="tracks">
+<section class="section section--soft" id="solutions">
   <div class="container">
 
     <div class="section-head section-head--center reveal">
-      <span class="eyebrow">המסלולים</span>
-      <h2>שלוש דרכים לעבוד יחד.</h2>
-      <p class="lead">כל אחד מגיע ממקום אחר. בחרו את מה שהכי מתאר אתכם.</p>
+      <span class="eyebrow">פתרונות</span>
+      <h2>אז מה אני מציעה?</h2>
+      <p class="lead">
+        אני באמת מאמינה שאין דרך אחת נכונה לנהל עסק.
+        לכל עסק יש צרכים אחרים, לכל אדם יש דרך עבודה אחרת —
+        ולכן גם הדרך שבה עובדים איתי יכולה להיראות אחרת.
+      </p>
     </div>
 
     <div class="tracks">
 
       <article class="card card--hover track reveal">
+        <span class="service__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/>
+          </svg>
+        </span>
         <span class="card__num">01</span>
-        <h3 class="card__title">בונים יחד</h3>
-        <p class="track__for">לבעלי עסקים טכנולוגיים</p>
-        <p class="track__quote">אתה רוצה לבנות בעצמך. אני עוזרת לך לבנות נכון.</p>
-        <ul class="tick-list">
-          <li>אפיון ותכנון</li><li>Database</li>
-          <li>AI / Vibe Coding</li><li>ביקורת</li><li>ליווי</li>
-        </ul>
+        <h3 class="card__title">בונים ביחד</h3>
+        <p class="track__for">אתה בונה, אני מכוונת.</p>
+        <p class="card__text">
+          למי שמאוד טכנולוגי ורוצה לבנות את המערכת בעצמו, אבל צריך מישהי מקצועית
+          שתעשה סדר, תחשוב איתו, תכוון ותעזור לקבל את ההחלטות הנכונות בדרך.
+        </p>
         <div class="track__cta">
           <a class="link-arrow" href="#contact">
             לפרטים על המסלול
@@ -297,28 +239,43 @@
 
       <article class="card card--hover track track--featured reveal" data-delay="1">
         <span class="track__badge">המסלול המרכזי</span>
+        <span class="service__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+          </svg>
+        </span>
         <span class="card__num">02</span>
-        <h3 class="card__title">העסק שלך, מסודר</h3>
-        <p class="track__for">לבעלי עסקים שרוצים להפסיק להחזיק הכול בראש</p>
-        <p class="track__quote">אני לוקחת את הבלגן העסקי, הופכת אותו לתהליך ברור ובונה את המערכת שתעשה לך סדר.</p>
-        <ul class="tick-list">
-          <li>אפיון ותכנון</li><li>פיתוח</li><li>דאטה</li>
-          <li>אוטומציה ואינטגרציות</li><li>הטמעה, הדרכה וליווי</li>
-        </ul>
+        <h3 class="card__title">סדר בעסק</h3>
+        <p class="track__for">אני בונה. העסק שלך מתנהל.</p>
+        <p class="card__text">
+          מערכת שמותאמת בדיוק לעסק שלך — נעימה, פשוטה ונוחה לעבודה,
+          עם כל הנתונים במקום אחד.
+          המטרה היא לא עוד מערכת שצריך ללמוד לעבוד איתה, אלא מערכת שתלווה את העסק
+          לאורך זמן ותעשה לך סדר, שליטה ושקט.
+        </p>
         <div class="track__cta">
           <a class="btn btn--primary btn--block" href="#contact">בואו נעשה סדר</a>
         </div>
       </article>
 
       <article class="card card--hover track reveal" data-delay="2">
+        <span class="service__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="5" rx="8" ry="3"/>
+            <path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/>
+            <path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/>
+          </svg>
+        </span>
         <span class="card__num">03</span>
-        <h3 class="card__title">דאטה שבנוי נכון</h3>
-        <p class="track__for">לאנשי אוטומציה, פיתוח ו־Vibe Coding</p>
-        <p class="track__quote">המערכת נראית טוב. אבל מה קורה מתחת?</p>
-        <ul class="tick-list">
-          <li>Database ומבנה נתונים</li><li>ארכיטקטורה</li>
-          <li>תכנון מערכת</li><li>ביקורת</li><li>AI / Vibe Coding</li>
-        </ul>
+        <h3 class="card__title">סדר בדאטה</h3>
+        <p class="track__for">ייעוץ למי שבונה מערכות.</p>
+        <p class="card__text">
+          למפתחי מערכות, אנשי אוטומציה ובוני מערכות שרוצים לקבל החלטות נכונות יותר
+          בכל מה שקשור לדאטה ולדאטה בייסים.
+          אפיון נכון, בחירת בסיס נתונים, מבנה מידע, תכנון נכון של המערכת וחשיבה קדימה —
+          כדי לבנות מערכת טובה שלא תיצור כאב ראש בהמשך.
+        </p>
         <div class="track__cta">
           <a class="link-arrow" href="#contact">
             לקביעת ייעוץ
@@ -332,105 +289,16 @@
 </section>
 
 <!-- ==========================================================================
-     למה לא פשוט לבנות לבד (§12)
-     ========================================================================== -->
-<section class="section" id="diy">
-  <div class="container">
-    <div class="diy__body">
-
-      <div class="reveal">
-        <span class="eyebrow">שאלה הוגנת</span>
-        <h2>היום באמת אפשר לבנות מערכת לבד.</h2>
-        <p class="lead">
-          AI ו־Vibe Coding הפכו את בניית המערכות לנגישה מאי פעם — אפשר לבנות מערכת
-          שנראית מצוין ואפילו עולה לאוויר, בלי צוות פיתוח שלם.
-        </p>
-        <hr class="rule">
-        <p class="statement" style="margin-top:var(--sp-5)">
-          אבל מערכת טובה היא הרבה יותר ממה שרואים על המסך.
-        </p>
-      </div>
-
-      <div class="reveal" data-delay="1">
-        <div class="diy__panel">
-          <p class="diy__panel-title">מה שנמצא מתחת לפני השטח</p>
-          <div class="diy__items">
-            <span class="diy__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg>אפיון נכון</span>
-            <span class="diy__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg>מבנה דאטה נכון</span>
-            <span class="diy__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg>תהליכים נכונים</span>
-            <span class="diy__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg>קשרים בין הנתונים</span>
-            <span class="diy__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg>חשיבה על צמיחה</span>
-            <span class="diy__item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"/></svg>אינטגרציות והרשאות</span>
-          </div>
-        </div>
-
-        <div class="diy__close">
-          <p>אני לא באה לקחת ממך את האפשרות לבנות לבד.</p>
-          <p><strong>אני באה לוודא שמה שאתה בונה — באמת בנוי נכון.</strong></p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ==========================================================================
-     איך עובדים יחד (§14)
-     ========================================================================== -->
-<section class="section" id="process">
-  <div class="container">
-
-    <div class="section-head reveal">
-      <span class="eyebrow">התהליך</span>
-      <h2>מסדרים את העסק. שלב אחרי שלב.</h2>
-    </div>
-
-    <ol class="process">
-      <li class="step reveal">
-        <span class="step__num">01</span>
-        <h3 class="step__title">אפיון</h3>
-        <p class="step__text">מבינים את העסק, התהליכים, הבעיות והצרכים.</p>
-      </li>
-      <li class="step reveal" data-delay="1">
-        <span class="step__num">02</span>
-        <h3 class="step__title">תכנון</h3>
-        <p class="step__text">מתכננים את המערכת, הדאטה והטכנולוגיה המתאימה.</p>
-      </li>
-      <li class="step reveal" data-delay="2">
-        <span class="step__num">03</span>
-        <h3 class="step__title">פיתוח</h3>
-        <p class="step__text">בונים את הפתרון בכלים המתאימים — כולל AI כשזה נכון.</p>
-      </li>
-      <li class="step reveal" data-delay="3">
-        <span class="step__num">04</span>
-        <h3 class="step__title">הטמעה</h3>
-        <p class="step__text">מעבירים את המערכת לעבודה אמיתית בעסק.</p>
-      </li>
-      <li class="step reveal" data-delay="4">
-        <span class="step__num">05</span>
-        <h3 class="step__title">הדרכה וליווי</h3>
-        <p class="step__text">דואגים שתדע להשתמש במערכת ושהיא באמת תשרת אותך.</p>
-      </li>
-    </ol>
-
-    <div class="process__note reveal">
-      <p class="statement">ואני לא נעלמת אחרי שהמערכת עולה לאוויר. <span class="text-accent">אני כאן לאורך הדרך.</span></p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ==========================================================================
      פרויקטים (§16)
      ⚠️ תוכן זמני — יש להחליף בפרויקטים אמיתיים + צילומי מסך.
         הוראות: assets/projects/README.md
      ========================================================================== -->
-<section class="section section--soft" id="work">
+<section class="section" id="work">
   <div class="container">
 
     <div class="section-head reveal">
       <span class="eyebrow">פרויקטים</span>
-      <h2>מה זה נראה בפועל.</h2>
+      <h2>פרויקטים לדוגמה.</h2>
       <p class="lead">כמה מערכות שבניתי — מה היה מסובך, מה נבנה, ומה הפך לפשוט יותר.</p>
     </div>
 
@@ -500,90 +368,41 @@
         </div>
       </article>
 
+      <!-- ===== פרויקט 3 ===== -->
+      <article class="card project reveal" data-delay="2">
+        <div class="project__media">
+          <div class="project__placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>
+            </svg>
+            <span>מקום לצילום מסך</span>
+            <code>assets/projects/project-3.png</code>
+          </div>
+        </div>
+        <div class="project__body">
+          <span class="project__type">[סוג המערכת]</span>
+          <h3 class="card__title">[שם הפרויקט]</h3>
+          <div class="project__rows">
+            <div>
+              <p class="project__row-label">האתגר</p>
+              <p class="project__row-text">[מה היה מסורבל או מבולגן לפני.]</p>
+            </div>
+            <div>
+              <p class="project__row-label">הפתרון</p>
+              <p class="project__row-text">[מה נבנה, חובר או שופר.]</p>
+            </div>
+            <div>
+              <p class="project__row-label">התוצאה</p>
+              <p class="project__row-text">[מה הפך להיות פשוט יותר.]</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
     </div>
 
     <p class="projects__note">להוספת פרויקט: שכפלו בלוק <code>&lt;article class="card project"&gt;</code> ועדכנו טקסט ותמונה.</p>
 
-  </div>
-</section>
-
-<!-- ==========================================================================
-     המלצה (§17)
-     ⚠️ placeholder — יש להחליף בהמלצה אמיתית אחת בלבד. אין להמציא.
-     ========================================================================== -->
-<section class="section" id="testimonial">
-  <div class="container">
-    <div class="testimonial reveal">
-
-      <span class="placeholder-tag">תוכן זמני — להחליף בהמלצה אמיתית</span>
-
-      <svg class="testimonial__quote-mark" viewBox="0 0 34 24" fill="currentColor" aria-hidden="true">
-        <path d="M0 24V13.2C0 5.9 4.2 1 11.6 0l1.2 3.6c-3.6 1.1-5.7 3.6-5.7 7h5.7V24H0Zm20.4 0V13.2C20.4 5.9 24.6 1 32 0l1.2 3.6c-3.6 1.1-5.7 3.6-5.7 7h5.7V24H20.4Z"/>
-      </svg>
-
-      <p class="testimonial__text">
-        [כאן תיכנס ההמלצה האמיתית. כדאי שתדבר על: סדר, מקצועיות, הבנה של הצרכים,
-        מערכת שעובדת, זמינות ותחושת ביטחון.]
-      </p>
-
-      <p class="testimonial__author">
-        <b>[שם הלקוח/ה]</b>
-        [תפקיד, שם העסק]
-      </p>
-
-    </div>
-  </div>
-</section>
-
-<!-- ==========================================================================
-     עליי (§28)
-     ========================================================================== -->
-<section class="section" id="about">
-  <div class="container">
-    <div class="about">
-
-      <div class="about__portrait reveal">
-        <!-- החליפו ב:
-             <img src="assets/rachel.jpg" alt="רחל ברונר" loading="lazy" width="760" height="950"> -->
-        <div class="project__placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="8.5" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/>
-          </svg>
-          <span>מקום לתמונת פורטרט</span>
-          <code>assets/rachel.jpg</code>
-        </div>
-      </div>
-
-      <div class="about__text reveal" data-delay="1">
-        <span class="eyebrow">עליי</span>
-        <h2>אין מי שעושה סדר בין כל החלקים.</h2>
-        <hr class="rule">
-        <div style="margin-top:var(--sp-6)">
-          <p>אני רחל ברונר, מפתחת Full Stack ומומחית דאטה ומערכות.</p>
-          <p>
-            אחרי שנים של עבודה עם מערכות מורכבות, APIs, בסיסי נתונים, אוטומציות ותהליכי Data,
-            הבנתי שהבעיה של הרבה עסקים היא לא מחסור בטכנולוגיה.
-          </p>
-          <p><strong>הבעיה היא שאין מי שעושה סדר בין כל החלקים.</strong></p>
-          <p>
-            לכן אני עוזרת לעסקים לבנות מערכות ותשתיות שמותאמות באמת לאופן שבו הם עובדים —
-            כדי שהטכנולוגיה תשרת את העסק ולא תוסיף לו עוד כאב ראש.
-          </p>
-        </div>
-        <!-- עקרונות העבודה (§15) — 3 העקרונות שאינם נאמרים במקום אחר בדף -->
-        <ul class="creed">
-          <li><b>קודם העסק. אחר כך הטכנולוגיה.</b> לא בוחרים כלי רק כי הוא חדש.</li>
-          <li><b>לא בונים סתם.</b> אם אפשר לפתור פשוט וזול יותר — זה מה שנעשה.</li>
-          <li><b>AI הוא כלי, לא תחליף לחשיבה.</b> משתמשים בו כשהוא נותן ערך אמיתי.</li>
-        </ul>
-
-        <p class="about__signature">
-          <b>רחל ברונר</b>
-          <span>מומחית דאטה ומערכות לעסקים</span>
-        </p>
-      </div>
-
-    </div>
   </div>
 </section>
 
@@ -714,11 +533,11 @@
       <div>
         <p class="footer__title">ניווט</p>
         <ul class="footer__list">
-          <li><a href="#help">איך אני יכולה לעזור</a></li>
-          <li><a href="#tracks">המסלולים</a></li>
-          <li><a href="#process">איך עובדים</a></li>
+          <li><a href="#top">בית</a></li>
+          <li><a href="#about">קצת עלי</a></li>
+          <li><a href="#solutions">פתרונות</a></li>
           <li><a href="#work">פרויקטים</a></li>
-          <li><a href="#about">עליי</a></li>
+          <li><a href="#contact">צור קשר</a></li>
         </ul>
       </div>
 
