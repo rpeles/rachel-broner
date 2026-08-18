@@ -164,8 +164,13 @@
     lightboxCap.textContent = trigger.getAttribute('data-caption') || '';
     lightbox.classList.add('is-open');
     document.body.classList.add('is-locked');
-    // האלמנט עדיין visibility:hidden ברגע הוספת המחלקה — פוקוס מיידי נכשל בשקט
-    requestAnimationFrame(function () { lightboxX.focus(); });
+    // אלמנט שזה עתה יצא מ-visibility:hidden אינו בר-מיקוד עד שמחושבת לו פריסה.
+    // קריאת offsetHeight מאלצת reflow סינכרוני; ה-timeout הוא רשת ביטחון.
+    void lightbox.offsetHeight;
+    lightboxX.focus();
+    if (document.activeElement !== lightboxX) {
+      setTimeout(function () { lightboxX.focus(); }, 50);
+    }
   }
 
   function closeLightbox() {
