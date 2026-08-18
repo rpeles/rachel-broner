@@ -153,16 +153,15 @@
    פרויקטים
    ========================================================================== */
 
+/* שתי עמודות ולא שלוש — בשלוש, צילום מסך של 1920px מוצג ב-330px ואי אפשר לקרוא בו כלום */
 .projects { display: grid; gap: var(--sp-5); margin-top: var(--sp-7); }
-@media (min-width: 700px)  { .projects { grid-template-columns: repeat(2, 1fr); } }
-/* 3 כרטיסים — שורה אחת בדסקטופ רחב */
-@media (min-width: 1040px) { .projects { grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); } }
+@media (min-width: 860px) { .projects { grid-template-columns: repeat(2, 1fr); } }
 
 .project { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
 
 .project__media {
   position: relative;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   background: var(--c-bg-soft);
   border-bottom: 1px solid var(--c-line);
   overflow: hidden;
