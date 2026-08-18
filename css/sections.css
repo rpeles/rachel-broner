@@ -153,20 +153,57 @@
    פרויקטים
    ========================================================================== */
 
-/* שתי עמודות ולא שלוש — בשלוש, צילום מסך של 1920px מוצג ב-330px ואי אפשר לקרוא בו כלום */
-.projects { display: grid; gap: var(--sp-5); margin-top: var(--sp-7); }
-@media (min-width: 860px) { .projects { grid-template-columns: repeat(2, 1fr); } }
+/* שלושה פרויקטים בשורה. הצילום קטן מכדי לקרוא בו —
+   לכן לחיצה עליו פותחת אותו בגודל מלא (ראו .lightbox). */
+.projects { display: grid; gap: var(--sp-4); margin-top: var(--sp-7); }
+@media (min-width: 700px)  { .projects { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .projects { grid-template-columns: repeat(3, 1fr); } }
 
 .project { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
 
 .project__media {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2 / 1;   /* היחס הטבעי של הצילום — בלי חיתוך */
   background: var(--c-bg-soft);
   border-bottom: 1px solid var(--c-line);
   overflow: hidden;
 }
 .project__media img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+
+/* מדיה שניתן ללחוץ עליה כדי להגדיל */
+button.project__media {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--c-line);
+  cursor: zoom-in;
+  font: inherit;
+}
+.project__zoom-hint {
+  position: absolute;
+  inset-block-end: 10px;
+  inset-inline-start: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(13, 13, 13, .78);
+  color: #fff;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.project__zoom-hint svg { width: 14px; height: 14px; }
+button.project__media:hover .project__zoom-hint,
+button.project__media:focus-visible .project__zoom-hint { opacity: 1; transform: none; }
+/* במגע אין hover — התווית מוצגת תמיד */
+@media (hover: none) {
+  .project__zoom-hint { opacity: 1; transform: none; }
+}
 
 /* מצב placeholder — עד שיתקבלו צילומי מסך */
 .project__placeholder {
@@ -206,8 +243,8 @@
   font-weight: 600;
   color: var(--c-accent);
 }
+/* תווית וטקסט באותה שורה — כרטיס צר, חוסך 3 שורות */
 .project__rows { margin-top: var(--sp-4); display: grid; gap: var(--sp-3); }
-/* תווית וטקסט באותה שורה — חוסך 3 שורות לכל כרטיס פרויקט */
 .project__rows > div { font-size: var(--fs-sm); line-height: 1.6; }
 .project__row-label {
   display: inline;

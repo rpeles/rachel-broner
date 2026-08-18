@@ -70,7 +70,9 @@
   });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') setMenu(false);
+    if (e.key !== 'Escape') return;
+    setMenu(false);
+    if (typeof closeLightbox === 'function') closeLightbox();
   });
 
   /* ======================================================================
@@ -144,6 +146,50 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', updateStickyCta);
   onScroll();
+
+  /* ======================================================================
+     Lightbox — הגדלת צילומי מסך של פרויקטים
+     ====================================================================== */
+  var lightbox    = $('#lightbox');
+  var lightboxImg = $('#lightboxImg');
+  var lightboxCap = $('#lightboxCaption');
+  var lightboxX   = $('#lightboxClose');
+  var lastFocused = null;
+
+  function openLightbox(trigger) {
+    if (!lightbox) return;
+    lastFocused = trigger;
+    lightboxImg.src = trigger.getAttribute('data-zoom');
+    lightboxImg.alt = trigger.querySelector('img') ? trigger.querySelector('img').alt : '';
+    lightboxCap.textContent = trigger.getAttribute('data-caption') || '';
+    lightbox.classList.add('is-open');
+    document.body.classList.add('is-locked');
+    // האלמנט עדיין visibility:hidden ברגע הוספת המחלקה — פוקוס מיידי נכשל בשקט
+    requestAnimationFrame(function () { lightboxX.focus(); });
+  }
+
+  function closeLightbox() {
+    if (!lightbox || !lightbox.classList.contains('is-open')) return;
+    lightbox.classList.remove('is-open');
+    document.body.classList.remove('is-locked');
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+    // משחררים את התמונה רק אחרי אנימציית היציאה
+    setTimeout(function () {
+      if (!lightbox.classList.contains('is-open')) lightboxImg.src = '';
+    }, 300);
+  }
+
+  $$('[data-zoom]').forEach(function (btn) {
+    btn.addEventListener('click', function () { openLightbox(btn); });
+  });
+
+  if (lightbox) {
+    lightboxX.addEventListener('click', closeLightbox);
+    // לחיצה על הרקע סוגרת; לחיצה על התמונה עצמה לא
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+  }
 
   /* ======================================================================
      טופס

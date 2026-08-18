@@ -289,11 +289,20 @@
 
       <!-- ===== פרויקט 1 — ועד בית (נתונים בצילום הם נתוני דמה) ===== -->
       <article class="card project reveal">
-        <div class="project__media">
+        <button class="project__media" type="button"
+                data-zoom="assets/projects/project-1.png"
+                data-caption="מערכת ניהול ועד בית — לוח בקרה (הנתונים בצילום הם נתוני דמה)"
+                aria-label="הגדלת צילום המסך: לוח הבקרה של מערכת ועד הבית">
           <img src="assets/projects/project-1.png"
                alt="לוח הבקרה של מערכת ועד הבית: יתרת קופה, גבייה חודשית, חובות פתוחים וטבלת דירות בחוב"
-               loading="lazy" width="1920" height="1080">
-        </div>
+               loading="lazy" width="1832" height="912">
+          <span class="project__zoom-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v6M8 11h6"/>
+            </svg>
+            להגדלה
+          </span>
+        </button>
         <div class="project__body">
           <span class="project__type">מערכת ניהול ועד בית</span>
           <h3 class="card__title">ועד בית, בלי כאב ראש</h3>
@@ -545,6 +554,17 @@
       <path d="M21 11.5a8.4 8.4 0 0 1-12.9 7.1L3 20.5l1.9-5A8.4 8.4 0 1 1 21 11.5Z"/>
     </svg>
   </a>
+</div>
+
+<!-- הגדלת צילומי מסך -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="תצוגה מוגדלת של צילום מסך">
+  <button class="lightbox__close" id="lightboxClose" type="button" aria-label="סגירה">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <path d="M18 6 6 18M6 6l12 12"/>
+    </svg>
+  </button>
+  <img class="lightbox__img" id="lightboxImg" src="" alt="">
+  <p class="lightbox__caption" id="lightboxCaption"></p>
 </div>
 
 <script src="js/config.js"></script>
