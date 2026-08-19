@@ -231,6 +231,17 @@ button.project__media:focus-visible .project__zoom-hint { opacity: 1; transform:
   direction: ltr;
 }
 
+/* תווית "בעבודה" — פרויקט שעדיין רץ, לפני שיש מה להראות */
+.project__wip {
+  padding: 5px 14px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--c-ink-2);
+}
+
 .project__body { padding: var(--sp-5); flex: 1; }
 .project__type {
   display: inline-block;
