@@ -1,280 +1,1329 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מערכת CRM - פיננסים ואוטומציות</title>
-    <style>
-        :root {
-            --bg-color: #f4f6f9;
-            --primary: #1e293b;
-            --accent: #2563eb;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --card-bg: #ffffff;
-            --text-main: #334155;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מערכת CRM — משרד פיננסי (דמו)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ==========================================================================
+     דמו CRM למשרד פיננסי — רץ כולו בדפדפן.
+     אין שרת ואין API: הנתונים נשמרים ב-localStorage (עם נפילה חיננית
+     לזיכרון אם האחסון חסום), כך שהמצב נשמר בין פתיחות של הדמו.
+     שפת העיצוב נגזרת מדף הנחיתה: Heebo, פינות רכות, צללים עדינים.
+     ========================================================================== */
+  :root {
+    --navy:        #16305c;   /* צבע המערכת */
+    --navy-2:      #1e4179;
+    --navy-dark:   #0f2244;
+    --bg:          #f3f5f9;   /* רקע העמוד */
+    --card:        #ffffff;
+    --line:        #e9ebf1;
+    --line-2:      #dde1ea;
+    --head:        #f7f8fb;   /* כותרת טבלה */
+    --row-hover:   #f6f8fd;
+    --row-sel:     #ecf2ff;
+    --ink:         #1d2434;
+    --ink-2:       #4b5566;
+    --muted:       #858da0;
+    --gold:        #b3902f;
+    --green:       #0f9d6b;
+    --red:         #d2453d;
+    --amber:       #c98a12;
+    --blue:        #2563eb;
+    --r:           12px;
+    --r-sm:        9px;
+    --sh-sm:       0 1px 2px rgba(19, 28, 51, .05);
+    --sh:          0 1px 2px rgba(19, 28, 51, .05), 0 10px 24px rgba(19, 28, 51, .05);
+    --sh-lg:       0 24px 60px rgba(12, 20, 40, .28);
+  }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
+  html, body {
+    height: 100%;
+    font-family: "Heebo", "Assistant", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { display: flex; flex-direction: column; overflow: hidden; }
 
-        /* Sidebar */
-        aside {
-            width: 250px;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem 1rem;
-        }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  ::selection { background: #d7e3fb; }
 
-        aside .logo {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-            color: #60a5fa;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+  /* פסי גלילה עדינים */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: #d5dae4; border-radius: 8px; border: 3px solid transparent; background-clip: content-box; }
+  ::-webkit-scrollbar-thumb:hover { background: #c2c9d6; background-clip: content-box; }
 
-        aside nav ul {
-            list-style: none;
-        }
+  /* ===== סרגל עליון ===== */
+  .topbar {
+    flex: 0 0 auto;
+    background: linear-gradient(270deg, var(--navy-dark), var(--navy-2));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 12px 24px;
+    box-shadow: inset 0 -2px 0 rgba(184, 148, 62, .5), 0 2px 12px rgba(15, 34, 68, .18);
+  }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand__mark {
+    width: 46px; height: 46px;
+    border-radius: 10px;
+    background: linear-gradient(160deg, rgba(255,255,255,.14), rgba(255,255,255,.03));
+    border: 1px solid rgba(216, 192, 127, .55);
+    display: grid; place-items: center;
+  }
+  .brand__mark svg { width: 26px; height: 26px; }
+  .brand__name { line-height: 1.25; text-align: left; }
+  .brand__name b { display: block; font-size: 13px; font-weight: 700; letter-spacing: .16em; color: #e2cd94; }
+  .brand__name span { font-size: 9.5px; letter-spacing: .24em; color: #93a6c2; }
 
-        aside nav li {
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-            color: #cbd5e1;
-        }
+  /* ב-RTL הניווט ראשון (ימין), והברכה + הלוגו נדחפים לקצה השמאלי */
+  .greet { font-size: 20px; font-weight: 600; margin-inline-start: auto; letter-spacing: -.01em; }
 
-        aside nav li.active, aside nav li:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
+  .tabs { display: flex; gap: 6px; }
+  .tab {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #c3d1e5;
+    padding: 9px 15px;
+    border-radius: 9px;
+    font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+    transition: background .18s ease, color .18s ease;
+  }
+  .tab:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .tab.is-active {
+    background: rgba(255,255,255,.14); color: #fff;
+    border-color: rgba(255,255,255,.2);
+    box-shadow: 0 1px 0 rgba(255,255,255,.12) inset;
+  }
 
-        /* Main Content */
-        main {
-            flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
-        }
+  /* ===== אזור התוכן ===== */
+  .view { flex: 1 1 auto; overflow: auto; padding: 18px 22px; display: flex; flex-direction: column; }
+  .view.is-hidden { display: none; }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
+  /* שלוש עמודות שנמתחות לגובה החלון — תחושה של מערכת, לא של מסמך */
+  .grid {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1.18fr) 212px;
+    gap: 16px;
+    align-items: stretch;
+    min-height: 0;
+  }
+  .grid > section, .grid > aside { display: flex; flex-direction: column; min-height: 0; }
+  .panel--fill { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
+  .table-wrap { flex: 1 1 auto; overflow: auto; min-height: 0; }
+  .table-wrap thead th { position: sticky; top: 0; z-index: 1; }
 
-        .btn-primary {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-        }
+  /* ===== כרטיסים ===== */
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    box-shadow: var(--sh);
+    overflow: hidden;
+  }
+  .panel__head {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .panel__title { font-size: 15px; font-weight: 700; white-space: nowrap; letter-spacing: -.01em; }
+  .panel__sub { font-size: 12px; color: var(--muted); font-weight: 400; }
 
-        /* Dashboard Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
+  /* ===== כרטיסי מדדים ===== */
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .kpi {
+    display: flex; align-items: center; gap: 11px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    box-shadow: var(--sh-sm);
+    padding: 13px 15px;
+    text-align: start;
+    overflow: hidden;   /* רשת ביטחון: טקסט ארוך לא יגלוש מחוץ לכרטיס */
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .kpi:hover { transform: translateY(-2px); box-shadow: var(--sh); }
+  .kpi__icon {
+    flex: 0 0 auto; width: 36px; height: 36px; border-radius: 10px;
+    display: grid; place-items: center;
+  }
+  .kpi__icon svg { width: 18px; height: 18px; }
+  .kpi__meta { min-width: 0; }   /* מאפשר ללייבל להתקצר במקום לדחוף את הכרטיס */
+  .kpi__label {
+    display: block; font-size: 12px; color: var(--muted); font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .kpi__value { display: block; font-size: 24px; font-weight: 700; line-height: 1.25; letter-spacing: -.02em; }
 
-        .card {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
+  .kpi--regular .kpi__icon { background: #faf3de; color: var(--gold); }
+  .kpi--regular .kpi__value { color: var(--gold); }
+  .kpi--regular.is-on { border-color: #e3cd8f; box-shadow: 0 0 0 3px rgba(179,144,47,.12); }
+  .kpi--active  .kpi__icon { background: #e9effa; color: var(--navy); }
+  .kpi--active  .kpi__value { color: var(--navy); }
+  .kpi--active.is-on { border-color: #b6c6e4; box-shadow: 0 0 0 3px rgba(22,48,92,.1); }
+  .kpi--new     .kpi__icon { background: #e2f6ee; color: var(--green); }
+  .kpi--new     .kpi__value { color: var(--green); }
+  .kpi--new.is-on { border-color: #a5dcc7; box-shadow: 0 0 0 3px rgba(15,157,107,.12); }
+  .kpi--off     .kpi__icon { background: #fceceb; color: var(--red); }
+  .kpi--off     .kpi__value { color: var(--red); }
+  .kpi--off.is-on { border-color: #eeb9b5; box-shadow: 0 0 0 3px rgba(210,69,61,.12); }
 
-        .card-title {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
+  /* ===== כפתורים ===== */
+  .btn {
+    background: var(--navy); color: #fff;
+    border: 1px solid var(--navy);
+    border-radius: 10px;
+    padding: 11px 18px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(22,48,92,.2), 0 6px 16px rgba(22,48,92,.16);
+    transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:hover { background: var(--navy-dark); transform: translateY(-1px); }
+  .btn:active { transform: none; }
+  .btn--ghost {
+    background: #fff; color: var(--navy); border-color: var(--line-2);
+    box-shadow: var(--sh-sm);
+  }
+  .btn--ghost:hover { background: #f5f7fc; }
+  .btn--danger { background: #fff; color: var(--red); border-color: #f0cbc8; box-shadow: var(--sh-sm); }
+  .btn--danger:hover { background: #fdf3f2; }
+  .btn--sm { padding: 8px 14px; font-size: 13px; border-radius: 9px; }
 
-        .card-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+  /* ===== חיפוש וסינון ===== */
+  .filters { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .filters .panel__title { margin-inline-end: auto; }
+  .filters .btn { flex: 0 0 auto; }
+  .field {
+    display: flex; align-items: center; gap: 8px;
+    background: #fff;
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-sm);
+    padding: 8px 11px;
+    min-width: 0;
+    flex: 1 1 140px;
+    max-width: 240px;
+    font-size: 13px;
+    transition: border-color .18s ease, box-shadow .18s ease;
+  }
+  .field input { border: 0; outline: 0; width: 100%; background: none; }
+  .field input::placeholder { color: #9aa2b3; }
+  .field:focus-within { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(22,48,92,.09); }
+  .field svg { width: 15px; height: 15px; color: var(--muted); flex: 0 0 auto; }
+  select.field { flex: 0 1 158px; appearance: auto; color: var(--ink-2); }
 
-        /* Content Grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 1.5rem;
-        }
+  /* ===== טבלאות ===== */
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  th, td { text-align: right; padding: 12px 11px; font-size: 13px; }
+  td { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-2); }
+  td b { color: var(--ink); font-weight: 600; }
+  thead th {
+    background: var(--head);
+    font-weight: 600; font-size: 11.5px; letter-spacing: .01em;
+    color: var(--muted);
+    white-space: nowrap; cursor: pointer; user-select: none;
+    overflow: hidden; text-overflow: ellipsis;   /* כותרת ארוכה נחתכת יפה במקום לגלוש */
+    border-bottom: 1px solid var(--line);
+    transition: color .15s ease;
+  }
+  thead th[data-sort]:hover { color: var(--navy); }
+  thead th:not([data-sort]) { cursor: default; }
+  tbody tr { border-bottom: 1px solid #f2f4f8; transition: background .15s ease; }
+  tbody tr:last-child { border-bottom: 0; }
+  .tbl--clients tbody tr { cursor: pointer; }
+  .tbl--clients tbody tr:hover { background: var(--row-hover); }
+  .tbl--clients tbody tr.is-sel { background: var(--row-sel); box-shadow: inset 3px 0 0 var(--navy); }
+  td.num, th.num { direction: ltr; text-align: right; }
+  .empty { text-align: center; color: var(--muted); padding: 30px 12px; }
+  .sort-ind { font-size: 9px; color: var(--navy); }
 
-        /* Tables */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: right;
-        }
+  /* רוחבי עמודות קבועים — כדי שהטבלאות לא "ירקדו" עם הנתונים */
+  .tbl--clients col.c-num    { width: 13%; }
+  .tbl--clients col.c-name   { width: 31%; }
+  .tbl--clients col.c-phone  { width: 19%; }
+  .tbl--clients col.c-status { width: 15%; }
+  .tbl--clients col.c-folder { width: 22%; }
 
-        th, td {
-            padding: 0.75rem;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.9rem;
-        }
+  .tbl--tasks th, .tbl--tasks td { padding: 11px 10px; font-size: 12.5px; }
+  .tbl--tasks thead th { overflow: hidden; text-overflow: ellipsis; font-size: 11px; }
+  .tbl--tasks col.t-title  { width: 25%; }
+  .tbl--tasks col.t-client { width: 18%; }
+  .tbl--tasks col.t-status { width: 14%; }
+  .tbl--tasks col.t-period { width: 17%; }
+  .tbl--tasks col.t-paid   { width: 14%; }
+  .tbl--tasks col.t-price  { width: 12%; }
 
-        th {
-            color: var(--text-muted);
-            font-weight: 600;
-        }
+  .link { color: var(--blue); text-decoration: none; font-weight: 500; }
+  .link:hover { text-decoration: underline; }
 
-        .badge {
-            padding: 0.25rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
+  .pill {
+    display: inline-block; padding: 3px 11px; border-radius: 999px;
+    font-size: 11.5px; font-weight: 600; white-space: nowrap;
+  }
+  .pill--regular { background: #faf3de; color: #8a6f14; }
+  .pill--active  { background: #e9effa; color: #24447c; }
+  .pill--new     { background: #e2f6ee; color: #0c6a4e; }
+  .pill--off     { background: #f2f3f6; color: #6b7385; }
+  .pill--open    { background: #e9effa; color: #24447c; }
+  .pill--doing   { background: #fdf1d9; color: #8c6212; }
+  .pill--done    { background: #e2f6ee; color: #0f6b4c; }
 
-        .badge-success { background: #d1fae5; color: #065f46; }
-        .badge-warning { background: #fef3c7; color: #92400e; }
+  .paid   { color: var(--green); font-weight: 600; }
+  .unpaid { color: var(--red);   font-weight: 600; }
+  .paid:hover, .unpaid:hover { text-decoration: underline; }
 
-        /* Automation Feed */
-        .feed-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.85rem;
-        }
+  /* ===== פיד האוטומציות ===== */
+  .feed { flex: 1 1 auto; padding: 6px 18px 12px; overflow: auto; min-height: 0; }
+  .feed__item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 2px; font-size: 12.5px;
+    border-bottom: 1px solid #f4f5f9;
+  }
+  .feed__item:last-child { border-bottom: 0; }
+  .feed__dot {
+    flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+  }
+  .feed__dot--ok   { background: var(--green); box-shadow: 0 0 0 3px rgba(15,157,107,.13); }
+  .feed__dot--warn { background: var(--amber); box-shadow: 0 0 0 3px rgba(201,138,18,.14); }
+  .feed__text { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-2); }
+  .feed__time { flex: 0 0 auto; color: var(--muted); font-size: 11px; direction: ltr; }
 
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--accent);
-        }
-    </style>
+  /* ===== התראה ===== */
+  .alert {
+    display: flex; align-items: center; gap: 11px;
+    min-height: 68px;   /* מיושר לגובה שורת כרטיסי המדדים שלצידה */
+    background: linear-gradient(270deg, #fdf6e6, #fefaf1);
+    border: 1px solid #eddfba;
+    border-radius: var(--r);
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    font-size: 13.5px;
+    width: 100%;
+    text-align: start;
+    color: #7a6220;
+    box-shadow: var(--sh-sm);
+    transition: background .18s ease;
+  }
+  .alert:hover { background: #fbf1de; }
+  .alert__icon {
+    flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--amber); color: #fff;
+    display: grid; place-items: center; font-size: 13px; font-weight: 700;
+  }
+  .alert.is-hidden { display: none; }
+
+  /* ===== הערות ===== */
+  .notes { display: flex; flex-direction: column; min-height: 320px; }
+  .notes__list { flex: 1 1 auto; overflow: auto; padding: 12px; display: flex; flex-direction: column; gap: 9px; }
+  .note {
+    background: #f8fafd; border: 1px solid var(--line);
+    border-inline-start: 3px solid #c9d6ee;
+    border-radius: var(--r-sm);
+    padding: 11px 12px; font-size: 12.5px; line-height: 1.6;
+    color: var(--ink-2);
+    position: relative;
+  }
+  .note time { display: block; color: var(--muted); font-size: 10.5px; margin-top: 6px; }
+  .note__del {
+    position: absolute; inset-block-start: 7px; inset-inline-start: 8px;
+    background: none; border: 0; color: #b6bdcb; font-size: 15px; line-height: 1;
+  }
+  .note__del:hover { color: var(--red); }
+  .notes__empty { margin: auto; text-align: center; color: var(--muted); padding: 20px; font-size: 12.5px; }
+  .notes__empty b { display: block; color: var(--ink); font-size: 13.5px; margin-bottom: 5px; }
+  .notes__add { border-top: 1px solid var(--line); padding: 12px; display: flex; flex-direction: column; gap: 9px; }
+  .notes__add textarea {
+    resize: none; height: 62px; border: 1px solid var(--line-2);
+    border-radius: var(--r-sm); padding: 9px 10px; outline: 0; font-size: 12.5px;
+    transition: border-color .18s ease, box-shadow .18s ease;
+  }
+  .notes__add textarea:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(22,48,92,.09); }
+
+  /* ===== כרטיס עובד ===== */
+  .emp-grid {
+    flex: 1 1 auto; min-height: 0;
+    display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 18px;
+    align-items: stretch;
+  }
+  .emp-card { padding: 22px; text-align: center; }
+  .emp-avatar {
+    width: 82px; height: 82px; margin: 0 auto 14px; border-radius: 50%;
+    background: linear-gradient(160deg, var(--navy-2), var(--navy-dark));
+    color: #fff; display: grid; place-items: center;
+    font-size: 30px; font-weight: 600;
+    box-shadow: 0 8px 22px rgba(22,48,92,.25);
+  }
+  .emp-card h3 { font-size: 19px; font-weight: 700; }
+  .emp-card p { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .emp-facts { margin-top: 18px; border-top: 1px solid var(--line); }
+  .emp-facts div { display: flex; justify-content: space-between; padding: 10px 2px; font-size: 13px; border-bottom: 1px solid #f4f5f9; }
+  .emp-facts span { color: var(--muted); }
+  .shift {
+    margin-top: 18px; padding: 16px; border-radius: var(--r);
+    background: #f6f9fe; border: 1px solid #e2e9f6;
+  }
+  .shift__clock { font-size: 27px; font-weight: 700; direction: ltr; margin-bottom: 12px; letter-spacing: .02em; }
+  .sum-row { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; padding: 16px 18px; }
+  .sum {
+    background: #f8fafd; border: 1px solid var(--line);
+    border-radius: var(--r-sm); padding: 14px; text-align: center;
+  }
+  .sum b { display: block; font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+  .sum span { font-size: 12px; color: var(--muted); }
+
+  /* ===== סרגל תחתון ===== */
+  .hintbar {
+    flex: 0 0 auto;
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 24px;
+    background: #fff;
+    border-top: 1px solid var(--line);
+    font-size: 12px; color: var(--muted);
+  }
+  .hintbar b { color: var(--ink-2); }
+  .hintbar button { margin-inline-start: auto; }
+
+  /* ===== מודאל ===== */
+  .modal {
+    position: fixed; inset: 0; z-index: 50;
+    background: rgba(13, 22, 42, .55);
+    backdrop-filter: blur(3px);
+    display: grid; place-items: center;
+    padding: 24px;
+    opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility .2s;
+  }
+  .modal.is-open { opacity: 1; visibility: visible; }
+  .modal__box {
+    background: #fff; border-radius: 16px; width: min(580px, 100%);
+    max-height: 100%; overflow: auto;
+    box-shadow: var(--sh-lg);
+    transform: translateY(10px) scale(.99); transition: transform .2s ease;
+  }
+  .modal.is-open .modal__box { transform: none; }
+  .modal__head {
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(270deg, var(--navy-dark), var(--navy-2));
+    color: #fff; padding: 16px 20px;
+  }
+  .modal__head h3 { font-size: 16px; font-weight: 600; }
+  .modal__close { background: none; border: 0; color: #b9c8de; font-size: 22px; line-height: 1; }
+  .modal__close:hover { color: #fff; }
+  .modal__body { padding: 20px; display: grid; gap: 14px; }
+  .modal__body p { line-height: 1.65; }
+  .modal__foot { padding: 14px 20px; border-top: 1px solid var(--line); display: flex; gap: 9px; background: #fbfcfe; }
+  .modal__foot .spacer { margin-inline-start: auto; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  label.f { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
+  .inp {
+    width: 100%; border: 1px solid var(--line-2); border-radius: var(--r-sm);
+    padding: 10px 12px; outline: 0; background: #fff; font-size: 13.5px;
+    transition: border-color .18s ease, box-shadow .18s ease;
+  }
+  .inp:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(22,48,92,.09); }
+  .check { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--ink-2); }
+  .check input { width: 16px; height: 16px; accent-color: var(--navy); }
+
+  /* ===== הודעות צצות ===== */
+  .toasts {
+    position: fixed; inset-block-end: 20px; inset-inline-start: 20px;
+    z-index: 60; display: flex; flex-direction: column; gap: 9px;
+  }
+  .toast {
+    background: #fff; border: 1px solid var(--line);
+    border-inline-start: 4px solid var(--green);
+    border-radius: 10px; padding: 12px 15px; font-size: 12.5px;
+    box-shadow: 0 12px 30px rgba(16,25,40,.16);
+    animation: pop .28s cubic-bezier(.22,.61,.36,1);
+    max-width: 360px;
+  }
+  .toast--info { border-inline-start-color: var(--blue); }
+  .toast--warn { border-inline-start-color: var(--amber); }
+  @keyframes pop { from { opacity: 0; transform: translateY(10px); } }
+
+  /* ===== מסכים צרים ===== */
+  @media (max-width: 1180px) {
+    .grid { grid-template-columns: 1fr; }
+    .emp-grid { grid-template-columns: 1fr; }
+    .sum-row { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .kpis { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .topbar { flex-wrap: wrap; gap: 12px; }
+    .greet { font-size: 17px; }
+    .notes { min-height: 260px; }
+    body { overflow: auto; }
+  }
+</style>
 </head>
 <body>
 
-    <aside>
-        <div class="logo">⚡ FinAuto CRM</div>
-        <nav>
-            <ul>
-                <li class="active">דשבורד ראשי</li>
-                <li>לקוחות ותיקיות</li>
-                <li>משימות וגבייה</li>
-                <li>ספירת שעות</li>
-                <li>הגדרות מערכת</li>
-            </ul>
-        </nav>
+<header class="topbar">
+  <!-- סדר ה-DOM ב-RTL: הניווט בימין, ואחריו הברכה והלוגו נדחפים לקצה השמאלי -->
+  <nav class="tabs">
+    <button class="tab is-active" data-view="home" type="button">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+      דף הבית
+    </button>
+    <button class="tab" data-view="employee" type="button">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+      כרטיס עובד
+    </button>
+  </nav>
+
+  <div class="greet">שלום רחל! 👋</div>
+
+  <div class="brand">
+    <div class="brand__name">
+      <b>ALFA FINANCE</b>
+      <span>CRM SYSTEM</span>
+    </div>
+    <div class="brand__mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#d8c07f" stroke-width="1.5" stroke-linecap="round">
+        <path d="M3 20h18M4 20V9m4 11V9m4 11V9m4 11V9m4 11V9M2.5 9 12 3.5 21.5 9"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ============================= דף הבית ============================= -->
+<main class="view" id="view-home">
+  <div class="grid">
+
+    <!-- ===== עמודה ימנית: לקוחות ===== -->
+    <section>
+      <div class="kpis" id="kpis"></div>
+
+      <div class="panel panel--fill">
+        <div class="filters">
+          <h2 class="panel__title">לקוחות</h2>
+          <select class="field" id="filterStatus" aria-label="סינון לפי סטטוס">
+            <option value="all">כל הלקוחות</option>
+            <option value="פעיל">לקוחות פעילים</option>
+            <option value="קבוע">לקוחות קבועים</option>
+            <option value="חדש">לקוחות חדשים</option>
+            <option value="לא פעיל">לקוחות לא פעילים</option>
+          </select>
+          <div class="field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+            <input id="searchClients" type="search" placeholder="חיפוש לקוח…" aria-label="חיפוש לקוח">
+          </div>
+          <button class="btn btn--sm" id="btnIntake" type="button"
+                  title="שליחת טופס קליטה ללקוח חדש">+ קליטת לקוח חדש</button>
+        </div>
+
+        <div class="table-wrap">
+        <table class="tbl--clients">
+          <!-- המייל והת"ז לא מוצגים בטבלה כדי לא להעמיס — הם בכרטיס הלקוח (לחיצה כפולה),
+               והחיפוש מוצא לפיהם גם כשהם מוסתרים -->
+          <colgroup>
+            <col class="c-num"><col class="c-name"><col class="c-phone">
+            <col class="c-status"><col class="c-folder">
+          </colgroup>
+          <thead>
+            <tr>
+              <th data-sort="num">מס׳ לקוח <span class="sort-ind"></span></th>
+              <th data-sort="name">שם לקוח <span class="sort-ind"></span></th>
+              <th data-sort="phone">טלפון <span class="sort-ind"></span></th>
+              <th data-sort="status">סטטוס <span class="sort-ind"></span></th>
+              <th>תיקיית מסמכים</th>
+            </tr>
+          </thead>
+          <tbody id="clientsBody"></tbody>
+        </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== עמודה אמצעית: התראה + משימות ===== -->
+    <section>
+      <button class="alert is-hidden" id="alertNew" type="button">
+        <span class="alert__icon">!</span>
+        <span id="alertText"></span>
+      </button>
+
+      <div class="panel">
+        <div class="panel__head">
+          <h2 class="panel__title" id="tasksTitle">המשימות הפתוחות שלי (0)</h2>
+          <label class="check" style="margin-inline-start:auto">
+            <input type="checkbox" id="showDone"> כולל שהושלמו
+          </label>
+          <button class="btn btn--ghost btn--sm" id="btnAddTask" type="button">+ משימה</button>
+        </div>
+        <table class="tbl--tasks">
+          <colgroup>
+            <col class="t-title"><col class="t-client"><col class="t-status">
+            <col class="t-period"><col class="t-paid"><col class="t-price">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>שם משימה</th>
+              <th>שם לקוח</th>
+              <th>סטטוס</th>
+              <th>חודש / שנה</th>
+              <th>שולם</th>
+              <th>מחיר</th>
+            </tr>
+          </thead>
+          <tbody id="tasksBody"></tbody>
+        </table>
+      </div>
+
+      <div class="panel panel--fill" style="margin-top:14px">
+        <div class="panel__head"><h2 class="panel__title">אוטומציות אחרונות</h2></div>
+        <div class="feed" id="logList"></div>
+      </div>
+    </section>
+
+    <!-- ===== עמודה שמאלית: הערות ===== -->
+    <aside class="panel notes">
+      <div class="panel__head"><h2 class="panel__title">הערות</h2></div>
+      <div class="notes__list" id="notesList"></div>
+      <div class="notes__add">
+        <textarea id="noteText" placeholder="כתוב הערה חדשה…" aria-label="הערה חדשה"></textarea>
+        <button class="btn btn--sm" id="btnAddNote" type="button">הוספת הערה</button>
+      </div>
     </aside>
 
-    <main>
-        <header>
-            <div>
-                <h1>ניהול לקוחות ואוטומציות</h1>
-                <p style="color: var(--text-muted);">שלום עובד, הנה סקירת המערכת להיום</p>
-            </div>
-            <button class="btn-primary" onclick="alert('נשלח טופס קליטה חדש ללקוח בוואטסאפ!')">+ שליחת טופס קליטה ללקוח</button>
-        </header>
+  </div>
+</main>
 
-        <div class="stats-grid">
-            <div class="card">
-                <div class="card-title">לקוחות פעילים</div>
-                <div class="card-value">128</div>
-            </div>
-            <div class="card">
-                <div class="card-title">טפסים שנחתמו היום</div>
-                <div class="card-value" style="color: var(--success);">12</div>
-            </div>
-            <div class="card">
-                <div class="card-title">תזכורות גבייה שנשלחו</div>
-                <div class="card-value" style="color: var(--accent);">5</div>
-            </div>
-            <div class="card">
-                <div class="card-title">ממתינים לייפוי כוח</div>
-                <div class="card-value" style="color: var(--warning);">3</div>
-            </div>
-        </div>
+<!-- ============================ כרטיס עובד ============================ -->
+<main class="view is-hidden" id="view-employee">
+  <div class="emp-grid">
 
-        <div class="content-grid">
-            <div class="card">
-                <h3>לקוחות מקולטים לאחרונה</h3>
-                <br>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>שם הלקוח</th>
-                            <th>ת.ז / ח.פ</th>
-                            <th>סטטוס CRM</th>
-                            <th>תיקיית Drive</th>
-                            <th>ייפוי כוח</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>ישראל ישראלי</td>
-                            <td>012345678</td>
-                            <td><span class="badge badge-success">לקוח קבוע (#102)</span></td>
-                            <td>קיימת (סונכרן)</td>
-                            <td><button style="cursor:pointer;" onclick="alert('ייפוי כוח נשלח ל-Filfaster')">שלח ב-Filfaster</button></td>
-                        </tr>
-                        <tr>
-                            <td>אברהם כהן</td>
-                            <td>987654321</td>
-                            <td><span class="badge badge-warning">בהמתנה למילוי</span></td>
-                            <td>נוצרה תיקייה</td>
-                            <td>ממתין לחתימה</td>
-                        </tr>
-                        <tr>
-                            <td>דני לוי</td>
-                            <td>055443322</td>
-                            <td><span class="badge badge-success">לקוח קבוע (#103)</span></td>
-                            <td>קיימת (סונכרן)</td>
-                            <td>נחתם ותוייק</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="panel emp-card">
+      <div class="emp-avatar">ר</div>
+      <h3>רחל ברונר</h3>
+      <p>מנהלת תפעול ואוטומציות</p>
+      <div class="emp-facts">
+        <div><span>מספר עובד</span><b>0142</b></div>
+        <div><span>טלפון</span><b class="num">052-0000000</b></div>
+        <div><span>תחילת עבודה</span><b>01/2024</b></div>
+        <div><span>לקוחות בטיפול</span><b id="empClients">0</b></div>
+      </div>
 
-            <div class="card">
-                <h3>לוג אוטומציות בלייב</h3>
-                <br>
-                <div class="feed-item">
-                    <div class="dot"></div>
-                    <div>נוצרה תיקיית Drive: ישראל ישראלי_012345678</div>
-                </div>
-                <div class="feed-item">
-                    <div class="dot" style="background: var(--success);"></div>
-                    <div>נשלח מייל אישור: טופס הסכמה נחתם</div>
-                </div>
-                <div class="feed-item">
-                    <div class="dot" style="background: var(--warning);"></div>
-                    <div>נשלחה תזכורת תשלום אוטומטית ללקוח #102</div>
-                </div>
-            </div>
-        </div>
-    </main>
+      <div class="shift">
+        <div class="shift__clock" id="shiftClock">00:00:00</div>
+        <button class="btn btn--sm" id="btnShift" type="button">התחלת משמרת</button>
+      </div>
+    </div>
 
+    <div class="panel">
+      <div class="panel__head"><h2 class="panel__title">דיווח שעות — אוגוסט 2026</h2></div>
+      <div class="sum-row">
+        <div class="sum"><b id="sumHours">0</b><span>שעות החודש</span></div>
+        <div class="sum"><b id="sumDays">0</b><span>ימי עבודה</span></div>
+        <div class="sum"><b id="sumOpenTasks">0</b><span>משימות פתוחות</span></div>
+        <div class="sum"><b id="sumDebt">₪0</b><span>ממתין לתשלום</span></div>
+      </div>
+      <table class="tbl--tasks">
+        <thead>
+          <tr><th>תאריך</th><th>כניסה</th><th>יציאה</th><th class="num">סה"כ שעות</th><th>הערה</th></tr>
+        </thead>
+        <tbody id="hoursBody"></tbody>
+      </table>
+    </div>
+
+  </div>
+</main>
+
+<footer class="hintbar">
+  <span><b>דמו:</b> לחיצה כפולה על לקוח פותחת עריכה · לחיצה על מדד מסננת · אפשר להוסיף משימות והערות. הכול נשמר בדפדפן שלך בלבד.</span>
+  <button class="btn btn--ghost btn--sm" id="btnReset" type="button">איפוס נתוני הדמו</button>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="modal__box" id="modalBox"></div>
+</div>
+<div class="toasts" id="toasts"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ======================================================================
+     אחסון — localStorage כשאפשר, אחרת זיכרון בלבד (iframe בארגז חול)
+     ====================================================================== */
+  var KEY = 'alfa_crm_demo_v2';
+  var mem = null;
+  var store = {
+    read: function () {
+      try { return JSON.parse(localStorage.getItem(KEY) || 'null'); }
+      catch (e) { return mem; }
+    },
+    write: function (data) {
+      mem = data;
+      try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+    },
+    clear: function () {
+      mem = null;
+      try { localStorage.removeItem(KEY); } catch (e) {}
+    }
+  };
+
+  /* ======================================================================
+     נתוני פתיחה (נתוני דמה בלבד)
+     ====================================================================== */
+  function seed() {
+    var now = Date.now(), DAY = 864e5;
+    return {
+      nextClientNum: 1018,
+      seq: 100,
+      clients: [
+        { id: 'c1',  num: 1017, name: 'משה כהן',              taxId: '436547864', email: 'm.cohen@example.com',  phone: '052-8745346', status: 'פעיל',    folder: '5JS1ZJI1lBGvOVVK', note: 'מבקש דוחות במייל בלבד.' },
+        { id: 'c2',  num: 1016, name: 'דוד ישראלי',           taxId: '123456789', email: 'd.israeli@example.com', phone: '050-4444444', status: 'פעיל',    folder: '7Kd0PzQm2XcTb91R', note: '' },
+        { id: 'c3',  num: 1015, name: 'חברת ABC בע"מ',        taxId: '515151515', email: 'office@abc.example',   phone: '03-5555555',  status: 'פעיל',    folder: 'A3nWq8YrLs4Vh27C', note: 'דוח שנתי דרך רו"ח חיצוני.' },
+        { id: 'c4',  num: 1014, name: 'שרה לוי',              taxId: '302145879', email: 's.levi@example.com',   phone: '054-7788990', status: 'קבוע',    folder: 'Bq6TzUe1Nm9Kd35P', note: '' },
+        { id: 'c5',  num: 1013, name: 'יוסי מזרחי',           taxId: '025874136', email: 'y.mizrahi@example.com', phone: '053-3216549', status: 'קבוע',   folder: 'Cm2VxRt7Hb4Ln88Q', note: 'החזר מס שנתי — בדיקה כל ינואר.' },
+        { id: 'c6',  num: 1012, name: 'טכנולוגיות NRG בע"מ',  taxId: '514789632', email: 'finance@nrg.example',  phone: '09-7412589',  status: 'קבוע',    folder: 'Dw9YbKc3Pf6Rt12M', note: '' },
+        { id: 'c7',  num: 1011, name: 'נועה ברק',             taxId: '311478529', email: 'n.barak@example.com',  phone: '058-6543217', status: 'חדש',     folder: 'Ez4NmHq8Ws1Cv67B', note: 'טרם נחתם ייפוי כוח.' },
+        { id: 'c8',  num: 1010, name: 'אבי גולן',             taxId: '044785213', email: 'a.golan@example.com',  phone: '052-9638527', status: 'חדש',     folder: 'Fh7QcLp2Zx5Bn03T', note: '' },
+        { id: 'c9',  num: 1009, name: 'רונית שפירא',          taxId: '058963214', email: 'r.shapira@example.com', phone: '050-1472583', status: 'לא פעיל', folder: 'Gk1RdMv6Ty8Jq44W', note: 'סגרה תיק בשנה שעברה.' },
+        { id: 'c10', num: 1008, name: 'מ.ל. שיווק בע"מ',      taxId: '513698521', email: 'mail@ml-mkt.example',  phone: '04-8529631',  status: 'לא פעיל', folder: 'Hn5SgWb9Uc2Xr70L', note: '' }
+      ],
+      tasks: [
+        { id: 't1', title: 'הכנת דוח שנתי 2025',       clientId: 'c3', status: 'בטיפול', period: 'שנתי 2025', paid: false, price: 2400 },
+        { id: 't2', title: 'דיווח מע"מ',                clientId: 'c1', status: 'פתוחה',  period: '07/2026',   paid: true,  price: 450 },
+        { id: 't3', title: 'תיאום מס',                  clientId: 'c4', status: 'פתוחה',  period: 'שנתי 2025', paid: false, price: 900 },
+        { id: 't4', title: 'העלאת מסמכים לתיקייה',      clientId: 'c2', status: 'בטיפול', period: '07/2026',   paid: true,  price: 0 },
+        { id: 't5', title: 'פתיחת תיק במס הכנסה',       clientId: 'c7', status: 'פתוחה',  period: 'חד פעמי',   paid: false, price: 650 },
+        { id: 't6', title: 'החזר מס שכירים',            clientId: 'c5', status: 'הושלמה', period: 'שנתי 2024', paid: true,  price: 1200 }
+      ],
+      notes: [
+        { id: 'n1', text: 'לבדוק מול רו"ח את הדוח של חברת ABC לפני שליחה.', at: now - 3 * 3600e3 },
+        { id: 'n2', text: 'נועה ברק ביקשה שנחזור אליה אחרי ה-20 לחודש.',    at: now - 1 * DAY }
+      ],
+      log: [
+        { id: 'l1', text: 'נשלחה תזכורת גבייה ללקוח 1015', kind: 'warn',  at: now - 25 * 60e3 },
+        { id: 'l2', text: 'נוצרה תיקיית מסמכים: שרה לוי_302145879', kind: 'info', at: now - 2 * 3600e3 },
+        { id: 'l3', text: 'ייפוי כוח נחתם דיגיטלית — אבי גולן', kind: 'ok', at: now - 5 * 3600e3 }
+      ],
+      hours: [
+        { id: 'h1', date: '18/08/2026', from: '09:00', to: '17:15', note: 'קליטת לקוחות חדשים' },
+        { id: 'h2', date: '17/08/2026', from: '09:10', to: '16:30', note: 'דיווחי מע"מ' },
+        { id: 'h3', date: '16/08/2026', from: '08:45', to: '17:00', note: 'סגירת דוח שנתי' },
+        { id: 'h4', date: '13/08/2026', from: '09:00', to: '14:00', note: 'חצי יום' }
+      ],
+      shiftStart: null
+    };
+  }
+
+  // נתונים שמורים מגרסה קודמת של הדמו עשויים לחסר שדות — משלימים מהזרע
+  function withDefaults(saved) {
+    if (!saved) return seed();
+    var base = seed();
+    Object.keys(base).forEach(function (k) {
+      if (saved[k] === undefined || saved[k] === null) saved[k] = base[k];
+    });
+    return saved;
+  }
+
+  var db = withDefaults(store.read());
+  var ui = { filter: 'all', q: '', sort: 'num', dir: -1, selected: null, showDone: false };
+
+  function save() { store.write(db); }
+  function uid(p) { db.seq = (db.seq || 100) + 1; return p + db.seq; }
+  function $(s) { return document.querySelector(s); }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function money(n) { return '₪' + Number(n || 0).toLocaleString('he-IL'); }
+  function clientById(id) {
+    for (var i = 0; i < db.clients.length; i++) if (db.clients[i].id === id) return db.clients[i];
+    return null;
+  }
+
+  var STATUS_CLASS = { 'קבוע': 'regular', 'פעיל': 'active', 'חדש': 'new', 'לא פעיל': 'off' };
+  var TASK_CLASS   = { 'פתוחה': 'open', 'בטיפול': 'doing', 'הושלמה': 'done' };
+
+  /* ======================================================================
+     הודעות צצות
+     ====================================================================== */
+  function toast(msg, kind) {
+    var el = document.createElement('div');
+    el.className = 'toast' + (kind ? ' toast--' + kind : '');
+    el.textContent = msg;
+    $('#toasts').appendChild(el);
+    setTimeout(function () {
+      el.style.transition = 'opacity .3s';
+      el.style.opacity = '0';
+      setTimeout(function () { el.remove(); }, 300);
+    }, 3200);
+  }
+
+  /* ======================================================================
+     פיד האוטומציות
+     ====================================================================== */
+  function logEvent(text, kind) {
+    db.log.unshift({ id: uid('l'), text: text, kind: kind || 'info', at: Date.now() });
+    db.log = db.log.slice(0, 12);
+    save();
+    renderLog();
+  }
+
+  function renderLog() {
+    $('#logList').innerHTML = db.log.map(function (l) {
+      return '<div class="feed__item">' +
+        '<span class="feed__dot feed__dot--' + l.kind + '"></span>' +
+        '<span class="feed__text" title="' + esc(l.text) + '">' + esc(l.text) + '</span>' +
+        '<span class="feed__time">' + shortTime(l.at) + '</span>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ======================================================================
+     מודאל
+     ====================================================================== */
+  var modal = $('#modal'), modalBox = $('#modalBox');
+
+  function openModal(title, bodyHtml, footHtml) {
+    modalBox.innerHTML =
+      '<div class="modal__head"><h3>' + title + '</h3>' +
+      '<button class="modal__close" type="button" data-close aria-label="סגירה">&times;</button></div>' +
+      '<div class="modal__body">' + bodyHtml + '</div>' +
+      '<div class="modal__foot">' + footHtml + '</div>';
+    modal.classList.add('is-open');
+    var first = modalBox.querySelector('input, select, textarea');
+    if (first) setTimeout(function () { first.focus(); }, 40);
+  }
+  function closeModal() { modal.classList.remove('is-open'); }
+
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal || e.target.hasAttribute('data-close')) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) { e.stopPropagation(); closeModal(); }
+  });
+
+  function statusOptions(sel) {
+    return ['חדש', 'פעיל', 'קבוע', 'לא פעיל'].map(function (s) {
+      return '<option' + (s === sel ? ' selected' : '') + '>' + s + '</option>';
+    }).join('');
+  }
+
+  /* ======================================================================
+     רשימת הלקוחות
+     ====================================================================== */
+  function visibleClients() {
+    var q = ui.q.trim();
+    return db.clients.filter(function (c) {
+      if (ui.filter !== 'all' && c.status !== ui.filter) return false;
+      if (!q) return true;
+      return [c.name, c.taxId, c.email, c.phone, String(c.num)].join(' ').indexOf(q) > -1;
+    }).sort(function (a, b) {
+      var x = a[ui.sort], y = b[ui.sort];
+      if (typeof x === 'number') return (x - y) * ui.dir;
+      return String(x).localeCompare(String(y), 'he') * ui.dir;
+    });
+  }
+
+  function renderClients() {
+    var rows = visibleClients();
+    $('#clientsBody').innerHTML = rows.length ? rows.map(function (c) {
+      var cls = STATUS_CLASS[c.status];
+      return '<tr data-id="' + c.id + '"' + (ui.selected === c.id ? ' class="is-sel"' : '') + ' title="לחיצה כפולה לפתיחת כרטיס הלקוח">' +
+        '<td class="num">' + c.num + '</td>' +
+        '<td title="' + esc(c.email) + '"><b>' + esc(c.name) + '</b></td>' +
+        '<td class="num">' + esc(c.phone) + '</td>' +
+        '<td><span class="pill pill--' + cls + '">' + esc(c.status) + '</span></td>' +
+        '<td class="num"><a href="#" class="link" data-folder="' + c.id + '">' + esc(c.folder) + '</a></td>' +
+      '</tr>';
+    }).join('') : '<tr><td colspan="5" class="empty">אין לקוחות שמתאימים לסינון</td></tr>';
+
+    // סימון עמודת המיון בכותרת
+    document.querySelectorAll('.tbl--clients thead th').forEach(function (th) {
+      var ind = th.querySelector('.sort-ind');
+      if (ind) ind.textContent = th.getAttribute('data-sort') === ui.sort ? (ui.dir === 1 ? '▲' : '▼') : '';
+    });
+  }
+
+  function renderKpis() {
+    var counts = { 'קבוע': 0, 'פעיל': 0, 'חדש': 0, 'לא פעיל': 0 };
+    db.clients.forEach(function (c) { counts[c.status]++; });
+
+    // סדר ה-DOM ב-RTL: הראשון מופיע בימין
+    var ICON = {
+      regular: '<path d="M12 3 4 7v5c0 4.4 3.3 8.3 8 9 4.7-.7 8-4.6 8-9V7z"/><path d="m9 12 2 2 4-4"/>',
+      active:  '<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M17 11l2 2 3.5-3.5"/>',
+      "new":   '<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M19 7v6M16 10h6"/>',
+      off:     '<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 10h6"/>'
+    };
+    // לייבל קצר בכרטיס עצמו (המילה "לקוחות" מובנת מההקשר) — כדי שלא יגלוש
+    var defs = [
+      { s: 'קבוע',    label: 'קבועים',    full: 'לקוחות קבועים',    mod: 'regular' },
+      { s: 'פעיל',    label: 'פעילים',    full: 'לקוחות פעילים',    mod: 'active' },
+      { s: 'חדש',     label: 'חדשים',     full: 'לקוחות חדשים',     mod: 'new' },
+      { s: 'לא פעיל', label: 'לא פעילים', full: 'לקוחות לא פעילים', mod: 'off' }
+    ];
+    $('#kpis').innerHTML = defs.map(function (d) {
+      return '<button type="button" class="kpi kpi--' + d.mod + (ui.filter === d.s ? ' is-on' : '') + '"' +
+        ' data-status="' + d.s + '" title="סינון הטבלה לפי ' + d.full + '">' +
+        '<span class="kpi__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+          'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + ICON[d.mod] + '</svg></span>' +
+        '<span class="kpi__meta">' +
+          '<span class="kpi__label">' + d.label + '</span>' +
+          '<span class="kpi__value">' + counts[d.s] + '</span>' +
+        '</span>' +
+      '</button>';
+    }).join('');
+
+    var newCount = counts['חדש'];
+    var alertEl = $('#alertNew');
+    alertEl.classList.toggle('is-hidden', newCount === 0);
+    $('#alertText').innerHTML = '<b>לתשומת לבך!!</b> יש לך ' + newCount + ' לקוחות חדשים';
+    $('#empClients').textContent = counts['פעיל'] + counts['קבוע'];
+  }
+
+  /* ======================================================================
+     משימות
+     ====================================================================== */
+  function renderTasks() {
+    var list = db.tasks.filter(function (t) { return ui.showDone || t.status !== 'הושלמה'; });
+    var open = db.tasks.filter(function (t) { return t.status !== 'הושלמה'; }).length;
+    $('#tasksTitle').textContent = 'המשימות הפתוחות שלי (' + open + ')';
+    $('#sumOpenTasks').textContent = open;
+    $('#sumDebt').textContent = money(db.tasks.reduce(function (s, t) { return s + (t.paid ? 0 : Number(t.price) || 0); }, 0));
+
+    $('#tasksBody').innerHTML = list.length ? list.map(function (t) {
+      var c = clientById(t.clientId);
+      return '<tr data-task="' + t.id + '" title="לחיצה כפולה לעריכת המשימה">' +
+        '<td title="' + esc(t.title) + '"><b>' + esc(t.title) + '</b></td>' +
+        '<td title="' + esc(c ? c.name : '') + '">' + esc(c ? c.name : '—') + '</td>' +
+        '<td><span class="pill pill--' + TASK_CLASS[t.status] + '">' + esc(t.status) + '</span></td>' +
+        '<td>' + esc(t.period) + '</td>' +
+        '<td><button class="' + (t.paid ? 'paid' : 'unpaid') + '" data-paid="' + t.id + '" ' +
+            'style="background:none;border:0;padding:0" title="לחיצה משנה סטטוס תשלום">' +
+            (t.paid ? 'שולם ✓' : 'לא שולם') + '</button></td>' +
+        '<td class="num">' + (t.price ? money(t.price) : '—') + '</td>' +
+      '</tr>';
+    }).join('') : '<tr><td colspan="6" class="empty">אין שורות</td></tr>';
+  }
+
+  function taskModal(task) {
+    var t = task || { title: '', clientId: db.clients[0] && db.clients[0].id, status: 'פתוחה', period: '', paid: false, price: 0 };
+    openModal(task ? 'עריכת משימה' : 'משימה חדשה',
+      '<div><label class="f">שם משימה</label><input class="inp" id="mTitle" value="' + esc(t.title) + '"></div>' +
+      '<div class="row2">' +
+        '<div><label class="f">שם לקוח</label><select class="inp" id="mClient">' +
+          db.clients.map(function (c) { return '<option value="' + c.id + '"' + (c.id === t.clientId ? ' selected' : '') + '>' + esc(c.name) + '</option>'; }).join('') +
+        '</select></div>' +
+        '<div><label class="f">סטטוס</label><select class="inp" id="mStatus">' +
+          ['פתוחה', 'בטיפול', 'הושלמה'].map(function (s) { return '<option' + (s === t.status ? ' selected' : '') + '>' + s + '</option>'; }).join('') +
+        '</select></div>' +
+      '</div>' +
+      '<div class="row2">' +
+        '<div><label class="f">חודש או שנה</label><input class="inp" id="mPeriod" value="' + esc(t.period) + '" placeholder="לדוגמה: 08/2026"></div>' +
+        '<div><label class="f">מחיר (₪)</label><input class="inp num" id="mPrice" type="number" min="0" value="' + (t.price || 0) + '"></div>' +
+      '</div>' +
+      '<label class="check"><input type="checkbox" id="mPaid"' + (t.paid ? ' checked' : '') + '> שולם</label>',
+      (task ? '<button class="btn btn--danger btn--sm" id="mDelete" type="button">מחיקה</button>' : '') +
+      '<span class="spacer"></span>' +
+      '<button class="btn btn--ghost btn--sm" type="button" data-close>ביטול</button>' +
+      '<button class="btn btn--sm" id="mSave" type="button">שמירה</button>'
+    );
+
+    $('#mSave').onclick = function () {
+      var title = $('#mTitle').value.trim();
+      if (!title) { toast('חסר שם משימה', 'warn'); return; }
+      var data = {
+        title: title,
+        clientId: $('#mClient').value,
+        status: $('#mStatus').value,
+        period: $('#mPeriod').value.trim() || '—',
+        price: Number($('#mPrice').value) || 0,
+        paid: $('#mPaid').checked
+      };
+      if (task) {
+        Object.keys(data).forEach(function (k) { task[k] = data[k]; });
+        toast('המשימה עודכנה');
+      } else {
+        data.id = uid('t');
+        db.tasks.unshift(data);
+        toast('נוספה משימה חדשה');
+        logEvent('נפתחה משימה: ' + title, 'info');
+      }
+      save(); renderTasks(); closeModal();
+    };
+
+    if (task) $('#mDelete').onclick = function () {
+      db.tasks = db.tasks.filter(function (x) { return x.id !== task.id; });
+      save(); renderTasks(); closeModal(); toast('המשימה נמחקה', 'warn');
+    };
+  }
+
+  /* ======================================================================
+     כרטיס לקוח
+     ====================================================================== */
+  function clientModal(c) {
+    var tasks = db.tasks.filter(function (t) { return t.clientId === c.id; });
+    openModal('כרטיס לקוח — ' + esc(c.name),
+      '<div class="row2">' +
+        '<div><label class="f">שם לקוח</label><input class="inp" id="mName" value="' + esc(c.name) + '"></div>' +
+        '<div><label class="f">ת"ז \\ מספר תיק</label><input class="inp num" id="mTax" value="' + esc(c.taxId) + '"></div>' +
+      '</div>' +
+      '<div class="row2">' +
+        '<div><label class="f">מייל</label><input class="inp" id="mMail" type="email" value="' + esc(c.email) + '"></div>' +
+        '<div><label class="f">טלפון</label><input class="inp num" id="mPhone" value="' + esc(c.phone) + '"></div>' +
+      '</div>' +
+      '<div class="row2">' +
+        '<div><label class="f">סטטוס</label><select class="inp" id="mStat">' + statusOptions(c.status) + '</select></div>' +
+        '<div><label class="f">מזהה תיקיית מסמכים</label><input class="inp num" id="mFolder" value="' + esc(c.folder) + '"></div>' +
+      '</div>' +
+      '<div><label class="f">הערה פנימית</label><textarea class="inp" id="mNote" rows="2">' + esc(c.note || '') + '</textarea></div>' +
+      '<div><label class="f">משימות משויכות (' + tasks.length + ')</label>' +
+        (tasks.length
+          ? '<ul style="font-size:13px;padding-inline-start:18px;line-height:1.9">' + tasks.map(function (t) {
+              return '<li>' + esc(t.title) + ' — ' + esc(t.status) + (t.paid ? ' · שולם' : ' · לא שולם') + '</li>';
+            }).join('') + '</ul>'
+          : '<p style="font-size:13px;color:#7b8595">אין משימות פתוחות ללקוח זה.</p>') +
+      '</div>',
+      '<button class="btn btn--danger btn--sm" id="mDelete" type="button">מחיקת לקוח</button>' +
+      '<span class="spacer"></span>' +
+      '<button class="btn btn--ghost btn--sm" type="button" data-close>ביטול</button>' +
+      '<button class="btn btn--sm" id="mSave" type="button">שמירת שינויים</button>'
+    );
+
+    $('#mSave').onclick = function () {
+      var name = $('#mName').value.trim();
+      if (!name) { toast('חסר שם לקוח', 'warn'); return; }
+      c.name   = name;
+      c.taxId  = $('#mTax').value.trim();
+      c.email  = $('#mMail').value.trim();
+      c.phone  = $('#mPhone').value.trim();
+      c.status = $('#mStat').value;
+      c.folder = $('#mFolder').value.trim();
+      c.note   = $('#mNote').value.trim();
+      save(); renderAll(); closeModal();
+      toast('הכרטיס של ' + c.name + ' עודכן');
+      logEvent('עודכן כרטיס הלקוח ' + c.name, 'ok');
+    };
+
+    $('#mDelete').onclick = function () {
+      db.clients = db.clients.filter(function (x) { return x.id !== c.id; });
+      db.tasks   = db.tasks.filter(function (t) { return t.clientId !== c.id; });
+      if (ui.selected === c.id) ui.selected = null;
+      save(); renderAll(); closeModal();
+      toast('הלקוח נמחק מהמערכת', 'warn');
+    };
+  }
+
+  /* ======================================================================
+     טופס קליטת לקוח חדש + שרשרת האוטומציה שאחריו
+     ====================================================================== */
+  function intakeModal() {
+    openModal('שליחת טופס קליטה ללקוח חדש',
+      '<p style="font-size:13px;color:#7b8595">מילוי הטופס מקים לקוח חדש, פותח לו תיקיית מסמכים ושולח ייפוי כוח לחתימה — כמו בזרימה האמיתית.</p>' +
+      '<div class="row2">' +
+        '<div><label class="f">שם לקוח</label><input class="inp" id="iName" placeholder="שם מלא / שם חברה"></div>' +
+        '<div><label class="f">ת"ז \\ מספר תיק</label><input class="inp num" id="iTax" placeholder="000000000"></div>' +
+      '</div>' +
+      '<div class="row2">' +
+        '<div><label class="f">מייל</label><input class="inp" id="iMail" type="email" placeholder="name@example.com"></div>' +
+        '<div><label class="f">טלפון</label><input class="inp num" id="iPhone" placeholder="05x-0000000"></div>' +
+      '</div>' +
+      '<label class="check"><input type="checkbox" id="iTask" checked> לפתוח גם משימת "פתיחת תיק במס הכנסה"</label>',
+      '<span class="spacer"></span>' +
+      '<button class="btn btn--ghost btn--sm" type="button" data-close>ביטול</button>' +
+      '<button class="btn btn--sm" id="iSend" type="button">שליחת הטופס</button>'
+    );
+
+    $('#iSend').onclick = function () {
+      var name = $('#iName').value.trim();
+      if (!name) { toast('חסר שם לקוח', 'warn'); return; }
+
+      var folder = '';
+      var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz0123456789';
+      for (var i = 0; i < 16; i++) folder += chars.charAt(Math.floor(Math.random() * chars.length));
+
+      var c = {
+        id: uid('c'),
+        num: db.nextClientNum++,
+        name: name,
+        taxId: $('#iTax').value.trim() || '—',
+        email: $('#iMail').value.trim() || '—',
+        phone: $('#iPhone').value.trim() || '—',
+        status: 'חדש',
+        folder: folder,
+        note: 'נקלט דרך טופס הקליטה.'
+      };
+      db.clients.unshift(c);
+
+      if ($('#iTask').checked) {
+        db.tasks.unshift({
+          id: uid('t'), title: 'פתיחת תיק במס הכנסה', clientId: c.id,
+          status: 'פתוחה', period: 'חד פעמי', paid: false, price: 650
+        });
+      }
+
+      ui.filter = 'all';
+      $('#filterStatus').value = 'all';
+      ui.selected = c.id;
+      save(); renderAll(); closeModal();
+
+      // שרשרת האוטומציה — הודעות עוקבות שנרשמות גם בפיד
+      toast('הטופס נשלח ל' + name + ' בוואטסאפ', 'info');
+      logEvent('נשלח טופס קליטה ל' + name, 'info');
+      setTimeout(function () {
+        toast('נוצרה תיקיית מסמכים: ' + name + '_' + c.taxId, 'info');
+        logEvent('נוצרה תיקיית מסמכים: ' + name + '_' + c.taxId, 'info');
+      }, 900);
+      setTimeout(function () {
+        toast('הלקוח הוקם ב-CRM (מספר ' + c.num + ')');
+        logEvent('הלקוח ' + name + ' הוקם ב-CRM (מספר ' + c.num + ')', 'ok');
+      }, 1800);
+      setTimeout(function () {
+        toast('ייפוי כוח נשלח לחתימה דיגיטלית', 'warn');
+        logEvent('ייפוי כוח נשלח לחתימה — ' + name, 'warn');
+      }, 2700);
+    };
+  }
+
+  /* ======================================================================
+     הערות
+     ====================================================================== */
+  function shortTime(ts) {
+    var d = new Date(ts);
+    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+  function timeLabel(ts) {
+    var d = new Date(ts);
+    var sameDay = d.toDateString() === new Date().toDateString();
+    if (sameDay) return 'היום, ' + shortTime(ts);
+    return d.toLocaleDateString('he-IL') + ', ' + shortTime(ts);
+  }
+
+  function renderNotes() {
+    var list = $('#notesList');
+    if (!db.notes.length) {
+      list.innerHTML = '<div class="notes__empty"><b>אין הערות</b>כתוב את ההערה הראשונה שלך</div>';
+      return;
+    }
+    list.innerHTML = db.notes.map(function (n) {
+      return '<div class="note">' +
+        '<button class="note__del" type="button" data-note="' + n.id + '" aria-label="מחיקת הערה">&times;</button>' +
+        esc(n.text) +
+        '<time>' + timeLabel(n.at) + '</time>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ======================================================================
+     שעות ומשמרת
+     ====================================================================== */
+  function hoursOf(h) {
+    var a = h.from.split(':'), b = h.to.split(':');
+    return ((b[0] * 60 + +b[1]) - (a[0] * 60 + +a[1])) / 60;
+  }
+
+  function renderHours() {
+    $('#hoursBody').innerHTML = db.hours.length ? db.hours.map(function (h) {
+      return '<tr><td class="num">' + esc(h.date) + '</td><td class="num">' + esc(h.from) + '</td>' +
+        '<td class="num">' + esc(h.to) + '</td><td class="num">' + hoursOf(h).toFixed(2) + '</td>' +
+        '<td>' + esc(h.note) + '</td></tr>';
+    }).join('') : '<tr><td colspan="5" class="empty">אין שורות</td></tr>';
+
+    var total = db.hours.reduce(function (s, h) { return s + hoursOf(h); }, 0);
+    $('#sumHours').textContent = total.toFixed(1);
+    $('#sumDays').textContent = db.hours.length;
+  }
+
+  var clockTimer = null;
+  function paintShift() {
+    var btn = $('#btnShift'), clock = $('#shiftClock');
+    if (!db.shiftStart) {
+      clock.textContent = '00:00:00';
+      btn.textContent = 'התחלת משמרת';
+      btn.classList.remove('btn--danger');
+      if (clockTimer) { clearInterval(clockTimer); clockTimer = null; }
+      return;
+    }
+    btn.textContent = 'סיום משמרת';
+    btn.classList.add('btn--danger');
+    function tick() {
+      var s = Math.floor((Date.now() - db.shiftStart) / 1000);
+      clock.textContent = [Math.floor(s / 3600), Math.floor(s / 60) % 60, s % 60]
+        .map(function (n) { return String(n).padStart(2, '0'); }).join(':');
+    }
+    tick();
+    if (!clockTimer) clockTimer = setInterval(tick, 1000);
+  }
+
+  $('#btnShift').onclick = function () {
+    var now = new Date();
+    var hm = function (d) { return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); };
+    if (!db.shiftStart) {
+      db.shiftStart = Date.now();
+      toast('המשמרת התחילה ב-' + hm(now), 'info');
+    } else {
+      var start = new Date(db.shiftStart);
+      db.hours.unshift({
+        id: uid('h'),
+        date: now.toLocaleDateString('he-IL'),
+        from: hm(start), to: hm(now),
+        note: 'דיווח מהמערכת'
+      });
+      db.shiftStart = null;
+      toast('המשמרת נסגרה ודווחה');
+      logEvent('דווחה משמרת: ' + hm(start) + '–' + hm(now), 'ok');
+      renderHours();
+    }
+    save(); paintShift();
+  };
+
+  /* ======================================================================
+     חיווט אירועים
+     ====================================================================== */
+  // מעבר בין מסכים
+  document.querySelectorAll('.tab').forEach(function (tab) {
+    tab.onclick = function () {
+      document.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('is-active'); });
+      tab.classList.add('is-active');
+      var v = tab.getAttribute('data-view');
+      $('#view-home').classList.toggle('is-hidden', v !== 'home');
+      $('#view-employee').classList.toggle('is-hidden', v !== 'employee');
+    };
+  });
+
+  // סינון וחיפוש
+  $('#filterStatus').onchange = function () { ui.filter = this.value; renderClients(); renderKpis(); };
+  $('#searchClients').oninput = function () { ui.q = this.value; renderClients(); };
+
+  // מדדים — סינון בלחיצה
+  $('#kpis').onclick = function (e) {
+    var btn = e.target.closest('[data-status]');
+    if (!btn) return;
+    var s = btn.getAttribute('data-status');
+    ui.filter = (ui.filter === s) ? 'all' : s;
+    $('#filterStatus').value = ui.filter;
+    renderClients(); renderKpis();
+  };
+
+  // התראת לקוחות חדשים
+  $('#alertNew').onclick = function () {
+    ui.filter = 'חדש';
+    $('#filterStatus').value = 'חדש';
+    renderClients(); renderKpis();
+  };
+
+  // מיון בלחיצה על כותרת
+  document.querySelector('.tbl--clients thead').onclick = function (e) {
+    var th = e.target.closest('th[data-sort]');
+    if (!th) return;
+    var key = th.getAttribute('data-sort');
+    if (ui.sort === key) ui.dir *= -1; else { ui.sort = key; ui.dir = 1; }
+    renderClients();
+  };
+
+  // בחירה, לחיצה כפולה לעריכה, קישור לתיקייה
+  var clientsBody = $('#clientsBody');
+  clientsBody.onclick = function (e) {
+    var folder = e.target.closest('[data-folder]');
+    if (folder) {
+      e.preventDefault();
+      var c = clientById(folder.getAttribute('data-folder'));
+      toast('נפתחת תיקיית המסמכים של ' + c.name + ' (דמו)', 'info');
+      logEvent('נפתחה תיקיית המסמכים של ' + c.name, 'info');
+      return;
+    }
+    var tr = e.target.closest('tr[data-id]');
+    if (!tr) return;
+    ui.selected = tr.getAttribute('data-id');
+    renderClients();
+  };
+  clientsBody.ondblclick = function (e) {
+    var tr = e.target.closest('tr[data-id]');
+    if (!tr) return;
+    var c = clientById(tr.getAttribute('data-id'));
+    if (c) clientModal(c);
+  };
+
+  // משימות
+  var tasksBody = $('#tasksBody');
+  tasksBody.onclick = function (e) {
+    var paid = e.target.closest('[data-paid]');
+    if (!paid) return;
+    var id = paid.getAttribute('data-paid');
+    db.tasks.forEach(function (t) {
+      if (t.id !== id) return;
+      t.paid = !t.paid;
+      logEvent((t.paid ? 'סומן כשולם: ' : 'בוטל סימון תשלום: ') + t.title, t.paid ? 'ok' : 'warn');
+    });
+    save(); renderTasks();
+  };
+  tasksBody.ondblclick = function (e) {
+    var tr = e.target.closest('tr[data-task]');
+    if (!tr) return;
+    var id = tr.getAttribute('data-task');
+    var task = db.tasks.filter(function (t) { return t.id === id; })[0];
+    if (task) taskModal(task);
+  };
+  $('#btnAddTask').onclick = function () { taskModal(null); };
+  $('#showDone').onchange = function () { ui.showDone = this.checked; renderTasks(); };
+
+  // הערות
+  $('#btnAddNote').onclick = function () {
+    var box = $('#noteText'), text = box.value.trim();
+    if (!text) { box.focus(); return; }
+    db.notes.unshift({ id: uid('n'), text: text, at: Date.now() });
+    box.value = '';
+    save(); renderNotes(); toast('ההערה נשמרה');
+  };
+  $('#noteText').onkeydown = function (e) {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) $('#btnAddNote').click();
+  };
+  $('#notesList').onclick = function (e) {
+    var del = e.target.closest('[data-note]');
+    if (!del) return;
+    var id = del.getAttribute('data-note');
+    db.notes = db.notes.filter(function (n) { return n.id !== id; });
+    save(); renderNotes();
+  };
+
+  // כפתורים ראשיים
+  $('#btnIntake').onclick = intakeModal;
+  $('#btnReset').onclick = function () {
+    store.clear();
+    db = seed();
+    ui = { filter: 'all', q: '', sort: 'num', dir: -1, selected: null, showDone: false };
+    $('#filterStatus').value = 'all';
+    $('#searchClients').value = '';
+    $('#showDone').checked = false;
+    save(); renderAll(); toast('הדמו אופס לנתוני ההתחלה', 'info');
+  };
+
+  /* ======================================================================
+     ציור ראשוני
+     ====================================================================== */
+  function renderAll() {
+    renderClients();
+    renderKpis();
+    renderTasks();
+    renderNotes();
+    renderLog();
+    renderHours();
+    paintShift();
+  }
+
+  renderAll();
+  save();
+})();
+</script>
 </body>
 </html>

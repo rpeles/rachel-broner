@@ -330,8 +330,8 @@
                 data-caption="מערכת CRM ואוטומציות למשרד פיננסי — דמו אינטראקטיבי, נתונים לדוגמה"
                 aria-label="פתיחת דמו אינטראקטיבי של מערכת ה-CRM והאוטומציות">
           <img src="assets/projects/project-2.png"
-               alt="דשבורד מערכת ה-CRM: לקוחות פעילים, טפסים שנחתמו, תזכורות גבייה ולוג אוטומציות"
-               loading="lazy" width="1400" height="700">
+               alt="דשבורד מערכת ה-CRM: טבלת לקוחות, מדדי לקוחות לפי סטטוס, משימות פתוחות, הערות ולוג אוטומציות"
+               loading="lazy" width="1400" height="720">
           <span class="project__zoom-hint">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="m9 18 6-6-6-6"/><circle cx="12" cy="12" r="10"/>
@@ -392,7 +392,7 @@
 
     </div>
 
-    <p class="projects__note">להוספת פרויקט: שכפלו בלוק <code>&lt;article class="card project"&gt;</code> ועדכנו טקסט ותמונה.</p>
+    <!-- להוספת פרויקט: שכפלו בלוק <article class="card project"> ועדכנו טקסט ותמונה. (הערה למפתח — לא מוצגת בעמוד) -->
 
   </div>
 </section>
@@ -569,9 +569,10 @@
     </svg>
   </button>
   <img class="lightbox__img" id="lightboxImg" src="" alt="">
-  <!-- דמו אינטראקטיבי. sandbox בלי allow-same-origin — הדמו מקבל מקור נפרד ומבודד מהאתר. -->
+  <!-- דמו אינטראקטיבי. allow-same-origin נדרש כדי שהדמו יוכל לשמור את המצב ב-localStorage;
+       הקובץ הוא שלנו ונטען מאותו מקור, ואין בו קוד חיצוני. -->
   <iframe class="lightbox__frame" id="lightboxFrame" src="" title="דמו אינטראקטיבי"
-          sandbox="allow-scripts allow-modals" loading="lazy"></iframe>
+          sandbox="allow-scripts allow-modals allow-same-origin" loading="lazy"></iframe>
   <p class="lightbox__caption" id="lightboxCaption"></p>
 </div>
 
