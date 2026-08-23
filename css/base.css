@@ -23,6 +23,18 @@ body {
   overflow-x: hidden;
 }
 
+/* רקע מעברי לכל הדף. השכבה מקובעת למסך (fixed) ולא נגללת יחד עם התוכן,
+   ולכן כל "עמוד" בגלילה מקבל את אותו גרדיאנט של אזור הפתיחה, בלי תפרים
+   ובלי חזרתיות. הסקשנים עצמם שקופים והוא נראה דרכם. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--grad-tint);
+  pointer-events: none;
+}
+
 img, svg, video { display: block; max-width: 100%; height: auto; }
 
 h1, h2, h3, h4 {
@@ -100,7 +112,20 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 .section { padding-block: var(--section-y); position: relative; }
 
-.section--soft { background: var(--c-bg-soft); }
+/* כל הסקשנים שקופים — הרקע המעברי של הדף (body::before) עובר דרכם.
+   מה שמפריד ביניהם הוא קו־שיער דק ולא בלוק צבע, כדי לשמור על אווריריות. */
+.section--soft,
+.section--tint { background: transparent; }
+
+.section + .section::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--c-line), transparent);
+}
+.section + .section::before { inset-block-start: 0; }
 
 .section--dark {
   background: var(--c-bg-dark);

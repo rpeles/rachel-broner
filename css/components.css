@@ -117,7 +117,8 @@
 .nav__links {
   display: none;
   align-items: center;
-  gap: var(--sp-5);
+  /* שישה קישורים — המרווח מתכווץ מעט במסכים צרים כדי שלא יידחקו ל-CTA */
+  gap: clamp(var(--sp-4), 1.8vw, var(--sp-5));
 }
 .nav__link {
   position: relative;
