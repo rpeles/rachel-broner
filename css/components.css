@@ -7,6 +7,8 @@
    ========================================================================== */
 
 .btn {
+  position: relative;
+  overflow: hidden;          /* תוחם את הבהוב האור שחולף על הכפתור */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -27,17 +29,50 @@
               box-shadow var(--dur) var(--ease);
 }
 
-.btn:active { transform: translateY(1px); }
+/* הכפתור נרים מעט בריחוף ונלחץ פנימה בקליק — משוב מיידי למגע */
+.btn:hover  { transform: translateY(-2px); }
+.btn:active { transform: translateY(1px); transition-duration: .06s; }
 
 /* כפתור ראשי — אדום הלוגו, בצורת מלבן מעוגל */
 .btn--primary {
   background: var(--c-accent);
   color: #fff;
   box-shadow: var(--shadow-btn);
+  /* נשימה איטית של ההילה — מושכת את העין בלי לצעוק */
+  animation: btn-breathe 4.5s ease-in-out infinite;
 }
 .btn--primary:hover {
   background: var(--c-accent-dark);
   box-shadow: var(--shadow-btn-hover);
+  animation: none;           /* בריחוף ההילה קבועה וחזקה, בלי נשימה */
+}
+
+/* הבהוב אור שחולף על הכפתור בריחוף — מימין לשמאל, בכיוון הקריאה.
+   inset-inline-start ב-RTL הוא הקצה הימני, ולכן ההבהוב מתחיל מחוץ לימין
+   ו-translateX השלילי מסיע אותו שמאלה לאורך הכפתור. */
+.btn--primary::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: -45%;
+  width: 45%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .38), transparent);
+  transform: skewX(-18deg);
+  opacity: 0;
+  pointer-events: none;
+}
+.btn--primary:hover::after { animation: btn-shine .72s var(--ease); }
+
+@keyframes btn-breathe {
+  0%, 100% { box-shadow: 0 2px 8px rgba(0, 0, 0, .45), 0 8px 22px rgba(224, 38, 45, .20); }
+  50%      { box-shadow: 0 2px 8px rgba(0, 0, 0, .45), 0 12px 34px rgba(224, 38, 45, .38); }
+}
+
+@keyframes btn-shine {
+  0%   { opacity: 0; transform: translateX(0) skewX(-18deg); }
+  18%  { opacity: 1; }
+  /* 430% מרוחב ההבהוב עצמו — מספיק כדי לחצות את הכפתור ולצאת מהצד השני */
+  100% { opacity: 0; transform: translateX(-430%) skewX(-18deg); }
 }
 
 .btn--ghost {
@@ -48,7 +83,11 @@
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
-.btn--ghost:hover { border-color: rgba(255, 255, 255, .34); background: rgba(255, 255, 255, .09); }
+.btn--ghost:hover {
+  border-color: rgba(255, 255, 255, .34);
+  background: rgba(255, 255, 255, .09);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .45), inset 0 0 0 1px rgba(255, 255, 255, .05);
+}
 
 /* על רקע כהה הצל האדום נבלע — מחליפים אותו בהילה עדינה */
 .section--dark .btn--primary {
@@ -68,8 +107,10 @@
   font-weight: 600;
   color: var(--c-accent-text);
 }
+.link-arrow { transition: color var(--dur) var(--ease); }
 .link-arrow svg { transition: transform var(--dur) var(--ease); }
-.link-arrow:hover svg { transform: translateX(-4px); }
+.link-arrow:hover { color: #fff; }
+.link-arrow:hover svg { transform: translateX(-6px); }
 
 /* ==========================================================================
    ניווט
