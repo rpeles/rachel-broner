@@ -47,7 +47,7 @@
   "availableLanguage": "he",
   "founder": { "@type": "Person", "name": "רחל ברונר", "jobTitle": "מומחית דאטה ומערכות לעסקים" },
   "telephone": "+972-53-359-7303",
-  "email": "0533597303r@gmail.com"
+  "email": "rachel@rachelbroner.co.il"
 }
 </script>
 </head>
@@ -217,6 +217,51 @@
           <b>רחל ברונר</b>
           <span>מומחית דאטה ומערכות לעסקים</span>
         </p>
+      </div>
+
+      <!-- ==================================================================
+           מסע העבודה — הסמן מהלוגו נוסע בין השלבים, וכל גלגל שיניים מתחיל
+           להסתובב ברגע שהוא מגיע אליו. התחנות עצמן נבנות ב-main.js לפי
+           נקודות אמיתיות על המסלול, כדי שהגלגל ישב עליו בדיוק.
+           ================================================================== -->
+      <div class="flow reveal" data-delay="1">
+        <svg width="0" height="0" class="visually-hidden" aria-hidden="true"><defs>
+          <linearGradient id="flowGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FF6E73"/><stop offset="100%" stop-color="#E0262D"/>
+          </linearGradient>
+          <!-- סמן העכבר מהלוגו. הקצה שלו ב-0,0 -->
+          <symbol id="curMark" viewBox="-14 -1 16 21">
+            <path d="M0,0 L0,17 L-4.3,13.2 L-7,19 L-9.8,17.7 L-7,12.1 L-12.4,12.1 Z"
+                  fill="#fff" stroke="#15161C" stroke-width="1.4" stroke-linejoin="round"/>
+          </symbol>
+          <!-- הסמל מהלוגו: גלגל שיניים אדום עם מטרה במרכז -->
+          <symbol id="hitMark" viewBox="0 0 100 100">
+            <path fill="#E0262D" d="M86.63,44.79L95.88,46.63A46,46 0 0 1 95.88,53.37L86.63,55.21A37,37 0 0 1 84.33,63.80L91.41,70.02A46,46 0 0 1 88.05,75.86L79.12,72.83A37,37 0 0 1 72.83,79.12L75.86,88.05A46,46 0 0 1 70.02,91.41L63.80,84.33A37,37 0 0 1 55.21,86.63L53.37,95.88A46,46 0 0 1 46.63,95.88L44.79,86.63A37,37 0 0 1 36.20,84.33L29.98,91.41A46,46 0 0 1 24.14,88.05L27.17,79.12A37,37 0 0 1 20.88,72.83L11.95,75.86A46,46 0 0 1 8.59,70.02L15.67,63.80A37,37 0 0 1 13.37,55.21L4.12,53.37A46,46 0 0 1 4.12,46.63L13.37,44.79A37,37 0 0 1 15.67,36.20L8.59,29.98A46,46 0 0 1 11.95,24.14L20.88,27.17A37,37 0 0 1 27.17,20.88L24.14,11.95A46,46 0 0 1 29.98,8.59L36.20,15.67A37,37 0 0 1 44.79,13.37L46.63,4.12A46,46 0 0 1 53.37,4.12L55.21,13.37A37,37 0 0 1 63.80,15.67L70.02,8.59A46,46 0 0 1 75.86,11.95L72.83,20.88A37,37 0 0 1 79.12,27.17L88.05,24.14A46,46 0 0 1 91.41,29.98L84.33,36.20A37,37 0 0 1 86.63,44.79Z"/>
+            <g transform="translate(50 50)">
+              <circle r="20" fill="none" stroke="#fff" stroke-width="5.5"/>
+              <circle r="11" fill="none" stroke="#fff" stroke-width="5.5"/>
+              <circle r="3.6" fill="#fff"/>
+            </g>
+          </symbol>
+        </defs></svg>
+
+        <div class="flow__stage" id="flowStage">
+          <svg class="flow__svg" viewBox="0 0 360 520" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <path class="flow__track" d="M 284 38 C 284 90, 76 94, 76 146 C 76 198, 284 202, 284 254 C 284 306, 76 310, 76 362 C 76 406, 180 398, 180 436"/>
+            <path class="flow__prog" id="flowPath" d="M 284 38 C 284 90, 76 94, 76 146 C 76 198, 284 202, 284 254 C 284 306, 76 310, 76 362 C 76 406, 180 398, 180 436"/>
+          </svg>
+
+          <div class="flow__cursor" aria-hidden="true"><svg class="flow__cur"><use href="#curMark"/></svg></div>
+
+          <div class="flow__fin">
+            <span class="flow__mark" aria-hidden="true">
+              <span class="flow__pulse"></span>
+              <svg><use href="#hitMark"/></svg>
+            </span>
+            <b>קלענו לעסק שלך 🎯</b>
+            <span class="flow__sub">מערכת שמתאימה בדיוק לכם</span>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -521,11 +566,11 @@
             </svg>
             <span><b>טלפון</b><span>053-359-7303</span></span>
           </a>
-          <a class="contact__link" id="linkMail" href="mailto:0533597303r@gmail.com">
+          <a class="contact__link" id="linkMail" href="mailto:rachel@rachelbroner.co.il">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7.5 10 6 10-6"/>
             </svg>
-            <span><b>אימייל</b><span>0533597303r@gmail.com</span></span>
+            <span><b>אימייל</b><span>rachel@rachelbroner.co.il</span></span>
           </a>
         </div>
       </div>
@@ -649,7 +694,7 @@
         <p class="footer__title">יצירת קשר</p>
         <ul class="footer__list">
           <li><a href="tel:0533597303" dir="ltr">053-359-7303</a></li>
-          <li><a href="mailto:0533597303r@gmail.com" dir="ltr">0533597303r@gmail.com</a></li>
+          <li><a href="mailto:rachel@rachelbroner.co.il" dir="ltr">rachel@rachelbroner.co.il</a></li>
           <li><a href="#contact">טופס התאמה</a></li>
         </ul>
       </div>

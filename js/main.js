@@ -148,6 +148,98 @@
   onScroll();
 
   /* ======================================================================
+     מסע העבודה — הסמן נוסע במסלול מתפתל בין תחנות של גלגלי שיניים.
+
+     שני דברים חייבים להיות מדויקים כדי שהתחנה תיצבע בדיוק כשהסמן מגיע:
+     1. התחנות והסמן נמדדים על אותו סרגל — אורך המסלול בפועל.
+     2. תנועת הסמן לינארית. עם האטה, מיקומו לא פרופורציונלי לזמן,
+        והצביעה הייתה מתרחשת אחרי שהוא כבר עבר.
+     ====================================================================== */
+  (function buildFlow() {
+    var stage = $('#flowStage');
+    var path  = $('#flowPath');
+    if (!stage || !path || !path.getTotalLength) return;
+
+    var STAGES = ['אפיון', 'תכנון', 'בנייה', 'בדיקות', 'תיקונים', 'הטמעה', 'ליווי'];
+    var N   = STAGES.length;
+    var DUR = 11;      // אורך הלולאה בשניות
+    var T0  = 5;       // אחוז שבו הסמן יוצא לדרך
+    var T1  = 70;      // אחוז שבו הוא נוחת על המטרה
+    var SPAN = 0.88;   // התחנות תופסות 88% מהמסלול; השאר מוביל לסיום
+
+    var VB_W = 360, VB_H = 520;
+    var len = path.getTotalLength();
+    var css = '';
+
+    // צורת גלגל השיניים של התחנה — 9 שיניים, טבעת חלולה עם טבור
+    var GEAR = 'M38.73,21.19L42.91,22.15A19,19 0 0 1 42.91,25.85L38.73,26.81A15,15 0 0 1 37.09,31.32L39.68,34.73A19,19 0 0 1 37.29,37.57L33.48,35.62A15,15 0 0 1 29.33,38.02L29.11,42.30A19,19 0 0 1 25.46,42.94L23.79,39.00A15,15 0 0 1 19.07,38.17L16.15,41.30A19,19 0 0 1 12.94,39.45L14.20,35.35A15,15 0 0 1 11.12,31.68L6.87,32.21A19,19 0 0 1 5.60,28.73L9.19,26.40A15,15 0 0 1 9.19,21.60L5.60,19.27A19,19 0 0 1 6.87,15.79L11.12,16.32A15,15 0 0 1 14.20,12.65L12.94,8.55A19,19 0 0 1 16.15,6.70L19.07,9.83A15,15 0 0 1 23.79,9.00L25.46,5.06A19,19 0 0 1 29.11,5.70L29.33,9.98A15,15 0 0 1 33.48,12.38L37.29,10.43A19,19 0 0 1 39.68,13.27L37.09,16.68A15,15 0 0 1 38.73,21.19Z';
+
+    STAGES.forEach(function (name, i) {
+      var frac = i / (N - 1) * SPAN;              // מיקום התחנה על המסלול
+      var at   = T0 + (T1 - T0) * frac;           // הרגע שבו הסמן נמצא שם
+      var pt   = path.getPointAtLength(len * frac);
+
+      var el = document.createElement('div');
+      el.className = 'flow__st ' + (pt.x > VB_W / 2 ? 'flow__st--left' : 'flow__st--right');
+      el.style.left = (pt.x / VB_W * 100) + '%';
+      el.style.top  = (pt.y / VB_H * 100) + '%';
+      el.innerHTML =
+        '<svg class="flow__gear" viewBox="0 0 48 48" aria-hidden="true">' +
+        '<path class="ring" d="' + GEAR + '"/><circle class="hub" cx="24" cy="24" r="4.5"/></svg>' +
+        '<span class="flow__lbl">' + name + '</span>';
+      stage.appendChild(el);
+
+      // מספר הסיבובים מעוגל לשלם, אחרת סוף הלולאה קופץ ביחס להתחלה
+      var turns = Math.max(1, Math.round(DUR * (100 - at) / 100 / 3.2));
+      var pre   = (at - 0.4).toFixed(2);
+
+      css += '@keyframes flow-spin-' + i + '{0%,' + at.toFixed(2) + '%{transform:rotate(0deg)}' +
+             '100%{transform:rotate(' + (turns * 360) + 'deg)}}';
+      css += '@keyframes flow-ring-' + i + '{0%,' + pre + '%{stroke:rgba(255,255,255,.22);fill:rgba(255,255,255,.03)}' +
+             at.toFixed(2) + '%{stroke:#FF6E73;fill:rgba(224,38,45,.30)}' +
+             (at + 3).toFixed(2) + '%,100%{stroke:#E0262D;fill:rgba(224,38,45,.20)}}';
+      css += '@keyframes flow-hub-' + i + '{0%,' + pre + '%{fill:rgba(255,255,255,.22)}' +
+             at.toFixed(2) + '%,100%{fill:#FF6E73}}';
+      css += '@keyframes flow-lbl-' + i + '{0%,' + pre + '%{color:#8E909B}' +
+             at.toFixed(2) + '%,100%{color:#F4F5F7}}';
+
+      var ease = 'cubic-bezier(.22,.61,.36,1)';
+      el.querySelector('.flow__gear').style.animation = 'flow-spin-' + i + ' ' + DUR + 's linear infinite';
+      el.querySelector('.ring').style.animation       = 'flow-ring-' + i + ' ' + DUR + 's ' + ease + ' infinite';
+      el.querySelector('.hub').style.animation        = 'flow-hub-'  + i + ' ' + DUR + 's ' + ease + ' infinite';
+      el.querySelector('.flow__lbl').style.animation  = 'flow-lbl-'  + i + ' ' + DUR + 's ' + ease + ' infinite';
+    });
+
+    // המסלול נצבע ולינארית, בדיוק בקצב הסמן
+    path.style.strokeDasharray  = len;
+    path.style.strokeDashoffset = len;
+    css += '.flow__prog{animation:flow-draw ' + DUR + 's linear infinite}';
+    css += '@keyframes flow-draw{0%,' + T0 + '%{stroke-dashoffset:' + len + '}' +
+           T1 + '%,100%{stroke-dashoffset:0}}';
+
+    var d = path.getAttribute('d');
+    css += '.flow__cursor{offset-path:path("' + d + '");offset-rotate:0deg;offset-anchor:87.5% 4.8%;' +
+           'animation:flow-move ' + DUR + 's linear infinite}';
+    css += '@keyframes flow-move{0%{offset-distance:0%;opacity:0}3%{opacity:1}' +
+           T0 + '%{offset-distance:0%}' + T1 + '%,95%{offset-distance:100%;opacity:1}' +
+           '100%{offset-distance:100%;opacity:0}}';
+
+    css += '.flow__fin{animation:flow-fin ' + DUR + 's cubic-bezier(.22,.61,.36,1) infinite}';
+    css += '@keyframes flow-fin{0%,72%{opacity:0;transform:scale(.7)}84%{opacity:1;transform:scale(1.06)}' +
+           '90%,100%{opacity:1;transform:scale(1)}}';
+    css += '.flow__pulse{animation:flow-pulse ' + DUR + 's cubic-bezier(.22,.61,.36,1) infinite}';
+    css += '@keyframes flow-pulse{0%,74%{opacity:0;transform:scale(.8)}80%{opacity:.85;transform:scale(1)}' +
+           '92%,100%{opacity:0;transform:scale(1.5)}}';
+    css += '.flow__mark svg{animation:flow-turn ' + DUR + 's linear infinite}';
+    css += '@keyframes flow-turn{0%,72%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}';
+
+    if (reduceMotion) return;   // בלי תנועה — ה-CSS הסטטי כבר מציג את התמונה הסופית
+    var style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+  })();
+
+  /* ======================================================================
      Lightbox — הגדלת צילומי מסך של פרויקטים
      ====================================================================== */
   var lightbox      = $('#lightbox');
