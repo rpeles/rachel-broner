@@ -10,8 +10,9 @@
 <style>
   /* ==========================================================================
      דמו CRM למשרד פיננסי — רץ כולו בדפדפן.
-     אין שרת ואין API: הנתונים נשמרים ב-localStorage (עם נפילה חיננית
-     לזיכרון אם האחסון חסום), כך שהמצב נשמר בין פתיחות של הדמו.
+     אין שרת ואין API: הנתונים נשמרים ב-sessionStorage (עם נפילה חיננית
+     לזיכרון אם האחסון חסום), כך שכל מבקר משחק עם עותק משלו —
+     והמצב מחזיק רק לביקור הנוכחי בדפדפן שלו.
      שפת העיצוב נגזרת מדף הנחיתה: Heebo, פינות רכות, צללים עדינים.
      ========================================================================== */
   :root {
@@ -643,7 +644,7 @@
 </main>
 
 <footer class="hintbar">
-  <span><b>דמו:</b> לחיצה כפולה על לקוח פותחת עריכה · לחיצה על מדד מסננת · אפשר להוסיף משימות והערות. הכול נשמר בדפדפן שלך בלבד.</span>
+  <span><b>דמו:</b> לחיצה כפולה על לקוח פותחת עריכה · לחיצה על מדד מסננת · אפשר להוסיף משימות והערות. הכול נשמר בדפדפן שלך בלבד, רק לביקור הנוכחי.</span>
   <button class="btn btn--ghost btn--sm" id="btnReset" type="button">איפוס נתוני הדמו</button>
 </footer>
 
@@ -657,22 +658,23 @@
   'use strict';
 
   /* ======================================================================
-     אחסון — localStorage כשאפשר, אחרת זיכרון בלבד (iframe בארגז חול)
+     אחסון — sessionStorage כשאפשר, אחרת זיכרון בלבד (iframe בארגז חול).
+     סשן בלבד: כל מבקר רואה את השינויים שלו רק בביקור הנוכחי.
      ====================================================================== */
   var KEY = 'alfa_crm_demo_v2';
   var mem = null;
   var store = {
     read: function () {
-      try { return JSON.parse(localStorage.getItem(KEY) || 'null'); }
+      try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); }
       catch (e) { return mem; }
     },
     write: function (data) {
       mem = data;
-      try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+      try { sessionStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
     },
     clear: function () {
       mem = null;
-      try { localStorage.removeItem(KEY); } catch (e) {}
+      try { sessionStorage.removeItem(KEY); } catch (e) {}
     }
   };
 

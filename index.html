@@ -285,25 +285,28 @@
     <div class="section-head reveal">
       <span class="eyebrow">פרויקטים</span>
       <h2>פרויקטים לדוגמה.</h2>
-      <p class="lead">כמה מערכות שבניתי — מה היה מסובך, מה נבנה, ומה הפך לפשוט יותר.</p>
+      <p class="lead">
+        כמה מערכות שבניתי — מה היה מסובך, מה נבנה, ומה הפך לפשוט יותר.
+        לחצו על <strong>"לדמו חי"</strong> ותנסו אותן בעצמכם — הנתונים לדוגמה, והשינויים שלכם נשמרים רק אצלכם בדפדפן.
+      </p>
     </div>
 
     <div class="projects">
 
-      <!-- ===== פרויקט 1 — ועד בית (נתונים בצילום הם נתוני דמה) ===== -->
+      <!-- ===== פרויקט 1 — ועד בית (דמו חי, נפתח ב-iframe) ===== -->
       <article class="card project reveal">
         <button class="project__media" type="button"
-                data-zoom="assets/projects/project-1.png"
-                data-caption="מערכת ניהול ועד בית — לוח בקרה (הנתונים בצילום הם נתוני דמה)"
-                aria-label="הגדלת צילום המסך: לוח הבקרה של מערכת ועד הבית">
+                data-demo="demos/vaad-bayit.html"
+                data-caption="מערכת ניהול ועד בית — דמו אינטראקטיבי: גבייה, דיירים, הוצאות. נתונים לדוגמה"
+                aria-label="פתיחת דמו אינטראקטיבי של מערכת ועד הבית">
           <img src="assets/projects/project-1.png"
                alt="לוח הבקרה של מערכת ועד הבית: יתרת קופה, גבייה חודשית, חובות פתוחים וטבלת דירות בחוב"
                loading="lazy" width="1832" height="912">
           <span class="project__zoom-hint">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v6M8 11h6"/>
+              <path d="m9 18 6-6-6-6"/><circle cx="12" cy="12" r="10"/>
             </svg>
-            להגדלה
+            לדמו חי
           </span>
         </button>
         <div class="project__body">
@@ -362,22 +365,37 @@
         </div>
       </article>
 
-      <!-- ===== פרויקט 3 — מערכת דיוור (בעבודה; ללא פרטים עד שיסתיים) ===== -->
+      <!-- ===== פרויקט 3 — מערכת דיוור (בעבודה; דמו מיני להתרשמות) ===== -->
       <article class="card project reveal" data-delay="2">
-        <div class="project__media">
-          <div class="project__placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>
+        <button class="project__media" type="button"
+                data-demo="demos/newsletter.html"
+                data-caption="מערכת דיוור — דמו מיני: מנויים, כתיבת דיוור ושליחה עם מעקב פתיחות. נתונים לדוגמה"
+                aria-label="פתיחת דמו אינטראקטיבי של מערכת הדיוור">
+          <img src="assets/projects/project-3.png"
+               alt="דשבורד מערכת הדיוור: מנויים פעילים, דיוורים שנשלחו, אחוזי פתיחה ורשימת נרשמים אחרונים"
+               loading="lazy" width="1832" height="912">
+          <span class="project__zoom-hint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m9 18 6-6-6-6"/><circle cx="12" cy="12" r="10"/>
             </svg>
-            <span class="project__wip">בעבודה</span>
-          </div>
-        </div>
+            לדמו חי
+          </span>
+        </button>
         <div class="project__body">
           <span class="project__type">מערכת דיוור</span>
           <h3 class="card__title">בניית מערכת דיוור פרטית ללקוחה</h3>
           <div class="project__rows">
             <div>
-              <p class="project__row-text">בעבודה</p>
+              <p class="project__row-label">האתגר</p>
+              <p class="project__row-text">שירותי דיוור חיצוניים עולים כסף כל חודש, מגבילים בכמות — ורשימת התפוצה יושבת אצלם.</p>
+            </div>
+            <div>
+              <p class="project__row-label">הפתרון</p>
+              <p class="project__row-text">מערכת דיוור פרטית: ניהול מנויים, עורך מיילים מעוצב, שליחה ומעקב פתיחות — הכול בבעלות מלאה של הלקוחה.</p>
+            </div>
+            <div>
+              <p class="project__row-label">ובינתיים</p>
+              <p class="project__row-text">הפרויקט בעבודה — אבל אפשר כבר לשחק בדמו המיני, בהשראת הניוזלטר שלי "סודות מהמקלדת".</p>
             </div>
           </div>
         </div>
@@ -416,12 +434,16 @@
 
         <blockquote class="testimonial__text">
           <p>
-            רחל נכנסה לעסק שלנו כשהכול היה מפוזר בין אקסלים, וואטסאפים וראש עמוס.
-            היא ישבה, הקשיבה, הבינה בדיוק איך אנחנו עובדים — ובנתה לנו מערכת
-            שמדברת בשפה שלנו ולא להפך.
+            רחל בנתה לי מערכת CRM שמרכזת את כל הלידים, הלקוחות, המשימות והגבייה,
+            עם אוטומציות שמלוות את הלקוח מרגע הקליטה ועד סיום הטיפול.
           </p>
           <p>
-            <strong>היום הכול נמצא במקום אחד, ואני סוף סוף יודעת מה קורה בעסק בלי לחפש.</strong>
+            <strong>היום הכול הרבה יותר מסודר, נוח ואוטומטי, ואני פשוט לא צריכה
+            להחזיק את כל העסק בראש.</strong>
+          </p>
+          <p>
+            מעבר למקצועיות וליכולת הטכנית, רחל ידעה להבין בדיוק את הצרכים שלי
+            ולבנות מערכת שבאמת מתאימה לי ולעסק שלי. ממליצה עליה בחום!
           </p>
         </blockquote>
 
@@ -613,8 +635,8 @@
     </svg>
   </button>
   <img class="lightbox__img" id="lightboxImg" src="" alt="">
-  <!-- דמו אינטראקטיבי. allow-same-origin נדרש כדי שהדמו יוכל לשמור את המצב ב-localStorage;
-       הקובץ הוא שלנו ונטען מאותו מקור, ואין בו קוד חיצוני. -->
+  <!-- דמו אינטראקטיבי. allow-same-origin נדרש כדי שהדמו יוכל לשמור את המצב ב-sessionStorage
+       (לביקור הנוכחי בלבד); הקובץ הוא שלנו ונטען מאותו מקור, ואין בו קוד חיצוני. -->
   <iframe class="lightbox__frame" id="lightboxFrame" src="" title="דמו אינטראקטיבי"
           sandbox="allow-scripts allow-modals allow-same-origin" loading="lazy"></iframe>
   <p class="lightbox__caption" id="lightboxCaption"></p>
