@@ -418,9 +418,19 @@ button.project__media:focus-visible .project__zoom-hint {
   transform: translateX(-2px);
 }
 .contact__link svg { width: 18px; height: 18px; color: var(--c-accent-text); flex: none; }
-.contact__link b { display: block; font-weight: 600; }
+
+/* הטקסט נמתח על כל רוחב הכרטיס ומיושר לשמאל, כך שאין חלל ריק באמצע
+   והתווית והערך מתחילים מאותו קצה. האייקון נשאר מעוגן בימין. */
+.contact__link > span { flex: 1; min-width: 0; }
+.contact__link b { display: block; font-weight: 600; text-align: left; }
 /* מספר הטלפון והמייל הם המידע שמחפשים כאן — לכן הם בהירים כמו הטקסט המשני */
-.contact__link span { direction: ltr; display: block; font-size: var(--fs-sm); color: var(--c-ink-2); text-align: start; }
+.contact__link span {
+  direction: ltr;
+  display: block;
+  font-size: var(--fs-sm);
+  color: var(--c-ink-2);
+  text-align: left;
+}
 
 .form-row { display: grid; gap: var(--sp-4); }
 @media (min-width: 560px) { .form-row { grid-template-columns: repeat(2, 1fr); } }
