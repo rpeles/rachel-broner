@@ -389,29 +389,38 @@ body.is-locked { overflow: hidden; }
   color: var(--c-ink-3);
 }
 
+/* שדות הכתיבה בהירים בכוונה, בניגוד לשאר הדף:
+   כתיבה על רקע כמעט־שחור מרתיעה מי שלא רגיל לממשקים כהים,
+   ואלה השדות היחידים שבהם הגולש באמת מקליד. */
 .input, .textarea {
   width: 100%;
   padding: 13px 16px;
-  background: rgba(255, 255, 255, .045);
-  border: 1px solid var(--c-line);
+  background: #F3F4F7;
+  border: 1px solid #F3F4F7;
   border-radius: var(--r-md);
   font-size: var(--fs-body);
-  color: var(--c-ink);
+  color: #14151B;
   transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease),
               background var(--dur-fast) var(--ease);
 }
-.input::placeholder, .textarea::placeholder { color: var(--c-ink-3); }
+.input::placeholder, .textarea::placeholder { color: #6C6E7A; }
+
+.input:hover, .textarea:hover { background: #FFFFFF; border-color: #FFFFFF; }
 
 .input:focus, .textarea:focus {
   outline: none;
-  background: rgba(255, 255, 255, .07);
-  border-color: var(--c-accent-text);
-  box-shadow: 0 0 0 3px rgba(255, 110, 115, .18);
+  background: #FFFFFF;
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px rgba(224, 38, 45, .3);
 }
 
 .textarea { min-height: 130px; resize: vertical; line-height: 1.65; }
 
-.input[aria-invalid="true"], .textarea[aria-invalid="true"] { border-color: var(--c-accent-text); }
+/* על שדה בהיר האדום הכהה בולט; הוורוד הבהיר היה נבלע */
+.input[aria-invalid="true"], .textarea[aria-invalid="true"] {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px rgba(224, 38, 45, .22);
+}
 
 .field__error {
   display: none;
@@ -432,7 +441,15 @@ body.is-locked { overflow: hidden; }
 }
 
 .radio-grid { display: grid; gap: 8px; }
-@media (min-width: 620px) { .radio-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 620px) {
+  .radio-grid { grid-template-columns: repeat(2, 1fr); }
+  /* "אחר" נפרס על שני הטורים — אחרת הוא נשאר יתום בשורה אחרונה */
+  .radio--wide { grid-column: 1 / -1; }
+}
+
+/* השדה שנפתח מתחת ל"אחר" */
+.field--reveal { margin-top: var(--sp-4); margin-bottom: 0; }
+.field--reveal[hidden] { display: none; }
 
 .radio {
   display: flex;

@@ -156,15 +156,17 @@
     <p class="hero__role reveal" data-delay="1">בניית מערכות, דאטה ואוטומציות לעסקים</p>
 
     <div class="hero__sub reveal" data-delay="2">
-      <p>יש שני דברים שאני באמת נהנית מהם: <strong>טכנולוגיה ולעזור לאנשים</strong>.</p>
       <p>
-        אני אוהבת ללמוד טכנולוגיות חדשות, למצוא פתרונות יצירתיים, לתכנת, לעבוד עם נתונים
-        ובעיקר — לקחת משהו מבולגן ולהפוך אותו למערכת שעובדת.
-        ומצד שני, אני אוהבת לעזור לאנשים ועסקים לעבוד חכם, מסודר ויעיל יותר.
+        השילוב בין אהבה אמיתית לטכנולוגיה, דאטה ומבנה מערכתי, לבין הרצון לעזור
+        לעסקים לצמוח ולהתייעל, הוא הלב הפועם של העסק שלי.
       </p>
       <p>
-        מהחיבור הזה נולד העסק שלי —
-        <strong>בניית מערכות, דאטה ואוטומציות שמותאמות באמת לעסק.</strong>
+        אני מתמחה בלקיחת תהליכים מסורבלים והפיכתם למערכות אוטומטיות, חכמות ויעילות
+        שחוסכות זמן יקר ומנהלות את הנתונים שלכם כמו שצריך.
+      </p>
+      <p>
+        אם אתם מחפשים פתרונות טכנולוגיים מותאמים אישית שעובדים חלק ומדויק —
+        <strong>אני כאן כדי לבנות אותם עבורכם.</strong>
       </p>
     </div>
 
@@ -191,7 +193,6 @@
     <div class="about">
 
       <div class="about__text reveal">
-        <span class="eyebrow">קצת עלי</span>
         <h2>מי אני?</h2>
         <hr class="rule">
         <div style="margin-top:var(--sp-6)">
@@ -232,7 +233,6 @@
   <div class="container">
 
     <div class="section-head section-head--center reveal">
-      <span class="eyebrow">פתרונות</span>
       <h2>אז מה אני מציעה?</h2>
       <p class="lead">
         אני באמת מאמינה שאין דרך אחת נכונה לנהל עסק.
@@ -325,7 +325,6 @@
   <div class="container">
 
     <div class="section-head reveal">
-      <span class="eyebrow">פרויקטים</span>
       <h2>פרויקטים לדוגמה.</h2>
       <p class="lead">
         כמה מערכות שבניתי — מה היה מסובך, מה נבנה, ומה הפך לפשוט יותר.
@@ -460,7 +459,6 @@
   <div class="container">
 
     <div class="section-head section-head--center reveal">
-      <span class="eyebrow">המלצות</span>
       <h2>מה אומרים עליי</h2>
       <p class="lead">
         הדבר שהכי משמח אותי הוא לשמוע שהמערכת באמת עושה את ההבדל ביום־יום.
@@ -513,7 +511,6 @@
 
       <!-- ===== צד מידע ===== -->
       <div class="contact__aside reveal">
-        <span class="eyebrow">צור קשר</span>
         <h2>הגיע הזמן להוציא את העסק מהראש.</h2>
         <p class="lead">
           אם יש לך תחושה שהעסק יכול לעבוד הרבה יותר מסודר, אבל אתה לא יודע מאיפה להתחיל —
@@ -577,8 +574,17 @@
             <label class="radio"><input type="radio" name="need" value="אני רוצה אוטומציות"><span class="radio__mark" aria-hidden="true"></span><span class="radio__text">אני רוצה אוטומציות</span></label>
             <label class="radio"><input type="radio" name="need" value="אני רוצה לבנות לבד וצריך ליווי"><span class="radio__mark" aria-hidden="true"></span><span class="radio__text">אני רוצה לבנות לבד וצריך ליווי</span></label>
             <label class="radio"><input type="radio" name="need" value="אני איש/אשת אוטומציה או פיתוח וצריך ייעוץ"><span class="radio__mark" aria-hidden="true"></span><span class="radio__text">אני איש/אשת אוטומציה או פיתוח וצריך ייעוץ</span></label>
+            <label class="radio radio--wide"><input type="radio" name="need" value="אחר"><span class="radio__mark" aria-hidden="true"></span><span class="radio__text">אחר — משהו אחר לגמרי</span></label>
           </div>
           <p class="field__error" data-error-for="need" style="display:none">נא לבחור אחת מהאפשרויות</p>
+
+          <!-- נפתח רק כשנבחר "אחר". ה-JS מסיר את hidden וממקד את השדה. -->
+          <div class="field field--reveal" id="needOtherField" hidden>
+            <label class="field__label" for="needOther">אז מה כן? <span class="req" aria-hidden="true">*</span></label>
+            <input class="input" type="text" id="needOther" name="needOther"
+                   placeholder="כתבו לי במילים שלכם">
+            <p class="field__error" data-error-for="needOther">נשמח לדעת במה מדובר</p>
+          </div>
         </fieldset>
 
         <div class="field">

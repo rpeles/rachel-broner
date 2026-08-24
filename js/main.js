@@ -253,6 +253,32 @@
       return digits.length >= 9 && digits.length <= 15;
     }
 
+    /* השדה "אז מה כן?" מוצג רק כשנבחרה האפשרות "אחר" */
+    var needOtherField = $('#needOtherField');
+    var needOtherInput = $('#needOther');
+
+    function isOtherSelected() {
+      var picked = form.querySelector('input[name="need"]:checked');
+      return !!picked && picked.value === 'אחר';
+    }
+
+    function syncNeedOther(focusIt) {
+      if (!needOtherField) return;
+      var show = isOtherSelected();
+      needOtherField.hidden = !show;
+      if (!show) {
+        needOtherInput.value = '';
+        setFieldError('needOther', false);
+      } else if (focusIt) {
+        needOtherInput.focus();
+      }
+    }
+
+    form.addEventListener('change', function (e) {
+      if (e.target.name === 'need') syncNeedOther(true);
+    });
+    syncNeedOther(false);   // המצב ההתחלתי, גם אחרי רענון שמשחזר בחירה
+
     function validate() {
       var ok = true;
       var firstBad = null;
@@ -276,18 +302,32 @@
         firstBad = firstBad || form.querySelector('input[name="need"]');
       }
 
+      // "אחר" בלי הסבר לא אומר לי כלום — לכן הפירוט נדרש
+      var otherBad = isOtherSelected() && !needOtherInput.value.trim();
+      setFieldError('needOther', otherBad);
+      if (otherBad) {
+        ok = false;
+        firstBad = firstBad || needOtherInput;
+      }
+
       if (firstBad && firstBad.focus) firstBad.focus();
       return ok;
     }
 
     function collect() {
       var need = form.querySelector('input[name="need"]:checked');
+      var needValue = need ? need.value : '';
+      var needOther = needOtherInput ? needOtherInput.value.trim() : '';
+      // כשנבחר "אחר", הפירוט מצורף לערך עצמו כדי שהפנייה תהיה מובנת בלי הצלבה
+      if (needValue === 'אחר' && needOther) needValue = 'אחר: ' + needOther;
+
       return {
         fullName:     form.elements.fullName.value.trim(),
         businessName: form.elements.businessName.value.trim(),
         phone:        form.elements.phone.value.trim(),
         email:        form.elements.email.value.trim(),
-        need:         need ? need.value : '',
+        need:         needValue,
+        needOther:    needOther,
         message:      form.elements.message.value.trim(),
         source:       'landing-page',
         pageUrl:      window.location.href,
@@ -364,6 +404,7 @@
       sendToWebhook(CFG.webhookUrl, data)
         .then(function () {
           form.reset();
+          syncNeedOther(false);   // reset מנקה את הבחירה, אבל לא מסתיר את השדה
           showStatus('ok', '<strong>תודה, הפנייה התקבלה.</strong><br>אחזור אליכם באופן אישי בהקדם.');
         })
         .catch(function () {
@@ -384,6 +425,7 @@
       var name = e.target.name;
       if (REQUIRED_TEXT.indexOf(name) > -1) setFieldError(name, false);
       if (name === 'need') setFieldError('need', false);
+      if (name === 'needOther') setFieldError('needOther', false);
     });
 
   }
