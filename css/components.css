@@ -75,17 +75,18 @@
   100% { opacity: 0; transform: translateX(-430%) skewX(-18deg); }
 }
 
+/* מסגרת מודגשת יותר מקווי ההפרדה הרגילים — אחרת הכפתור נראה כבוי */
 .btn--ghost {
-  background: rgba(255, 255, 255, .05);
+  background: rgba(255, 255, 255, .07);
   color: var(--c-ink);
-  border-color: var(--c-line);
+  border-color: rgba(255, 255, 255, .26);
   box-shadow: var(--shadow-sm);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 .btn--ghost:hover {
-  border-color: rgba(255, 255, 255, .34);
-  background: rgba(255, 255, 255, .09);
+  border-color: rgba(255, 255, 255, .45);
+  background: rgba(255, 255, 255, .11);
   box-shadow: 0 8px 22px rgba(0, 0, 0, .45), inset 0 0 0 1px rgba(255, 255, 255, .05);
 }
 
@@ -303,7 +304,7 @@ body.is-locked { overflow: hidden; }
   transform: translateY(-3px);
 }
 .card__title { margin-bottom: var(--sp-3); }
-.card__text { color: var(--c-ink-2); font-size: var(--fs-sm); line-height: 1.7; }
+.card__text { color: var(--c-ink-2); font-size: var(--fs-sm); line-height: 1.88; }
 
 /* מספר סידורי */
 .card__num {
@@ -462,7 +463,8 @@ body.is-locked { overflow: hidden; }
   flex: none;
   width: 18px;
   height: 18px;
-  border: 1.5px solid var(--c-line);
+  /* מסגרת מודגשת מקווי ההפרדה — העיגול צריך להיראות כפקד שאפשר ללחוץ */
+  border: 1.5px solid rgba(255, 255, 255, .3);
   border-radius: 50%;
   transition: border-color var(--dur-fast) var(--ease);
 }
@@ -617,10 +619,9 @@ body.is-locked { overflow: hidden; }
 
 .footer__title {
   margin-bottom: var(--sp-3);
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  letter-spacing: var(--ls-wide);
-  text-transform: uppercase;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.03em;
   color: var(--c-ink-inv);
 }
 .footer__list li { margin-bottom: 10px; }

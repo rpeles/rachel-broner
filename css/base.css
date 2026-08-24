@@ -207,20 +207,21 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .section-head { max-width: 720px; margin-bottom: var(--sp-7); }
 .section-head--center { margin-inline: auto; text-align: center; }
 
+/* ריווח אותיות רחב מיועד לרישיות לטיניות; בעברית הוא רק מקשה על הקריאה,
+   ולכן כאן הוא מצומצם והכותרת גדולה וחזקה יותר במקום. */
 .eyebrow {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
   margin-bottom: var(--sp-4);
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  letter-spacing: var(--ls-wide);
-  text-transform: uppercase;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   color: var(--c-accent-text);
 }
 .eyebrow::before {
   content: "";
-  width: 22px;
+  width: 26px;
   height: 2px;
   background: var(--c-accent-text);
   border-radius: 2px;
@@ -241,9 +242,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .lead {
   margin-top: var(--sp-5);
   font-size: var(--fs-lead);
-  line-height: 1.65;
+  line-height: 1.75;
   color: var(--c-ink-2);
-  font-weight: 300;
+  font-weight: 400;
 }
 .text-accent { color: var(--c-accent-text); }
 
