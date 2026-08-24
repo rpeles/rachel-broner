@@ -366,8 +366,14 @@ button.project__media:focus-visible .project__zoom-hint {
 /* בלי תמונת פורטרט — טור טקסט אחד ברוחב קריא */
 .about__text { max-width: 720px; }
 
-.about__text p + p { margin-top: var(--sp-4); }
-.about__text p { color: var(--c-ink-2); line-height: 1.8; }
+.about__text p + p { margin-top: var(--sp-5); }
+/* גדול מטקסט הגוף הרגיל אך קטן מ-lead: זה הטקסט האישי של הדף
+   ומגיע לו קצת יותר נוכחות, בלי להפוך לכותרת. */
+.about__text p {
+  color: var(--c-ink-2);
+  font-size: clamp(1.05rem, 1rem + 0.32vw, 1.1875rem);
+  line-height: 1.85;
+}
 .about__signature {
   margin-top: var(--sp-6);
   padding-top: var(--sp-5);
