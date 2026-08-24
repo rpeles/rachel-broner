@@ -30,9 +30,73 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: -2;
   background: var(--grad-tint);
   pointer-events: none;
+}
+
+/* ==========================================================================
+   גלגלי שיניים ברקע
+   מנגנון שמסתובב בשקט מאחורי התוכן — הרחבה של גלגל השיניים שבלוגו.
+   השכבה מקובעת למסך ויושבת מעל הגרדיאנט (z-index -1) ומתחת לכל התוכן.
+   ========================================================================== */
+
+.gears {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  /* רשת תוכניות עדינה — נותנת לשחור מרקם במקום שטח ריק */
+  background-image:
+    linear-gradient(var(--gear-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--gear-grid) 1px, transparent 1px);
+  background-size: 68px 68px;
+  /* הרשת דוהה לקצוות כדי שלא תיראה כמו טבלה */
+  -webkit-mask-image: radial-gradient(120% 95% at 50% 30%, #000 25%, transparent 82%);
+          mask-image: radial-gradient(120% 95% at 50% 30%, #000 25%, transparent 82%);
+}
+
+/* הצללה רכה במרכז: הטקסט תמיד יושב על רקע שקט,
+   בזמן שהפינות נשארות עשירות ומלאות תנועה. */
+.gears::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(58% 50% at 50% 42%,
+              rgba(13, 14, 18, .88) 0%,
+              rgba(13, 14, 18, .45) 52%,
+              transparent 78%);
+  pointer-events: none;
+}
+
+.gears__svg { width: 100%; height: 100%; display: block; }
+
+.gear {
+  fill: var(--gear-fill);
+  stroke: var(--gear-line);
+  stroke-width: 1.5;
+  /* הקו נשאר באותה עובי חזותית בכל קנה מידה — אחרת הגלגל הגדול יוצא מגושם */
+  vector-effect: non-scaling-stroke;
+  /* מרכז הסיבוב הוא מרכז הגלגל עצמו, לא פינת ה-SVG */
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: gear-spin var(--spin, 140s) linear infinite;
+}
+
+/* גלגל משנן מסתובב בכיוון ההפוך מזה שהוא נושך בו */
+.gear--rev { animation-direction: reverse; }
+
+/* גלגל האקסנט — האדום מהלוגו, קצת יותר נוכח */
+.gear--accent { fill: var(--gear-accent); stroke: rgba(240, 74, 80, .3); }
+
+@keyframes gear-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* מכבדים בקשה למעט תנועה: הגלגלים נעצרים, הרקע נשאר */
+@media (prefers-reduced-motion: reduce) {
+  .gear { animation: none; }
 }
 
 img, svg, video { display: block; max-width: 100%; height: auto; }
@@ -90,8 +154,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
   top: -100px;
   z-index: 200;
   padding: var(--sp-3) var(--sp-5);
-  background: var(--c-ink);
-  color: var(--c-ink-inv);
+  background: var(--c-accent);
+  color: #fff;
   border-radius: var(--r-sm);
   font-size: var(--fs-sm);
   font-weight: 600;
@@ -112,10 +176,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 .section { padding-block: var(--section-y); position: relative; }
 
-/* כל הסקשנים שקופים — הרקע המעברי של הדף (body::before) עובר דרכם.
-   מה שמפריד ביניהם הוא קו־שיער דק ולא בלוק צבע, כדי לשמור על אווריריות. */
-.section--soft,
-.section--tint { background: transparent; }
+/* כל הסקשנים שקופים — הרקע ושכבת גלגלי השיניים עוברים דרכם.
+   מה שמפריד ביניהם הוא קו־שיער דק ולא בלוק צבע, כדי לשמור על אווריריות.
+   ל-soft ול-tint יש הבהרה מזערית בלבד, כדי לתת מקצב לדף בלי לחסום את הרקע. */
+.section--soft { background: rgba(255, 255, 255, .014); }
+.section--tint { background: rgba(255, 255, 255, .025); }
 
 .section + .section::before,
 .hero::after {
@@ -151,24 +216,22 @@ button, input, select, textarea { font: inherit; color: inherit; }
   font-weight: 600;
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
-  color: var(--c-accent);
+  color: var(--c-accent-text);
 }
 .eyebrow::before {
   content: "";
   width: 22px;
   height: 2px;
-  background: var(--c-accent);
+  background: var(--c-accent-text);
   border-radius: 2px;
 }
 .section-head--center .eyebrow::before { display: none; }
-.section--dark .eyebrow { color: #FF6B70; }
-.section--dark .eyebrow::before { background: #FF6B70; }
 
 /* קו אדום — מוטיב מרכזי מהלוגו */
 .rule {
   width: 52px;
   height: 2px;
-  background: var(--c-accent);
+  background: linear-gradient(90deg, var(--c-accent-text), var(--c-accent));
   border: 0;
   margin: var(--sp-5) 0 0;
   border-radius: 2px;
@@ -182,10 +245,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   color: var(--c-ink-2);
   font-weight: 300;
 }
-.section--dark .lead { color: var(--c-ink-inv-2); }
-
-.text-accent { color: var(--c-accent); }
-.section--dark .text-accent { color: #FF6B70; }
+.text-accent { color: var(--c-accent-text); }
 
 /* משפט סיכום מודגש */
 .statement {
