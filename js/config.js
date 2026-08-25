@@ -17,7 +17,7 @@ window.SITE_CONFIG = {
      כל עוד השדה ריק, הטופס לא מעמיד פנים שנשלח: הוא מודיע לגולש
      שהטופס לא מחובר ומציע קישור מייל מוכן עם כל הפרטים.
      ------------------------------------------------------------------ */
-  webhookUrl: "https://script.google.com/macros/s/AKfycbxbi-qJGXjRDXv_yZP2omaJa3_IJoA40BRw-ssz79OxHwqzTq9iKqQkr1E5aIMvgEbMlA/exec",
+  webhookUrl: "https://script.google.com/macros/s/AKfycbwAPywTyYGelhUcbk0OieZe1z7OK2YU4GNbLLNMZ_OJfsTiJ3mVhTeyvECmB5mGR4mVJQ/exec",
 
   /* ------------------------------------------------------------------
      פרטי קשר
