@@ -427,7 +427,7 @@
       };
     }
 
-    function asWhatsappText(d) {
+    function asPlainText(d) {
       return [
         'פנייה חדשה מהאתר',
         '',
@@ -444,9 +444,24 @@
       }).join('\n');
     }
 
-    /* שליחה ל-webhook.
-       ניסיון ראשון: fetch רגיל (מחזיר סטטוס אמיתי אם ה-webhook מגדיר CORS).
-       גיבוי: no-cors — עובד מול Make / n8n / Google Apps Script שלא מחזירים CORS. */
+    /* גיבוי אם השליחה נכשלה: קישור מייל מוכן עם כל הפרטים,
+       כדי שפנייה לא תלך לאיבוד גם כשהשרת לא זמין. */
+    function buildMailtoUrl(d) {
+      return 'mailto:' + (CFG.email || '') +
+             '?subject=' + encodeURIComponent('פנייה מהאתר — ' + d.fullName) +
+             '&body=' + encodeURIComponent(asPlainText(d));
+    }
+
+    function fallbackHtml(d) {
+      return '<a href="' + buildMailtoUrl(d) + '"><strong>שליחה במייל</strong></a>' +
+             (CFG.phone ? ' או בטלפון <a href="tel:' + CFG.phone + '" dir="ltr">' + CFG.phone + '</a>' : '') + '.';
+    }
+
+    /* שליחה לשרת שמעביר את הפנייה למייל.
+       ניסיון ראשון: fetch רגיל (מחזיר סטטוס אמיתי אם השרת מגדיר CORS).
+       גיבוי: no-cors — עובד מול Make / n8n / Google Apps Script שלא מחזירים CORS.
+       ב-no-cors התשובה אטומה, ולכן אי אפשר לדעת אם השרת קיבל — זה המחיר
+       של שליחה מדף סטטי בלי שרת משלנו. */
     function sendToWebhook(url, data) {
       var body = JSON.stringify(data);
 
@@ -481,10 +496,11 @@
 
       var data = collect();
 
-      // אין webhook מוגדר → מעבר לוואטסאפ עם כל הפרטים
+      // אין כתובת שליחה מוגדרת → לא מעמידים פנים שנשלח, ומציעים דרך חלופית
       if (!CFG.webhookUrl) {
-        window.open(buildWhatsappUrl(asWhatsappText(data)), '_blank', 'noopener');
-        showStatus('ok', '<strong>נפתח וואטסאפ עם הפרטים שלכם.</strong><br>שלחו את ההודעה ואחזור אליכם בהקדם.');
+        showStatus('error',
+          '<strong>הטופס עדיין לא מחובר.</strong><br>' +
+          'בינתיים אפשר ליצור קשר ישירות: ' + fallbackHtml(data));
         return;
       }
 
@@ -501,9 +517,7 @@
         })
         .catch(function () {
           showStatus('error',
-            'משהו השתבש בשליחה. ' +
-            '<a href="' + buildWhatsappUrl(asWhatsappText(data)) + '" target="_blank" rel="noopener"><strong>שלחו לי בוואטסאפ</strong></a>' +
-            ' או במייל ' + (CFG.email || '') + '.');
+            'משהו השתבש בשליחה. אפשר ' + fallbackHtml(data));
         })
         .finally(function () {
           submitBtn.classList.remove('is-loading');
