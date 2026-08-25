@@ -24,13 +24,43 @@
 
    אחרי שינוי בקוד צריך לפרוס מחדש: "פריסה" ← "ניהול פריסות" ←
    העיפרון ← "גרסה: חדשה" ← "פריסה". הכתובת נשארת אותה כתובת.
+
+   --------------------------------------------------------------------------
+   כשההפעלות מסתיימות בהצלחה אבל מייל לא מגיע:
+
+   הסיבה השכיחה היא סינון ספאם. הפנייה נשלחת משרתי גוגל אל תיבה
+   שמנוהלת בספק אחר (myinbox), והספק הזה עלול לסווג אותה כספאם.
+
+   1. לבדוק בתיקיית הספאם / דואר זבל בתיבה של הדומיין, ואם ההודעה שם
+      לסמן "לא ספאם" ולהוסיף את כתובת השולח לאנשי הקשר.
+   2. הסקריפט שולח גם עותק לתיבת הגוגל שמריצה אותו (ראו
+      ALSO_COPY_TO_SELF למטה) — שם ההודעה כמעט תמיד עוברת.
+   3. לאבחון: לפתוח בדפדפן את כתובת הפריסה עם ?check=1 בסוף.
+      מוחזר לאן נשלח, מי מריץ, וכמה מיילים נשארו במכסה היומית.
+      מכסה 0 פירושה שנגמרה המכסה להיום (100 נמענים ביום בחשבון רגיל).
    ========================================================================== */
 
 /* הכתובת שאליה יגיעו הפניות */
 const TO = 'rachel@rachelbroner.co.il';
 
+/* עותק לתיבת הגוגל שמריצה את הסקריפט.
+   הפנייה נשלחת משרתי גוגל, והתיבה בדומיין מנוהלת בספק אחר (myinbox),
+   ולכן היא עלולה להיתפס שם כספאם. העותק הזה מגיע לתיבה של אותו חשבון
+   שממנו נשלח המייל, ולכן הוא כמעט תמיד עובר. */
+const ALSO_COPY_TO_SELF = true;
+
 /* שם השולח כפי שיופיע בתיבה */
 const FROM_NAME = 'טופס האתר';
+
+
+function recipients() {
+  const list = [TO];
+  if (ALSO_COPY_TO_SELF) {
+    const self = Session.getEffectiveUser().getEmail();
+    if (self && list.indexOf(self) === -1) list.push(self);
+  }
+  return list.join(',');
+}
 
 
 function doPost(e) {
@@ -61,14 +91,19 @@ function doPost(e) {
       'זמן:    ' + formatTime(d.submittedAt)
     );
 
-    MailApp.sendEmail({
-      to:      TO,
+    const opts = {
+      to:      recipients(),
       subject: 'פנייה מהאתר — ' + (d.fullName || 'ללא שם'),
       body:    lines.join('\n'),
-      name:    FROM_NAME,
-      /* כך אפשר ללחוץ "השב" במייל והתשובה הולכת ישר ללקוח */
-      replyTo: isEmail(d.email) ? d.email : TO
-    });
+      name:    FROM_NAME
+    };
+
+    /* כך אפשר ללחוץ "השב" במייל והתשובה הולכת ישר ללקוח.
+       כתובות בדומיינים שמורים כמו example.com מדלגות על זה — הן
+       מעלות את הסיכוי שמסנני ספאם יתפסו את ההודעה. */
+    if (isRealEmail(d.email)) opts.replyTo = d.email;
+
+    MailApp.sendEmail(opts);
 
     return reply(true);
 
@@ -76,7 +111,7 @@ function doPost(e) {
     /* הפנייה לא תלך לאיבוד בשקט: נשלח לעצמנו את השגיאה עם הגוף הגולמי */
     try {
       MailApp.sendEmail({
-        to: TO,
+        to: recipients(),
         subject: 'שגיאה בטופס האתר',
         body: 'השגיאה:\n' + err + '\n\nמה שהתקבל:\n' + (e && e.postData ? e.postData.contents : '(ריק)'),
         name: FROM_NAME
@@ -87,11 +122,25 @@ function doPost(e) {
 }
 
 
-/* פתיחת הכתובת בדפדפן — בדיקה מהירה שהפריסה עלתה */
-function doGet() {
+/* פתיחת הכתובת בדפדפן — בדיקה מהירה שהפריסה עלתה.
+   הוספת ?check=1 לסוף הכתובת מחזירה אבחון: לאן נשלח, מי מריץ,
+   וכמה מיילים נשארו במכסה היומית. שימושי כשמייל לא מגיע. */
+function doGet(e) {
+  const wantsCheck = e && e.parameter && e.parameter.check;
+  if (!wantsCheck) {
+    return ContentService
+      .createTextOutput('הטופס מחובר ופעיל.')
+      .setMimeType(ContentService.MimeType.TEXT);
+  }
   return ContentService
-    .createTextOutput('הטופס מחובר ופעיל.')
-    .setMimeType(ContentService.MimeType.TEXT);
+    .createTextOutput(JSON.stringify({
+      ok:             true,
+      sendsTo:        recipients(),
+      runsAs:         Session.getEffectiveUser().getEmail(),
+      remainingQuota: MailApp.getRemainingDailyQuota(),
+      scriptTime:     Utilities.formatDate(new Date(), 'Asia/Jerusalem', 'dd/MM/yyyy HH:mm')
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 
@@ -114,8 +163,12 @@ function reply(ok) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-function isEmail(v) {
-  return typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+function isRealEmail(v) {
+  if (typeof v !== 'string') return false;
+  const s = v.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s)) return false;
+  /* דומיינים שמורים לדוגמאות — לא כתובות אמיתיות */
+  return !/@(example\.(com|org|net)|test|localhost)$/i.test(s);
 }
 
 function formatTime(iso) {
