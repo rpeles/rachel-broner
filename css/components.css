@@ -90,11 +90,6 @@
   box-shadow: 0 8px 22px rgba(0, 0, 0, .45), inset 0 0 0 1px rgba(255, 255, 255, .05);
 }
 
-/* על רקע כהה הצל האדום נבלע — מחליפים אותו בהילה עדינה */
-.section--dark .btn--primary {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .4), 0 10px 30px rgba(212, 33, 39, .3);
-}
-
 .btn--sm { padding: 10px 18px; font-size: var(--fs-xs); border-radius: 9px; }
 .btn--lg { padding: 16px 32px; font-size: var(--fs-body); border-radius: 13px; }
 .btn--block { width: 100%; }
@@ -315,17 +310,6 @@ body.is-locked { overflow: hidden; }
   letter-spacing: var(--ls-wide);
   color: var(--c-accent-text);
   font-variant-numeric: tabular-nums;
-}
-
-/* רשימת פריטים בתוך כרטיס */
-.tick-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--sp-5); }
-.tick-list li {
-  padding: 5px 12px;
-  background: rgba(255, 255, 255, .05);
-  border: 1px solid var(--c-line-soft);
-  border-radius: var(--r-pill);
-  font-size: var(--fs-xs);
-  color: var(--c-ink-2);
 }
 
 /* ==========================================================================

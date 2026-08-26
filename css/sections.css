@@ -203,43 +203,6 @@ button.project__media:focus-visible .project__zoom-hint {
   box-shadow: 0 8px 22px rgba(0, 0, 0, .6), 0 0 20px rgba(224, 38, 45, .5);
 }
 
-/* מצב placeholder — עד שיתקבלו צילומי מסך */
-.project__placeholder {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  gap: 10px;
-  padding: var(--sp-5);
-  text-align: center;
-  background:
-    repeating-linear-gradient(45deg, transparent 0 10px, rgba(255, 110, 115, .05) 10px 20px),
-    var(--c-bg-soft);
-  color: var(--c-ink-3);
-  font-size: var(--fs-xs);
-}
-.project__placeholder svg { width: 26px; height: 26px; color: var(--c-ink-3); }
-.project__placeholder code {
-  padding: 3px 8px;
-  background: rgba(255, 255, 255, .06);
-  border: 1px solid var(--c-line);
-  border-radius: 5px;
-  font-size: 0.75rem;
-  direction: ltr;
-}
-
-/* תווית "בעבודה" — פרויקט שעדיין רץ, לפני שיש מה להראות */
-.project__wip {
-  padding: 5px 14px;
-  background: rgba(255, 255, 255, .06);
-  border: 1px solid var(--c-line);
-  border-radius: var(--r-pill);
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--c-ink-2);
-}
-
 .project__body { padding: var(--sp-5); flex: 1; }
 .project__type {
   display: inline-block;
@@ -262,13 +225,6 @@ button.project__media:focus-visible .project__zoom-hint {
   color: var(--c-ink);
 }
 .project__row-text { display: inline; color: var(--c-ink-2); }
-
-.projects__note {
-  margin-top: var(--sp-6);
-  font-size: var(--fs-xs);
-  color: var(--c-ink-3);
-  text-align: center;
-}
 
 /* ==========================================================================
    המלצות
