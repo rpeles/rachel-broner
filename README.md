@@ -3,12 +3,15 @@
 דף נחיתה סטטי. **בלי npm, בלי build, בלי תלויות.**
 פותחים את `index.html` בדפדפן וזהו.
 
+**האתר באוויר:** [rachelbroner.co.il](https://rachelbroner.co.il)
+
 ---
 
 ## מבנה הפרויקט
 
 ```
 index.html              ← כל התוכן. כל סקשן מסומן בהערה.
+CNAME                   ← הדומיין המותאם ל-GitHub Pages
 css/
   tokens.css            ← צבעים, פונטים, מרווחים — כל שינוי גלובלי מתחיל כאן
   base.css              ← reset, טיפוגרפיה, אנימציות
@@ -16,76 +19,81 @@ css/
   sections.css          ← פריסה ייחודית לכל סקשן
 js/
   config.js             ← ⚙️ webhook + פרטי קשר — הקובץ היחיד שחייבים לערוך
-  main.js               ← ניווט, אנימציות, לוגיקת טופס
+  main.js               ← ניווט, אנימציות, לוגיקת טופס, לייטבוקס
+docs/
+  form-to-email.gs      ← הקוד של Google Apps Script שמקבל את הטופס ושולח למייל
+demos/                  ← שלושה עמודי דמו. נטענים ב-iframe בתוך הלייטבוקס
+                          מכרטיסי הפרויקטים — ראו `data-demo` בסקשן #work.
 assets/
-  logo-broner.png          ← קובץ המקור. לא מוצג באתר — כל השאר נחתכו ממנו
-  logo-name.png            ← שורת השם בלבד → ניווט
-  logo-wordmark-light.png  ← הלוגו המלא בלבן → פוטר כהה
+  logo-broner-newmail.png  ← קובץ המקור (עם כתובת המייל בדומיין)
+  logo-name-light.png      ← שורת השם בלבן → ניווט
+  logo-wordmark-onblack.png← הלוגו המלא על רקע שחור → פוטר
   favicon.png              ← גלגל השיניים מהלוגו → אייקון הטאב
   og-image.png             ← 1200×630, תמונת שיתוף לרשתות
-  projects/             ← צילומי מסך לפרויקטים (ראו README שם)
-DECISIONS.md            ← החלטות עיצוב ותוכן שהתקבלו
+  projects/                ← צילומי מסך לפרויקטים (ראו README שם)
+DECISIONS.md            ← 📌 היומן המלא: החלטות עיצוב, תוכן ומצב נוכחי. פנימי, לא בריפו.
 ```
 
 ---
 
-## 3 דברים לעשות לפני העלייה לאוויר
+## מצב נוכחי
 
-### 1. לחבר את הטופס
-
-פותחים את `js/config.js` ומדביקים את כתובת ה-Webhook:
-
-```js
-webhookUrl: "https://hook.eu2.make.com/xxxxxxxxx",
-```
-
-**עד שזה ריק — הטופס פותח וואטסאפ** עם כל פרטי הפנייה מסודרים,
-כך שאף ליד לא הולך לאיבוד. אפשר לעלות לאוויר גם ככה.
-
-<details>
-<summary>אופציה חינמית לגמרי — Google Apps Script</summary>
-
-1. Google Sheets חדש → כותרות בשורה 1:
-   `submittedAt | fullName | businessName | phone | email | need | message`
-2. `Extensions` → `Apps Script` → הדביקו:
-
-```js
-function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
-  var d = JSON.parse(e.postData.contents);
-  sheet.appendRow([
-    d.submittedAt, d.fullName, d.businessName,
-    d.phone, d.email, d.need, d.message
-  ]);
-  return ContentService.createTextOutput('ok');
-}
-```
-
-3. `Deploy` → `New deployment` → סוג **Web app** →
-   `Execute as: Me`, `Who has access: Anyone`
-4. מעתיקים את ה-URL ל-`webhookUrl`.
-
-</details>
-
-### 2. להחליף את ה-placeholders
-
-חפשו בקובץ `index.html` את הסימן `⚠️` — שם נמצא כל התוכן הזמני:
-
-- [ ] **פרויקטים** — צילומי מסך + טקסט (ראו `assets/projects/README.md`)
-- [ ] **המלצה** — המלצה אמיתית אחת. אין להמציא.
-- [ ] **תמונת פורטרט** — `assets/rachel.jpg`
-- [ ] **canonical URL** — בתגית `<link rel="canonical">` בראש הקובץ
-- [ ] **OG image** — `assets/og-image.png` בגודל 1200×630
-
-### 3. להעלות לאוויר
-
-| שירות | איך |
+| | |
 |---|---|
-| **Netlify Drop** | גוררים את התיקייה ל-[app.netlify.com/drop](https://app.netlify.com/drop). הכי מהיר. |
-| **Cloudflare Pages** | חינם, מהיר בישראל, תומך בדומיין מותאם |
-| **GitHub Pages** | דוחפים לריפו → Settings → Pages |
+| **אחסון** | GitHub Pages, ענף `main` — כל דחיפה מעלה לאוויר |
+| **דומיין** | MyNames. הכתובת הקנונית בלי `www`, ו-`www` מפנה אליה |
+| **מייל** | myinbox, `rachel@rachelbroner.co.il` |
+| **טופס** | ✅ מחובר ל-Google Apps Script |
+| **גוגל** | ✅ מאומת ב-Search Console ומאונדקס |
+| **ניוזלטר** | "סודות מהמקלדת" — אפליקציה נפרדת ב-`news.rachelbroner.co.il`. כאן רק קישורים אליה |
 
-כולם חינמיים ותומכים בדומיין משלכם.
+### מה שנשאר לעשות
+
+- [ ] **המלצה אמיתית** — הסקשן `#testimonials` הוא עדיין תוכן זמני, מסומן ב-⚠️ בתוך `index.html`. אין להמציא.
+- [ ] **פרופיל עסקי בגוגל** — לא נפתח עדיין. לא נוגע בקוד.
+- [ ] **עמודי תוכן** — 3–4 מאמרים. אז גם יעלו `robots.txt` ו-`sitemap.xml` שממתינים מקומית.
+
+---
+
+## הטופס
+
+הפניות נשלחות ל-Google Apps Script שרץ בחשבון הגוגל של רחל — חינם, ואף שירות
+חיצוני לא רואה את פרטי הלקוחות. הקוד והוראות ההתקנה ב-`docs/form-to-email.gs`,
+והכתובת מוגדרת ב-`js/config.js`:
+
+```js
+webhookUrl: "https://script.google.com/macros/s/AKfy.../exec",
+```
+
+עובד גם מול Make / n8n / Zapier — כל כתובת שמקבלת POST עם JSON.
+
+אם השדה יתרוקן, הטופס לא יעמיד פנים שנשלח: הוא יודיע לגולש שהטופס לא מחובר
+ויציע קישור מייל מוכן עם כל הפרטים, כדי שאף פנייה לא תלך לאיבוד.
+
+---
+
+## הניוזלטר — "סודות מהמקלדת"
+
+⚠️ **ההרשמה לא יושבת בריפו הזה.** היא אפליקציית Next.js נפרדת (Vercel) שרצה על
+`https://news.rachelbroner.co.il`. האתר הזה רק **מקשר** אליה, בשלושה מקומות:
+
+| מקום | מה זה |
+|---|---|
+| ניווט + תפריט מובייל | קישור "ניוזלטר" — אדום, עם חץ יוצא (`.nav__link--out`) |
+| רצועה מעל הפוטר | `<aside class="newsletter-bar">` בסוף `index.html` |
+| פוטר, עמודת הניווט | פריט ברשימה |
+
+**למה קישור ולא טופס מוטמע?** נבדק: נקודת הקצה `POST /api/subscribe` **לא מחזירה
+כותרות CORS**, ולכן טופס שיושב על `rachelbroner.co.il` ייחסם על ידי הדפדפן.
+כדי להטמיע טופס כאן צריך קודם להוסיף `Access-Control-Allow-Origin` בצד של
+אפליקציית הניוזלטר ולדפלוי אותה מחדש.
+
+**הטקסטים ברצועה זהים לאלה שבדף ההרשמה** — אם משנים שם, לעדכן גם כאן.
+
+⚠️ **נקודת שבירה:** עם הקישור השביעי בניווט, תפריט הדסקטופ עובר להמבורגר מתחת
+ל-**1100px** (היה 1000px). שלושה כללים ב-`components.css` נעולים למספר הזה יחד:
+`.nav__links`/`.nav__cta`/`.nav__toggle`, `.sticky-cta`, וריפוד תחתון של `.footer`.
+מזיזים את שלושתם או אף אחד.
 
 ---
 
@@ -94,22 +102,37 @@ function doPost(e) {
 כל הטקסטים נמצאים ב-`index.html`, מסודרים לפי סקשנים עם הערות:
 
 ```html
-<!-- ====== שלושת המסלולים (§11) ====== -->
+<!-- ====== פתרונות ====== -->
 ```
-
-**לשנות צבע?** רק `css/tokens.css`:
-
-```css
---c-accent: #D42127;   /* האדום מהלוגו */
---c-ink:    #0D0D0D;
-```
-
-**להוסיף פרויקט?** משכפלים בלוק `<article class="card project">` בסקשן `#work`.
 
 **סדר הסקשנים:**
 ```
-בית (Hero) · קצת עלי · פתרונות (3 מסלולים) · פרויקטים (3) · צור קשר · פוטר
+בית (#top) · קצת עלי (#about) · פרויקטים (#work) ·
+פתרונות (#solutions) · המלצות (#testimonials) · צור קשר (#contact) ·
+רצועת ניוזלטר · פוטר
 ```
+
+**לשנות צבע?** רק `css/tokens.css`. האתר **כהה**:
+
+```css
+--c-bg:      #0D0E12;   /* רקע ראשי */
+--c-ink:     #F4F5F7;   /* טקסט */
+--c-accent:  #E0262D;   /* האדום מהלוגו */
+```
+
+שימו לב: על רקע כהה, ה-hover של האדום **מבהיק** (`--c-accent-dark: #F04A50`)
+ולא מכהה, ולטקסט אדום יש גוון מובהר משלו (`--c-accent-text`) כדי לעמוד בניגודיות.
+
+**להוסיף פרויקט?** משכפלים בלוק `<article class="card project">` בסקשן `#work`.
+
+---
+
+## SEO — מה כבר מוגדר
+
+בראש `index.html` יושבים `title`, `description`, `canonical`, תגיות Open Graph
+ו-JSON-LD מסוג `ProfessionalService` עם הטלפון והמייל. גוגל מציג בפועל את ה-`title`
+וה-`description` כפי שנכתבו — כלומר הניסוח שם הוא מה שאנשים רואים בתוצאות החיפוש.
+לשנות אותו רק במודע.
 
 ---
 
