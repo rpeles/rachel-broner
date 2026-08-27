@@ -130,17 +130,19 @@
      ====================================================================== */
   var stickyCta = $('#stickyCta');
   var hero      = $('#top');
-  var contact   = $('#contact');
+
+  /* אזורים שבהם ה-CTA הדביק מסתתר: הטופס — כי הוא כבר מוביל לשם —
+     ורצועת הניוזלטר, שיש בה כפתור אדום משלה ושניהם היו מתנגשים על המסך. */
+  var ctaFreeZones = $$('#contact, .newsletter-bar');
 
   function updateStickyCta() {
     if (!stickyCta) return;
     var pastHero = hero ? window.scrollY > (hero.offsetHeight * 0.7) : window.scrollY > 400;
-    var inContact = false;
-    if (contact) {
-      var r = contact.getBoundingClientRect();
-      inContact = r.top < window.innerHeight && r.bottom > 0;
-    }
-    stickyCta.classList.toggle('is-visible', pastHero && !inContact);
+    var inFreeZone = ctaFreeZones.some(function (el) {
+      var r = el.getBoundingClientRect();
+      return r.top < window.innerHeight && r.bottom > 0;
+    });
+    stickyCta.classList.toggle('is-visible', pastHero && !inFreeZone);
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
