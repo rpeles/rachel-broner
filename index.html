@@ -502,9 +502,9 @@
 
 <!-- ==========================================================================
      המלצות
-     ⚠️ תוכן זמני — יש להחליף בנוסח ההמלצה האמיתי, בשם הממליץ ובתפקידו.
-        להוספת המלצה: לשכפל את בלוק <figure class="card testimonial">
-        ולהוסיף class="testimonials testimonials--grid" למכל שלמטה.
+     להוספת המלצה: לשכפל בלוק <figure class="card testimonial"> ולהוסיף אותו
+     בתוך .testimonials--grid. שלוש ההמלצות נפרסות בשורה אחת במסך רחב; ה-CSS
+     מטפל לבד בפריסה לשני טורים ולטור אחד במסכים צרים יותר.
      ========================================================================== -->
 <section class="section section--tint" id="testimonials">
   <div class="container">
@@ -516,7 +516,7 @@
       </p>
     </div>
 
-    <div class="testimonials">
+    <div class="testimonials testimonials--grid">
 
       <figure class="card testimonial reveal">
         <svg class="testimonial__quote" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -545,6 +545,69 @@
           <span>
             <span class="testimonial__name">רבקה גלברט</span>
             <span class="testimonial__role">גלברט פיננסים -יעוץ מס</span>
+          </span>
+        </figcaption>
+      </figure>
+
+      <figure class="card testimonial reveal">
+        <svg class="testimonial__quote" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M9.5 5C6 6.6 4 9.6 4 13.3V19h6.6v-6.6H7.4c0-2.2 1-3.8 3-4.9L9.5 5Zm9.3 0c-3.5 1.6-5.5 4.6-5.5 8.3V19H20v-6.6h-3.2c0-2.2 1-3.8 3-4.9L18.8 5Z"/>
+        </svg>
+
+        <blockquote class="testimonial__text">
+          <p>
+            רחלי, תודה רבה על העזרה שלך באוטומציה של העסק שלי. כל מי שסיפרתי לו
+            אומר שזה לא יאומן, מה שאפשר לעשות היום.
+          </p>
+          <p>
+            <strong>אין לתאר איזו הקלה זה בשבילי, וכמה שעות של עבודה יחסוך לי
+            קיצור הדרך הזה.</strong>
+          </p>
+          <p>
+            תודה גם על הסבלנות האינסופית, על הזמינות בשעות שנוחות לי, ועל הנכונות
+            שלך לבדוק איתי שוב ושוב עד שיתאים לי. מאוד מאוד מעריכה את המקצועיות
+            והאנושיות.
+          </p>
+        </blockquote>
+
+        <figcaption class="testimonial__author">
+          <span class="testimonial__avatar testimonial__avatar--logo" aria-hidden="true">
+            <img src="assets/shana-mecholelet-mark.png" alt="" width="52" height="52" loading="lazy" decoding="async">
+          </span>
+          <span>
+            <span class="testimonial__name">אסתי זלזניק</span>
+            <span class="testimonial__role">שנה מחוללת — ליווי תהליכי שינוי</span>
+          </span>
+        </figcaption>
+      </figure>
+
+      <figure class="card testimonial reveal">
+        <svg class="testimonial__quote" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M9.5 5C6 6.6 4 9.6 4 13.3V19h6.6v-6.6H7.4c0-2.2 1-3.8 3-4.9L9.5 5Zm9.3 0c-3.5 1.6-5.5 4.6-5.5 8.3V19H20v-6.6h-3.2c0-2.2 1-3.8 3-4.9L18.8 5Z"/>
+        </svg>
+
+        <blockquote class="testimonial__text">
+          <p>
+            ועד בית, למי שמכיר, זה כאב ראש לא קטן.
+          </p>
+          <p>
+            לעקוב מי חייב, כמה, ממתי ועל מה — ובמקביל לנהל ערימות של דפים
+            וסימונים שצריך לפענח כל פעם מחדש.
+          </p>
+          <p>
+            רחל בנתה לנו מערכת פשוטה וחכמה, שמרכזת את כל המידע במקום אחד.
+            <strong>מוסיפים תשלום והמערכת מחשבת ומעדכנת את החובות לבד.</strong>
+          </p>
+          <p>
+            חוסך המון כאב ראש, עם שירות ומענה מעל ומעבר. ממליץ מאוד!
+          </p>
+        </blockquote>
+
+        <figcaption class="testimonial__author">
+          <span class="testimonial__avatar" aria-hidden="true">א</span>
+          <span>
+            <span class="testimonial__name">איתמר</span>
+            <span class="testimonial__role">ועד בית</span>
           </span>
         </figcaption>
       </figure>
