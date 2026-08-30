@@ -12,6 +12,10 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* שליחת אירוע לסטטיסטיקות. הכינוי המקומי מבטיח שהכול ממשיך לעבוד גם אם
+     analytics.js נחסם על ידי חוסם פרסומות, נכשל בטעינה או נמחק. */
+  var track = window.track || function () {};
+
   /* ======================================================================
      שנה בפוטר
      ====================================================================== */
@@ -250,6 +254,8 @@
   var lightboxCap   = $('#lightboxCaption');
   var lightboxX     = $('#lightboxClose');
   var lastFocused   = null;
+  var demoId        = null;   // איזה דמו פתוח כרגע, לצורך מדידת זמן הצפייה
+  var demoAt        = 0;
 
   function openLightbox(trigger) {
     if (!lightbox) return;
@@ -259,6 +265,9 @@
     if (demo) {
       lightbox.setAttribute('data-kind', 'demo');
       lightboxFrame.src = demo;
+      demoId = demo.replace(/^demos\//, '').replace(/\.html$/, '');
+      demoAt = Date.now();
+      track('demo', { id: demoId });
     } else {
       lightbox.setAttribute('data-kind', 'image');
       lightboxImg.src = trigger.getAttribute('data-zoom');
@@ -281,6 +290,12 @@
     if (!lightbox || !lightbox.classList.contains('is-open')) return;
     lightbox.classList.remove('is-open');
     document.body.classList.remove('is-locked');
+
+    if (demoId) {
+      track('demo_end', { id: demoId, sec: Math.round((Date.now() - demoAt) / 1000) });
+      demoId = null;
+    }
+
     if (lastFocused && lastFocused.focus) lastFocused.focus();
     // משחררים את המדיה רק אחרי אנימציית היציאה.
     // איפוס ה-iframe חשוב במיוחד — אחרת הדמו ממשיך לרוץ ברקע.
@@ -372,6 +387,14 @@
       if (e.target.name === 'need') syncNeedOther(true);
     });
     syncNeedOther(false);   // המצב ההתחלתי, גם אחרי רענון שמשחזר בחירה
+
+    /* focusin ולא input — כדי לספור גם מי שנגע בטופס ונטש בלי להקליד כלום */
+    var formStarted = false;
+    form.addEventListener('focusin', function () {
+      if (formStarted) return;
+      formStarted = true;
+      track('form_start');
+    });
 
     function validate() {
       var ok = true;
@@ -493,10 +516,23 @@
 
       if (!validate()) {
         showStatus('error', 'חסרים כמה פרטים — סימנתי אותם למעלה.');
+        // אילו שדות נכשלו — נקרא ישירות מהסימון ש-setFieldError כבר עשה ב-DOM
+        track('form_error', {
+          f: $$('[data-error-for]', form)
+               .filter(function (el) { return el.style.display === 'block'; })
+               .map(function (el) { return el.getAttribute('data-error-for'); })
+               .join(',')
+        });
         return;
       }
 
       var data = collect();
+
+      /* קוראים את בחירת הרדיו הגולמית ולא את data.need: ל-data.need כבר מוזג
+         הטקסט החופשי של "אחר", וטקסט שהמבקרת הקלידה לא נשלח לסטטיסטיקות.
+         חייב להיקרא כאן — form.reset() בהמשך מנקה את הבחירה. */
+      var needPicked = form.querySelector('input[name="need"]:checked');
+      var needBase   = needPicked ? needPicked.value : '';
 
       // אין כתובת שליחה מוגדרת → לא מעמידים פנים שנשלח, ומציעים דרך חלופית
       if (!CFG.webhookUrl) {
@@ -516,6 +552,7 @@
           form.reset();
           syncNeedOther(false);   // reset מנקה את הבחירה, אבל לא מסתיר את השדה
           showStatus('ok', '<strong>תודה, הפנייה התקבלה.</strong><br>אחזור אליכם באופן אישי בהקדם.');
+          track('form_sent', { need: needBase });
         })
         .catch(function () {
           showStatus('error',

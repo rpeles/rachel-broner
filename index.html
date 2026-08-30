@@ -36,6 +36,26 @@
 <link rel="stylesheet" href="css/components.css">
 <link rel="stylesheet" href="css/sections.css">
 
+<!-- ==========================================================================
+     סטטיסטיקות שימוש — Umami. בלי עוגיות, בלי זיהוי אישי, בלי באנר הסכמה.
+
+     הסקריפט מאוחסן אצלנו (js/umami.js) ולא נטען משרת חיצוני, כדי ששום קוד
+     של צד שלישי לא ירוץ בדף שיש בו טופס עם פרטי לקוחות. החוצה יוצאת רק
+     שליחה של מספרים אנונימיים.
+
+     כתובת היעד של השליחה מוטמעת בתוך js/umami.js ולא נכתבת כאן בכוונה —
+     כך אין שתי כתובות שיכולות להיפרד. כדי לראות לאן בדיוק הולכים הנתונים,
+     לחפש "api/send" בתוך js/umami.js (כרגע: gateway.umami.is).
+
+     data-website-id — ריק = המדידה כבויה לגמרי, אפס בקשות רשת. זה מצב בטוח.
+     data-domains — שולח רק מהדומיין החי. על localhost ועל file:// הסקריפט
+       נטען, מגדיר את window.umami, ומשליך בשקט כל שליחה — כך שבדיקות
+       מקומיות רצות באותו מסלול קוד בדיוק, בלי לזהם את הנתונים האמיתיים.
+     ========================================================================== -->
+<script defer src="js/umami.js"
+        data-website-id="f04747dc-77e8-4219-a7ba-9b6ef29802b3"
+        data-domains="rachelbroner.co.il,www.rachelbroner.co.il"></script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -734,7 +754,7 @@
      ההרשמה עצמה יושבת ב-news.rachelbroner.co.il (אפליקציה נפרדת);
      כאן רק ההזמנה והקישור אליה. הטקסטים זהים לאלה שבדף ההרשמה.
      ========================================================================== -->
-<aside class="newsletter-bar reveal" aria-labelledby="newsletter-title">
+<aside class="newsletter-bar reveal" id="news" aria-labelledby="newsletter-title">
   <div class="container newsletter-bar__inner">
 
     <div class="newsletter-bar__text">
@@ -805,7 +825,7 @@
 
     <div class="footer__bottom">
       <span>© <span id="year">2026</span> רחל ברונר — בניית מערכות ניהול לעסקים</span>
-      <span>כל הזכויות שמורות</span>
+      <span>כל הזכויות שמורות · סטטיסטיקות שימוש אנונימיות, בלי עוגיות</span>
     </div>
 
   </div>
@@ -837,6 +857,7 @@
 </div>
 
 <script src="js/config.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/main.js"></script>
 
 </body>
