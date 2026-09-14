@@ -94,10 +94,13 @@ body::before {
   to { transform: rotate(360deg); }
 }
 
-/* מכבדים בקשה למעט תנועה: הגלגלים נעצרים, הרקע נשאר */
+/* מכבדים בקשה למעט תנועה: הגלגלים נעצרים, הרקע נשאר.
+   .no-motion היא אותה בקשה בדיוק, רק מכפתור בפוטר במקום מהמערכת —
+   ולכן כל בלוק כזה בקוד מופיע בזוג. משנים אחד, משנים את שניהם. */
 @media (prefers-reduced-motion: reduce) {
   .gear { animation: none; }
 }
+.no-motion .gear { animation: none; }
 
 img, svg, video { display: block; max-width: 100%; height: auto; }
 
@@ -243,6 +246,15 @@ button, input, select, textarea { font: inherit; color: inherit; }
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
+}
+
+/* הזוג של הבלוק שמעליו — הבקשה שהגיעה מהכפתור בפוטר */
+html.no-motion { scroll-behavior: auto; }
+.no-motion .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+.no-motion *, .no-motion *::before, .no-motion *::after {
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important;
 }
 
 /* ==========================================================================

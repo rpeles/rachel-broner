@@ -472,6 +472,14 @@ button.project__media:focus-visible .project__zoom-hint {
   .flow__fin { opacity: 1 !important; transform: none !important; }
 }
 
+/* הזוג של הבלוק שמעליו — הבקשה שהגיעה מהכפתור בפוטר */
+.no-motion .flow__prog { stroke-dashoffset: 0 !important; }
+.no-motion .flow__cursor { display: none; }
+.no-motion .flow__gear .ring { stroke: var(--c-accent); fill: rgba(224, 38, 45, .2); }
+.no-motion .flow__gear .hub { fill: var(--c-accent-text); }
+.no-motion .flow__lbl { color: var(--c-ink); }
+.no-motion .flow__fin { opacity: 1 !important; transform: none !important; }
+
 /* ==========================================================================
    טופס — פריסה
    ========================================================================== */
@@ -483,9 +491,12 @@ button.project__media:focus-visible .project__zoom-hint {
 @media (max-width: 959px) { .contact__aside { position: static; } }
 
 .contact__direct { margin-top: var(--sp-6); display: grid; gap: var(--sp-3); }
-/* טלפון ומייל זה לצד זה במקום זה מתחת לזה — חוסך גובה במובייל */
+/* טלפון ומייל זה לצד זה במקום זה מתחת לזה — חוסך גובה במובייל.
+   וואטסאפ הוא השלישי ולכן נשאר לבדו בשורה — נמתח על שתי העמודות
+   כדי שלא ייווצר חצי כרטיס ריק לצידו. */
 @media (min-width: 480px) and (max-width: 959px) {
   .contact__direct { grid-template-columns: repeat(2, 1fr); }
+  .contact__direct > :last-child { grid-column: 1 / -1; }
 }
 .contact__link {
   display: flex;
@@ -525,3 +536,56 @@ button.project__media:focus-visible .project__zoom-hint {
 @media (min-width: 560px) { .form-row { grid-template-columns: repeat(2, 1fr); } }
 .form-row .field { margin-bottom: 0; }
 .form-row { margin-bottom: var(--sp-5); }
+
+/* ==========================================================================
+   עמוד מסמך — הצהרת נגישות
+
+   עמוד טקסט ארוך ולא דף שיווקי: עמודה צרה שנוח לקרוא בה, טיפוגרפיה
+   רגועה ומרווחת. עומד בפני עצמו ולא משתמש בשום דבר מדף הנחיתה.
+   ========================================================================== */
+
+/* הניווט קבוע ומרחף, ולכן התוכן מתחיל מתחתיו — כמו ה-hero בדף הבית */
+.section--doc { padding-block: calc(var(--nav-h) + var(--sp-7)) var(--section-y); }
+
+.doc { max-width: 68ch; }              /* מעל ~75 תווים לשורה הקריאה נפגעת */
+
+/* h1 גלובלי הוא בגודל כותרת ראשית של דף נחיתה — גדול מדי למסמך */
+.doc h1 { margin-bottom: var(--sp-3); font-size: var(--fs-h2); }
+
+.doc__meta {
+  margin-bottom: var(--sp-6);
+  padding-bottom: var(--sp-5);
+  border-bottom: 1px solid var(--c-line);
+  font-size: var(--fs-sm);
+  color: var(--c-ink-3);
+}
+.doc h2 {
+  margin-top: var(--sp-7);
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-h3);
+}
+.doc h2:first-of-type { margin-top: 0; }
+.doc h3 {
+  margin-top: var(--sp-5);
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-h4);
+  color: var(--c-ink);
+}
+.doc p { margin-bottom: var(--sp-4); color: var(--c-ink-2); line-height: var(--lh-normal); }
+.doc ul { margin: 0 0 var(--sp-4); padding-inline-start: var(--sp-5); list-style: disc; }
+.doc li { margin-bottom: var(--sp-2); color: var(--c-ink-2); line-height: var(--lh-normal); }
+.doc a { color: var(--c-accent-text); text-decoration: underline; text-underline-offset: 3px; }
+.doc strong { color: var(--c-ink); font-weight: 600; }
+
+/* תיבת פרטי הקשר — הדבר שגולש שנתקל בבעיה מחפש, ולכן מובלטת */
+.doc__contact {
+  margin-top: var(--sp-5);
+  padding: var(--sp-5);
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid var(--c-accent-line);
+  border-radius: var(--r-md);
+}
+.doc__contact ul { margin-bottom: 0; padding-inline-start: 0; list-style: none; }
+.doc__contact li { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.doc__contact b { color: var(--c-ink); font-weight: 600; min-width: 8ch; }
+.doc__contact a { direction: ltr; }

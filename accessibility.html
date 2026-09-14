@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>הצהרת נגישות | רחל ברונר</title>
+<meta name="description" content="הצהרת הנגישות של אתר רחל ברונר — רמת הנגישות, ההתאמות שבוצעו, החלקים שאינם נגישים במלואם, ודרכי פנייה בנושא נגישות.">
+<meta name="author" content="רחל ברונר">
+<meta name="theme-color" content="#0D0E12">
+<link rel="canonical" href="https://rachelbroner.co.il/accessibility.html">
+
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/sections.css">
+
+<!-- כפתור עצירת התנועה בפוטר. הקובץ היחיד מ-js/ שהעמוד הזה טוען. -->
+<script src="js/motion.js"></script>
+
+<!-- סטטיסטיקות שימוש — אותו סקריפט ואותו מזהה כמו בדף הבית, לצפיות בלבד.
+     analytics.js לא נטען כאן: הוא מודד סקשנים שקיימים רק בדף הנחיתה. -->
+<script defer src="js/umami.js"
+        data-website-id="f04747dc-77e8-4219-a7ba-9b6ef29802b3"
+        data-domains="rachelbroner.co.il,www.rachelbroner.co.il"></script>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
+
+<!-- ==========================================================================
+     ניווט — מצומצם בכוונה: לוגו וחזרה לדף הבית בלבד.
+
+     בלי המבורגר ובלי תפריט מובייל, ולכן העמוד הזה לא טוען את main.js
+     ואין בו שום קוד שמצפה לאלמנטים של דף הנחיתה.
+     ========================================================================== -->
+<header class="nav">
+  <div class="container nav__inner">
+
+    <a class="brand" href="index.html" aria-label="רחל ברונר, לדף הבית">
+      <img class="brand__logo" src="assets/logo-name-light.png"
+           alt="רחל ברונר" width="618" height="81">
+    </a>
+
+    <a class="btn btn--ghost btn--sm" href="index.html">חזרה לדף הבית</a>
+
+  </div>
+</header>
+
+<main id="main">
+<section class="section section--doc">
+  <div class="container">
+    <div class="doc">
+
+      <h1>הצהרת נגישות</h1>
+
+      <p class="doc__meta">עודכן לאחרונה: 7 בספטמבר 2026</p>
+
+      <p>
+        אני מאמינה שכל אדם זכאי לקבל שירות ומידע בכבוד, בעצמאות ובלי להיתקל
+        במכשולים מיותרים. האתר הזה נבנה מתוך הכוונה הזו, ואני פועלת כדי
+        שכל מי שמגיע אליו — לרבות אנשים עם מוגבלות — יוכל להשתמש בו בנוחות.
+      </p>
+
+      <h2>רמת הנגישות של האתר</h2>
+
+      <p>
+        האתר הותאם לדרישות <strong>תקנות שוויון זכויות לאנשים עם מוגבלות
+        (התאמות נגישות לשירות), התשע"ג-2013</strong>, ולתקן הישראלי
+        <strong>ת"י 5568</strong> ברמה <strong>AA</strong> — התקן המאמץ את
+        הנחיות הנגישות הבין-לאומיות לתוכן אינטרנט (WCAG).
+      </p>
+
+      <h2>ההתאמות שבוצעו באתר</h2>
+
+      <ul>
+        <li><strong>מבנה סמנטי</strong> — כותרות, רשימות, טפסים ואזורי דף מסומנים נכון בקוד, כך שטכנולוגיות מסייעות מזהות את מבנה העמוד.</li>
+        <li><strong>ניווט מקלדת מלא</strong> — אפשר להגיע לכל חלקי האתר ולהפעיל כל כפתור וקישור באמצעות המקלדת בלבד, בלי עכבר.</li>
+        <li><strong>סימון פוקוס נראה</strong> — האלמנט שנמצא כרגע במיקוד מסומן בבירור.</li>
+        <li><strong>קישור דילוג לתוכן</strong> — קישור המופיע בלחיצת Tab הראשונה ומדלג ישירות אל התוכן הראשי.</li>
+        <li><strong>טקסט חלופי לתמונות</strong> — לתמונות המשמעותיות יש תיאור טקסטואלי; תמונות שהן קישוט בלבד מסומנות ככאלה ואינן מוקראות.</li>
+        <li><strong>טופס נגיש</strong> — לכל שדה יש תווית קבועה, שדות החובה מסומנים, והודעות השגיאה מקושרות לשדה שאליו הן שייכות כך שהסיבה מוקראת ולא רק העובדה שיש שגיאה.</li>
+        <li><strong>ניגודיות צבעים</strong> — הטקסטים באתר נבדקו מול הרקע ועומדים ביחסי הניגודיות הנדרשים.</li>
+        <li><strong>אפשרות לעצור את התנועה</strong> — בתחתית כל עמוד יש כפתור "עצירת תנועה" שמכבה את כל האנימציות באתר. הבחירה נשמרת בדפדפן שלך לביקורים הבאים.</li>
+        <li><strong>כיבוד העדפת הפחתת תנועה</strong> — למי שהגדיר במערכת ההפעלה העדפה להפחתת אנימציות, האנימציות באתר נכבות מאליהן, בלי צורך בכפתור.</li>
+        <li><strong>התאמה לכל מסך ולהגדלה</strong> — האתר נבנה כך שיעבוד בכל גודל מסך וגם בהגדלת תצוגה, בלי אובדן תוכן ובלי גלילה לרוחב.</li>
+        <li><strong>ללא הבהובים והפעלה אוטומטית</strong> — אין באתר תוכן מהבהב ואין וידאו או קול שמופעלים מעצמם.</li>
+        <li><strong>חלונות קופצים נגישים</strong> — בחלון מוגדל, המיקוד נשמר בתוך החלון, מקש Esc סוגר אותו, והמיקוד חוזר למקום שממנו נפתח.</li>
+      </ul>
+
+      <h2>כיצד נבדקה הנגישות</h2>
+
+      <p>
+        בדיקת הנגישות של האתר בוצעה על ידי <strong>בדיקה עצמית</strong>:
+        כלים אוטומטיים לבדיקת נגישות, מעבר ידני על האתר במקלדת בלבד,
+        ובדיקת ניגודיות הצבעים.
+      </p>
+
+      <p>
+        למען הגילוי המלא — <strong>טרם בוצעה באתר בדיקת נגישות על ידי מורשה
+        נגישות מוסמך</strong>. אני מציינת זאת במפורש כדי שההצהרה הזו תשקף את
+        המצב לאשורו, ולא תתאר בדיקה שלא נערכה.
+      </p>
+      <!-- TODO: אם וכאשר תוזמן בדיקת מורשה נגישות מוסמך — לעדכן את שני
+           הפסקאות שלמעלה בשם המורשה ובתאריך הבדיקה, ולעדכן את תאריך
+           העדכון בראש העמוד. -->
+
+      <h2>חלקים שאינם נגישים במלואם</h2>
+
+      <p>
+        חשוב לי לומר בכנות מה עדיין לא הותאם, ולא רק מה כן:
+      </p>
+
+      <h3>ההדמיות האינטראקטיביות של הפרויקטים</h3>
+      <p>
+        בעמוד הפרויקטים אפשר לפתוח הדמיות של מערכות שבניתי. ההדמיות הן
+        הצגה חזותית של מערכות לקוח, בעלות עיצוב נפרד משל האתר, ו<strong>לא
+        עברו התאמת נגישות</strong>. אם תוכן ההדמיות רלוונטי עבורך ואינו נגיש
+        לך — אשמח לתאר אותן במלואן בשיחת טלפון או במייל, לפי הפרטים שלמטה.
+      </p>
+
+      <h3>אתר הניוזלטר</h3>
+      <p>
+        הניוזלטר "סודות מהמקלדת" יושב במערכת נפרדת, בכתובת
+        news.rachelbroner.co.il. ההצהרה הזו מתייחסת לאתר
+        rachelbroner.co.il בלבד ואינה חלה על אותה מערכת.
+      </p>
+
+      <h2>נתקלתם בבעיה? אשמח לדעת</h2>
+
+      <p>
+        אם נתקלתם בקושי כלשהו בשימוש באתר, בעמוד שלא עובד כמו שצריך, או בתוכן
+        שלא הצלחתם להגיע אליו — אנא פנו אליי. כל פנייה תיבדק, ואעשה כמיטב
+        יכולתי לתקן בהקדם. תיאור קצר של הבעיה, של העמוד שבו היא קרתה ושל
+        הדפדפן או הטכנולוגיה המסייעת שבהם השתמשתם — יעזור לי מאוד לאתר אותה.
+      </p>
+
+      <div class="doc__contact">
+        <h3>פרטי אחראית הנגישות</h3>
+        <ul>
+          <li><b>שם:</b> <span>רחל ברונר</span></li>
+          <li><b>מייל:</b> <a href="mailto:rachel@rachelbroner.co.il">rachel@rachelbroner.co.il</a></li>
+          <li><b>טלפון:</b> <a href="tel:0533597303">053-359-7303</a></li>
+          <li><b>זמן מענה:</b> <span>עד 5 ימי עסקים</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ==========================================================================
+     פוטר — זהה לזה שבדף הבית, עם קישורים מוחלטים במקום עוגנים
+     ========================================================================== -->
+<footer class="footer">
+  <div class="container">
+
+    <div class="footer__top">
+
+      <div>
+        <a class="brand brand--footer" href="index.html" aria-label="רחל ברונר, לדף הבית">
+          <img class="brand__logo" src="assets/logo-wordmark-onblack.png"
+               alt="רחל ברונר — בניית מערכות ניהול לעסקים" width="618" height="120">
+        </a>
+        <p class="footer__blurb">
+          מערכות, דאטה ואוטומציה שעושים סדר בעסק, כדי שתוכל לעשות סדר בראש.
+        </p>
+      </div>
+
+      <div>
+        <p class="footer__title">ניווט</p>
+        <ul class="footer__list">
+          <li><a href="index.html">בית</a></li>
+          <li><a href="index.html#about">קצת עלי</a></li>
+          <li><a href="index.html#work">פרויקטים</a></li>
+          <li><a href="index.html#solutions">פתרונות</a></li>
+          <li><a href="index.html#testimonials">המלצות</a></li>
+          <li><a href="index.html#contact">צור קשר</a></li>
+          <li>
+            <a href="https://news.rachelbroner.co.il/" target="_blank" rel="noopener">
+              ניוזלטר<span class="nav__link-out-icon" aria-hidden="true">↗</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer__title">יצירת קשר</p>
+        <ul class="footer__list">
+          <li><a href="tel:0533597303" dir="ltr">053-359-7303</a></li>
+          <li><a href="mailto:rachel@rachelbroner.co.il" dir="ltr">rachel@rachelbroner.co.il</a></li>
+          <li>
+            <a data-wa
+               href="https://wa.me/972533597303?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%97%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%90%D7%99%D7%9A%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9C%D7%A2%D7%A9%D7%95%D7%AA%20%D7%A1%D7%93%D7%A8%20%D7%91%D7%A2%D7%A1%D7%A7%20%D7%A9%D7%9C%D7%99."
+               target="_blank" rel="noopener">
+              וואטסאפ<span class="nav__link-out-icon" aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li><a href="index.html#contact">טופס התאמה</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <span id="year">2026</span> רחל ברונר — בניית מערכות ניהול לעסקים</span>
+      <span class="footer__legal">
+        <a class="footer__legal-link" href="accessibility.html" aria-current="page">הצהרת נגישות</a>
+        <span aria-hidden="true">·</span>
+        <button class="footer__legal-link footer__motion" id="motionToggle" type="button">עצירת תנועה</button>
+        <span aria-hidden="true">·</span>
+        <span>כל הזכויות שמורות</span>
+        <span aria-hidden="true">·</span>
+        <span>סטטיסטיקות שימוש אנונימיות, בלי עוגיות</span>
+      </span>
+    </div>
+
+  </div>
+</footer>
+
+<!-- בועת וואטסאפ — אותה בועה שבדף הבית. הכתובת כתובה כאן במלואה,
+     ולכן היא עובדת גם בלי main.js שלא נטען בעמוד הזה.
+     האזור המסומן נדרש כדי שהקישור לא יישאר תוכן מחוץ לכל אזור בדף. -->
+<aside class="shortcuts" aria-label="קיצורי דרך ליצירת קשר">
+<a class="wa-fab" id="waFab" data-wa
+   href="https://wa.me/972533597303?text=%D7%94%D7%99%D7%99%20%D7%A8%D7%97%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%90%D7%99%D7%9A%20%D7%90%D7%A4%D7%A9%D7%A8%20%D7%9C%D7%A2%D7%A9%D7%95%D7%AA%20%D7%A1%D7%93%D7%A8%20%D7%91%D7%A2%D7%A1%D7%A7%20%D7%A9%D7%9C%D7%99."
+   target="_blank" rel="noopener"
+   aria-label="שליחת הודעה בוואטסאפ לרחל ברונר (נפתח בחלון חדש)">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.87 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35Z"/>
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23a8.2 8.2 0 0 1 8.23 8.24c0 4.54-3.7 8.23-8.24 8.23Z"/>
+  </svg>
+</a>
+</aside>
+
+<!-- כל מה שהעמוד הזה צריך מ-JS: השנה בפוטר. -->
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

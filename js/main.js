@@ -10,7 +10,12 @@
   var $  = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* שתי הדרכים לבקש פחות תנועה שקולות לגמרי: הגדרת מערכת ההפעלה,
+     והכפתור בפוטר (js/motion.js מסמן אותו במחלקה על <html> עוד לפני
+     הציור הראשון). בלי השורה השנייה, מי שעצר תנועה היה עדיין מקבל את
+     מסע העבודה מצויר מאפס במקום את התמונה הסופית. */
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+                     document.documentElement.classList.contains('no-motion');
 
   /* שליחת אירוע לסטטיסטיקות. הכינוי המקומי מבטיח שהכול ממשיך לעבוד גם אם
      analytics.js נחסם על ידי חוסם פרסומות, נכשל בטעינה או נמחק. */
@@ -29,8 +34,12 @@
     return 'https://wa.me/' + (CFG.phoneIntl || '') + '?text=' + encodeURIComponent(text || '');
   }
 
-  var waBtn = $('#stickyWhatsapp');
-  if (waBtn) waBtn.href = buildWhatsappUrl(CFG.whatsappGreeting);
+  /* כל קישורי הוואטסאפ בדף מסומנים ב-data-wa: הבועה הצפה, השורה בסקשן
+     "צור קשר" והשורה בפוטר. הכתובת כתובה מלאה גם ב-HTML עצמו, כדי שהם
+     יעבדו גם אם הקובץ הזה נכשל בטעינה; כאן רק מיישרים אותם לקונפיג. */
+  $$('[data-wa]').forEach(function (el) {
+    el.href = buildWhatsappUrl(CFG.whatsappGreeting);
+  });
 
   var linkPhone = $('#linkPhone');
   if (linkPhone && CFG.phone) linkPhone.href = 'tel:' + CFG.phone;
@@ -55,12 +64,26 @@
   var toggle = $('#navToggle');
   var menu   = $('#mobileMenu');
 
+  /* כשהתפריט פתוח, כל השאר לא קיים: לא ב-Tab ולא לקורא מסך.
+     inert עושה את שניהם בבת אחת; aria-hidden הוא גיבוי לדפדפנים ישנים. */
+  var behindMenu = [$('#main'), $('.footer')].filter(Boolean);
+
   function setMenu(open) {
     if (!toggle || !menu) return;
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'סגירת תפריט' : 'פתיחת תפריט');
     menu.classList.toggle('is-open', open);
     document.body.classList.toggle('is-locked', open);
+
+    behindMenu.forEach(function (el) {
+      if (open) {
+        el.setAttribute('inert', '');
+        el.setAttribute('aria-hidden', 'true');
+      } else {
+        el.removeAttribute('inert');
+        el.removeAttribute('aria-hidden');
+      }
+    });
   }
 
   if (toggle) {
@@ -311,11 +334,55 @@
     btn.addEventListener('click', function () { openLightbox(btn); });
   });
 
+  /* מלכודת פוקוס — חלון מודאלי חייב להחזיק את הפוקוס בתוכו.
+     בתצוגת תמונה יש תחנה אחת (כפתור הסגירה), ובתצוגת דמו שתיים:
+     הכפתור וה-iframe. Tab מהאחרונה חוזר לראשונה, ו-Shift+Tab להפך. */
+  function trapStops() {
+    var stops = [lightboxX];
+    if (lightbox.getAttribute('data-kind') === 'demo') stops.push(lightboxFrame);
+    return stops;
+  }
+
+  function onLightboxKeydown(e) {
+    if (e.key !== 'Tab' || !lightbox.classList.contains('is-open')) return;
+    var stops = trapStops();
+    var first = stops[0];
+    var last  = stops[stops.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
   if (lightbox) {
     lightboxX.addEventListener('click', closeLightbox);
     // לחיצה על הרקע סוגרת; לחיצה על התמונה עצמה לא
     lightbox.addEventListener('click', function (e) {
       if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', onLightboxKeydown);
+
+    /* רשת הביטחון של המלכודת. ה-Tab האחרון בתוך ה-iframe של הדמו מתרחש
+       במסמך אחר ולכן לא מגיע להאזנת המקלדת שלמעלה — הדפדפן פשוט מעביר
+       את הפוקוס אל האלמנט הבא בדף שמאחור. כאן אנחנו מזהים כל מיקוד
+       שנחת מחוץ לחלון בזמן שהוא פתוח, ומחזירים אותו פנימה. */
+    document.addEventListener('focusin', function (e) {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (lightbox.contains(e.target)) return;
+
+      /* קריאה ל-focus() בתוך טיפול באירוע מיקוד מתבטלת — הדפדפן ממשיך
+         להשלים את המעבר שכבר התחיל. דוחים לסבב הבא, ובודקים שוב את המצב
+         שם: אם בינתיים החלון נסגר, לא חוטפים את הפוקוס מהמשתמש. */
+      setTimeout(function () {
+        if (lightbox.classList.contains('is-open') &&
+            !lightbox.contains(document.activeElement)) {
+          lightboxX.focus();
+        }
+      }, 0);
     });
   }
 

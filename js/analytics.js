@@ -141,6 +141,7 @@
     if (el.closest('#nav'))            return 'nav';
     if (el.closest('#mobileMenu'))     return 'menu';
     if (el.closest('#stickyCta'))      return 'sticky';
+    if (el.closest('#waFab'))          return 'fab';   /* בועת הוואטסאפ הצפה */
     if (el.closest('.newsletter-bar')) return 'news';
     if (el.closest('.footer'))         return 'footer';
     var section = el.closest('section[id]');
