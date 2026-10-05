@@ -913,6 +913,61 @@
   <p class="lightbox__caption" id="lightboxCaption"></p>
 </div>
 
+<!-- חלון קופץ: הזמנה לניוזלטר. נפתח פעם אחת, כמה שניות אחרי הכניסה (ראו
+     main.js). <dialog> מקורי — הדפדפן כבר מחזיק בו את הפוקוס, סוגר ב-Esc
+     ומשתיק את הדף שמאחור, בלי מלכודת פוקוס ידנית כמו ב-lightbox.
+     גם כאן ההרשמה עצמה לא קורית בדף: הכפתור מוביל לדף ההרשמה. -->
+<dialog class="promo" id="promo" aria-labelledby="promoTitle" aria-describedby="promoLead">
+  <button class="promo__close" id="promoClose" type="button" aria-label="סגירה">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <path d="M18 6 6 18M6 6l12 12"/>
+    </svg>
+  </button>
+
+  <span class="promo__eyebrow">ניוזלטר שבועי · בחינם</span>
+  <p class="promo__title" id="promoTitle">סודות מהמקלדת</p>
+  <p class="promo__lead" id="promoLead">
+    הטיפ השבועי שיחסוך לכם זמן, עצבים — או לפחות עוד חיפוש אחד בגוגל.
+  </p>
+
+  <!-- שלוש ההבטחות מדף ההרשמה, בקיצור: אייקון וכותרת בלבד, בלי משפט
+       ההסבר — בכרטיס צר הן היו הופכות את החלון לעמוס. האייקונים זהים
+       לאלה שבדף ההרשמה; רק הקווים לוקחים את צבע הטקסט, כי כאן הרקע כהה. -->
+  <ul class="promo__perks">
+    <li>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="14" r="7.4" stroke="currentColor"/>
+        <path d="M9.7 2.6h4.6M12 2.6v4M18.9 8.1 20.3 6.7" stroke="currentColor"/>
+        <path d="M12 14l3.3-2.7" class="promo__perk-accent"/>
+      </svg>
+      קצר. באמת.
+    </li>
+    <li>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="8.4" cy="8.4" r="4.4" stroke="currentColor"/>
+        <path d="m11.6 11.6 8 8M15.6 15.6l1.7-1.7M17.9 17.9l1.7-1.7" stroke="currentColor"/>
+        <circle cx="8.4" cy="8.4" r="1.4" class="promo__perk-dot"/>
+      </svg>
+      דברים ששווה לדעת
+    </li>
+    <li>
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2.6" y="5.4" width="18.8" height="13.6" rx="2.4" stroke="currentColor"/>
+        <path d="m3.8 7.6 8.2 5.8 8.2-5.8" stroke="currentColor"/>
+        <circle cx="19.6" cy="5.8" r="3.1" class="promo__perk-dot promo__perk-dot--ring"/>
+      </svg>
+      פעם בשבוע
+    </li>
+  </ul>
+
+  <a class="btn btn--primary promo__cta" id="promoCta"
+     href="https://news.rachelbroner.co.il/" target="_blank" rel="noopener">
+    אני בפנים
+    <span aria-hidden="true">←</span>
+  </a>
+  <button class="promo__later" id="promoLater" type="button">אולי בפעם אחרת</button>
+</dialog>
+
 <script src="js/config.js"></script>
 <script src="js/analytics.js"></script>
 <script src="js/main.js"></script>

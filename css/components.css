@@ -712,6 +712,128 @@ body.is-locked .wa-fab {
 }
 
 /* ==========================================================================
+   חלון קופץ — הזמנה לניוזלטר
+   אותה שפה של רצועת הניוזלטר, בכרטיס מרווח ולא עמוס: כותרת, משפט, כפתור.
+   ========================================================================== */
+
+.promo {
+  width: min(440px, calc(100% - 32px));
+  margin: auto;
+  padding: var(--sp-7) var(--sp-6) var(--sp-6);
+  background: var(--c-bg-soft);
+  border: 1px solid var(--c-accent-line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+  color: var(--c-ink);
+  text-align: center;
+}
+
+.promo::backdrop {
+  background: rgba(13, 13, 13, .72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.promo[open] { animation: promo-in var(--dur-slow) var(--ease); }
+@keyframes promo-in {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+}
+@media (prefers-reduced-motion: reduce) { .promo[open] { animation: none; } }
+.no-motion .promo[open] { animation: none; }
+
+.promo__close {
+  position: absolute;
+  inset-block-start: var(--sp-3);
+  inset-inline-end: var(--sp-3);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  color: var(--c-ink-3);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.promo__close:hover { background: rgba(255, 255, 255, .08); color: var(--c-ink); }
+
+.promo__eyebrow {
+  display: block;
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--ls-wide);
+  color: var(--c-accent-text);
+}
+
+.promo__title {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+}
+
+.promo__lead {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--c-ink-2);
+}
+
+/* שלוש ההבטחות — שורה אחת של שלוש עמודות, מופרדת מעל ומתחת בקו דק */
+.promo__perks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+  padding: var(--sp-5) 0;
+  border-block: 1px solid var(--c-line);
+  list-style: none;
+}
+
+.promo__perks li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  color: var(--c-ink);
+}
+
+.promo__perks svg {
+  width: 28px;
+  height: 28px;
+  color: var(--c-ink-2);
+}
+
+.promo__perk-accent { stroke: var(--c-accent-text); }
+.promo__perk-dot    { fill: var(--c-accent); stroke: none; }
+/* בדף ההרשמה הנקודה על המעטפה מוקפת לבן, כדי להיפרד מהקו. כאן — בצבע הכרטיס */
+.promo__perk-dot--ring { stroke: var(--c-bg-soft); stroke-width: 1.6; }
+
+.promo__cta {
+  width: 100%;
+  margin-top: var(--sp-6);
+}
+
+/* דרך יציאה מנומסת ובולטת פחות מהכפתור — לא כל מי שסוגר מחפש את ה-X */
+.promo__later {
+  margin-top: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: var(--fs-sm);
+  color: var(--c-ink-3);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.promo__later:hover { color: var(--c-ink-2); }
+
+/* ==========================================================================
    פוטר
    ========================================================================== */
 

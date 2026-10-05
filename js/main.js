@@ -387,6 +387,84 @@
   }
 
   /* ======================================================================
+     חלון קופץ — הזמנה לניוזלטר
+     נפתח פעם אחת, אחרי כמה שניות בדף. מי שסגר לא יראה אותו שוב חודש,
+     ומי שלחץ "אני בפנים" לא יראה אותו יותר בכלל.
+     ====================================================================== */
+  (function setupPromo() {
+    var promo = $('#promo');
+    if (!promo || typeof promo.showModal !== 'function') return;   // דפדפן ישן — מוותרים בשקט
+
+    var DELAY      = 10000;                   // כמה זמן בדף לפני שהחלון קופץ
+    var SNOOZE     = 30 * 24 * 60 * 60 * 1000;  // אחרי סגירה — חודש שקט
+    var KEY        = 'promoNewsletter';
+
+    /* localStorage עלול להיחסם (גלישה פרטית, הגדרות פרטיות). במקרה כזה
+       עדיף לא להציג בכלל מאשר להציג את החלון בכל כניסה מחדש. */
+    function load() {
+      try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return null; }
+    }
+    function save(v) {
+      try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {}
+    }
+
+    var state = load();
+    if (!state || state.joined || (state.closedAt && Date.now() - state.closedAt < SNOOZE)) return;
+
+    /* לא קופצים באמצע משהו: כשהתפריט או צילום מסך פתוחים, כשממלאים את
+       טופס הפנייה, או כשרצועת הניוזלטר כבר מול העיניים. מנסים שוב קצת אחר כך. */
+    function isBusy() {
+      if (document.body.classList.contains('is-locked')) return true;
+      if (form && form.contains(document.activeElement)) return true;
+      var bar = $('.newsletter-bar');
+      if (bar) {
+        var r = bar.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) return true;
+      }
+      return false;
+    }
+
+    function open() {
+      if (isBusy()) { setTimeout(open, 5000); return; }
+      promo.showModal();
+      document.body.classList.add('is-locked');
+      track('promo_open');
+    }
+
+    // close נורה בכל דרך סגירה: X, "אולי בפעם אחרת", Esc ולחיצה על הרקע
+    promo.addEventListener('close', function () {
+      document.body.classList.remove('is-locked');
+      var now = load();
+      if (!now || !now.joined) {
+        save({ closedAt: Date.now() });
+        track('promo_close');
+      }
+    });
+
+    $('#promoClose').addEventListener('click', function () { promo.close(); });
+    $('#promoLater').addEventListener('click', function () { promo.close(); });
+
+    /* לחיצה על הרקע — ב-<dialog> היא נרשמת כלחיצה על החלון עצמו, וכך גם
+       לחיצה על השוליים הריקים שבתוך הכרטיס. לכן בודקים לפי המיקום אם
+       הלחיצה נפלה מחוץ לכרטיס. */
+    promo.addEventListener('click', function (e) {
+      if (e.target !== promo) return;
+      var r = promo.getBoundingClientRect();
+      var outside = e.clientX < r.left || e.clientX > r.right ||
+                    e.clientY < r.top  || e.clientY > r.bottom;
+      if (outside) promo.close();
+    });
+
+    $('#promoCta').addEventListener('click', function () {
+      save({ joined: true });
+      track('promo_join');
+      promo.close();
+    });
+
+    setTimeout(open, DELAY);
+  })();
+
+  /* ======================================================================
      טופס
      ====================================================================== */
   var form      = $('#leadForm');
